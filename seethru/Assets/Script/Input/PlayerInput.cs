@@ -18,6 +18,9 @@ public class PlayerInput : MonoBehaviour
 	public float rotateSpeed;
 	public float moveForceMultiplier;
 
+	[SerializeField]
+	private GameObject bulletStart;
+
 	// プライベート
 	float inputMove;
 	bool inputAttack;
@@ -113,7 +116,7 @@ public class PlayerInput : MonoBehaviour
 	
 	private void Attack(){
 		if(inputAttack && !inputAttackBuff){
-			bulletPool.Place(transform.position, transform.rotation);
+			bulletPool.Place(bulletStart.transform.position, transform.rotation);
 		}
 		inputAttackBuff = inputAttack;
 	}

@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
 	public int bullet = 3;
 	public bool attackStop = false;
 
-	bool isDead = false;
+	public bool isDead = false;
 
     // Start is called before the first frame update
     void Start() {
