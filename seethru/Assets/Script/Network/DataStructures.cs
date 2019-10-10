@@ -6,7 +6,7 @@ namespace DataStructures
 {
     public struct S_DataPlayer
     {
-        public float x, y, z;
+        public float x, y;
         public float angle;
         public int bullets;
         public bool died;
@@ -14,7 +14,7 @@ namespace DataStructures
 
     public struct S_DataShots
     {
-        public float x, y, z;
+        public float x, y;
         public float angle;
         public int bullets;
         public bool died;

@@ -137,7 +137,6 @@ public class SampleEchoClient : Mrs {
                 S_DataPlayer player = new S_DataPlayer();
                 player.x = g_Object.transform.position.x;
                 player.y = g_Object.transform.position.y;
-                player.z = g_Object.transform.position.z;
                 player.angle = g_Object.GetComponent<PlayerInput>().moveAngle;
                 player.bullets = g_Object.GetComponent<Player>().bullet;
                 player.died = false;
@@ -157,7 +156,6 @@ public class SampleEchoClient : Mrs {
                 S_DataShots shot = new S_DataShots();
                 shot.x = movepos;
                 shot.y = 1.0f;
-                shot.z = movepos + 1.0f;
                 shot.angle = angle;
                 IntPtr p_data = Marshal.AllocHGlobal(Marshal.SizeOf(shot));
                 Marshal.StructureToPtr(shot, p_data, false);
