@@ -36,4 +36,20 @@ public class Bullet : PoolObject
 		}
 	}
 
+	private void OnCollisionEnter2D(Collision2D collision) {
+		if(collision.gameObject.tag == "Gap"){
+			HitEffect();
+			return;
+		}
+
+		reflect--;
+		if(reflect < 0){
+			HitEffect();
+		}
+	}
+
+	private void HitEffect(){
+		ReturnToPool();
+	}
+
 }

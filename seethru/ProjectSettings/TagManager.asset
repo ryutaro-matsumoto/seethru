@@ -4,9 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Attack
   - Guard
   - Gap
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -16,6 +16,11 @@ TagManager:
   - UI
   - 
   - 
+  - Bullet
+  - Gap
+  - Guard
+  - Player
+  - Wall
   - 
   - 
   - 
@@ -32,13 +37,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - MyPlayer
+  - MyGuard
   - 
   m_SortingLayers:
   - name: Default
