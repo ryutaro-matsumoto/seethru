@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TimeDestroy : MonoBehaviour
+public class Timer : MonoBehaviour
 {
 	private float startTime;
 
@@ -21,9 +21,7 @@ public class TimeDestroy : MonoBehaviour
 		float time = Time.time;
         if(time - startTime > count){
 			timeUp = true;
-			Debug.Log("消滅");
 		}
-		Debug.Log(time - startTime);
 	}
 
 	public void TimeStart(){

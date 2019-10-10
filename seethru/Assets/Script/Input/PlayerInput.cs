@@ -7,6 +7,7 @@ public class PlayerInput : MonoBehaviour
 	// コンポーネント
 	Rigidbody2D rb2d;
 	Pool bulletPool;
+	Player player;
 
 	// ゲームオブジェクト
 	GameObject pointer;
@@ -35,6 +36,8 @@ public class PlayerInput : MonoBehaviour
 		pointer = GameObject.Find("Pointer");
 
 		bulletPool = GameObject.Find("BulletPool").GetComponent<Pool>();
+
+		player = GetComponent<Player>();
 
 		playerVector = new Vector2(0.0f, 1.0f);
     }
@@ -83,10 +86,10 @@ public class PlayerInput : MonoBehaviour
 
 		qt.eulerAngles = new Vector3(0f, 0f, qt.eulerAngles.z + 90f);
 
-
 		playerVector.x = moveSpeed * Mathf.Cos(qt.eulerAngles.z * Mathf.Deg2Rad);
 		playerVector.y = moveSpeed * Mathf.Sin(qt.eulerAngles.z * Mathf.Deg2Rad);
 
+		player.angle = qt.eulerAngles.z;
 	}
 
 

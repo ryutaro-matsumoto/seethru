@@ -11,7 +11,7 @@ public class Bullet : PoolObject
 
 	Rigidbody2D rb2d;
 
-	TimeDestroy td;
+	Timer td;
 
 	public override void Init() {
 		rb2d = GetComponent<Rigidbody2D>();
@@ -26,7 +26,7 @@ public class Bullet : PoolObject
 
 		rb2d.AddForce(moveVector);
 
-		td = GetComponent<TimeDestroy>();
+		td = GetComponent<Timer>();
 		td.TimeStart();
 	}
 
@@ -41,11 +41,31 @@ public class Bullet : PoolObject
 			HitEffect();
 			return;
 		}
+	}
 
-		reflect--;
-		if(reflect < 0){
-			HitEffect();
+	private void OnTriggerEnter2D(Collider2D collision) {
+		if(collision.gameObject.tag == "Reflecter"){
+			reflect--;
+			if (reflect < 0) {
+				HitEffect();
+				return;
+			}
+
+			Debug.Log("a");
+
+			Vector2 vec = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad));
+
+			rb2d.velocity = Vector2.zero;
+
+			ReflectCollider rc = collision.gameObject.GetComponent<ReflectCollider>();
+
+			vec += 2 * rc.rayVector * rc.rayVector;
+			vec.Normalize();
+			rb2d.AddForce(vec * moveSpeed);
+
+			angleRad = Mathf.Atan2(vec.y, vec.x);
 		}
+
 	}
 
 	private void HitEffect(){

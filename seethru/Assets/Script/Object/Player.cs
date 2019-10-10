@@ -11,7 +11,16 @@ public class Player : MonoBehaviour
 	public int bullet = 3;
 	public bool attackStop = false;
 
+	[SerializeField]
+	private float coolTime = 1.0f;
+
+	[HideInInspector]
+	public bool isReload = false;
+
+	[HideInInspector]
 	public bool isDead = false;
+
+	
 
 
     // Update is called once per frame
