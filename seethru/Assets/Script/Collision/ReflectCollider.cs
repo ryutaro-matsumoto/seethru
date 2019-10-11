@@ -7,11 +7,14 @@ public class ReflectCollider : MonoBehaviour{
 	public Vector2 rayVector;
 	public bool isDebug = false;
 
+	BoxCollider2D reflectCollision;
+
 
     // Start is called before the first frame update
     void Start(){
 		float rad = transform.eulerAngles.z * Mathf.Deg2Rad;
 		rayVector = new Vector2(Mathf.Cos(rad), Mathf.Sin(rad));
+		reflectCollision = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
@@ -25,5 +28,10 @@ public class ReflectCollider : MonoBehaviour{
 		ans = vec - 2 * Vector2.Dot(vec, rayVector) * rayVector;
 		ans.Normalize();
 		return ans;
+
+		Vector2 pos = transform.position;
+		Vector2 localx = (rayVector * reflectCollision.size.x) + pos ;
+
+
 	}
 }

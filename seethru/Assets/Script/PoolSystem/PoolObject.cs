@@ -12,7 +12,7 @@ public abstract class PoolObject : MonoBehaviour
 		ReturnToPool();
 	}
 
-	protected void ReturnToPool(){
+	public void ReturnToPool(){
 		pool.Return(this);
 	}
 

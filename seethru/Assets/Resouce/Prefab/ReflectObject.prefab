@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4584930338667799033
+--- !u!1 &2986420258963831795
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,52 +8,53 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8251202594254845958}
-  - component: {fileID: 7327257990945957982}
-  - component: {fileID: 8196141670408280636}
-  - component: {fileID: 4955360212442995723}
-  m_Layer: 30
-  m_Name: RayCollision_mono
-  m_TagString: Reflecter
+  - component: {fileID: 7684105008122768732}
+  - component: {fileID: 6307771594111960057}
+  - component: {fileID: 3955060858738206376}
+  - component: {fileID: 8399548381434768800}
+  m_Layer: 0
+  m_Name: ReflectObject
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8251202594254845958
+--- !u!4 &7684105008122768732
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4584930338667799033}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_GameObject: {fileID: 2986420258963831795}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7327257990945957982
+--- !u!114 &6307771594111960057
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4584930338667799033}
+  m_GameObject: {fileID: 2986420258963831795}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85318c88439b3fa43920046be17cfa7a, type: 3}
+  m_Script: {fileID: 11500000, guid: 82d6bd31312b50146a3d75f002251f04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayVector: {x: 1, y: 0}
-  isDebug: 0
---- !u!61 &8196141670408280636
+  reflect: 0
+  isDead: 0
+  startReflect: 2
+--- !u!61 &3955060858738206376
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4584930338667799033}
+  m_GameObject: {fileID: 2986420258963831795}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -71,17 +72,17 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.15, y: 1.1}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!50 &4955360212442995723
+--- !u!50 &8399548381434768800
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4584930338667799033}
-  m_BodyType: 1
+  m_GameObject: {fileID: 2986420258963831795}
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0

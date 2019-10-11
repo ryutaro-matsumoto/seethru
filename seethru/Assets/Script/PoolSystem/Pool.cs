@@ -62,5 +62,4 @@ public class Pool : MonoBehaviour
 		obj.gameObject.SetActive(false);
 		_pool.Enqueue(obj);
 	}
-
 }

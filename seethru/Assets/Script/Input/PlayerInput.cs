@@ -116,13 +116,14 @@ public class PlayerInput : MonoBehaviour
 		rb2d.AddForce(moveForceMultiplier * (moveVector - rb2d.velocity));
 	}
 
-	
+
 	private void Attack(){
 		if(inputAttack && !inputAttackBuff){
 			bulletPool.Place(bulletStart.transform.position, transform.rotation);
 		}
 		inputAttackBuff = inputAttack;
 	}
+
 
 	public float Vector2Cross(Vector2 vec1, Vector2 vec2){
 		return vec1.x * vec2.y - vec2.x * vec1.y;

@@ -8,6 +8,7 @@ TagManager:
   - Gap
   - Bullet
   - Reflecter
+  - ReflectObject
   layers:
   - Default
   - TransparentFX
@@ -38,9 +39,9 @@ TagManager:
   - 
   - 
   - 
-  - MyPlayer
-  - MyGuard
   - 
+  - Reflecter
+  - ReflectObject
   m_SortingLayers:
   - name: Default
     uniqueID: 0
