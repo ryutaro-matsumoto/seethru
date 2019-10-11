@@ -7,7 +7,7 @@ using DataStructures;
 using MrsServer = System.IntPtr;
 using MrsConnection = System.IntPtr;
 using MrsCipher = System.IntPtr;
-public class SampleEchoClient : Mrs {
+public class MrsClient : Mrs {
     protected static String g_ArgConnectionType;
     protected static String g_ArgIsKeyExchange;
     protected static String g_ArgIsEncryptRecords;
@@ -38,29 +38,36 @@ public class SampleEchoClient : Mrs {
     protected static Single angle = 0;
     protected static Int16 ammos = 5;
 
+    protected static NetworkSettingData netsettings;
+    protected static DataStructures.S_DataPlayer myData;
+    protected static DataStructures.S_DataPlayer myNewData;
     protected static GameObject g_Object;
+    private static bool connected;
+    private static bool g_gameon;
+    private static bool createMrs;
     
-    static SampleEchoClient(){
+    static MrsClient()
+    {
 #if UNITY_WEBGL
         g_ArgConnectionType   = "3";
         g_ArgIsKeyExchange    = "0";
 #else
-        g_ArgConnectionType   = "2";
-        g_ArgIsKeyExchange    = "1";
+        g_ArgConnectionType = "2";
+        g_ArgIsKeyExchange = "1";
 #endif
         g_ArgIsEncryptRecords = "1";
-        g_ArgWriteDataLen     = "1024";
-        g_ArgWriteCount       = "10";
-        g_ArgConnections      = "1";
-        g_ArgServerAddr       = "127.0.0.1";
+        g_ArgWriteDataLen = "1024";
+        g_ArgWriteCount = "10";
+        g_ArgConnections = "1";
+        g_ArgServerAddr = "127.0.0.1";
 #if UNITY_WEBGL
         g_ArgServerPort       = "22223";
 #else
-        g_ArgServerPort       = "22222";
+        g_ArgServerPort = "22222";
 #endif
-        g_ArgTimeoutMsec      = "5000";
-        g_ArgIsValidRecord    = "1";
-        g_ArgConnectionPath   = "/";
+        g_ArgTimeoutMsec = "500";
+        g_ArgIsValidRecord = "1";
+        g_ArgConnectionPath = "/";
     }
     
     protected bool m_IsRunning;
@@ -71,64 +78,54 @@ public class SampleEchoClient : Mrs {
         m_IsRunning = false;
         g_ReadCount = 0;
         g_Connect = new mrs.Connect();
+        netsettings = new NetworkSettingData();
+        InitMyData();
+
+        g_gameon = false;
+        if (!createMrs)
+        {
+            DontDestroyOnLoad(this.gameObject);
+            createMrs = true;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
     }
-    
-    void OnGUI(){
-        if ( ! m_IsRunning ){
+
+    void OnGUI()
+    {
+        if (!m_IsRunning)
+        {
+            GUILayout.Space(30);
+
             GUILayout.BeginHorizontal();
-            GUILayout.Label( "ConnectionType:" );
-            g_ArgConnectionType = GUILayout.TextField( g_ArgConnectionType );
-            GUILayout.Space( 30 );
-#if ! UNITY_WEBGL
-            GUILayout.Label( "IsKeyExchange:" );
-            g_ArgIsKeyExchange = GUILayout.TextField( g_ArgIsKeyExchange );
-            GUILayout.Space( 30 );
-#endif
-            GUILayout.Label( "IsEncryptRecords:" );
-            g_ArgIsEncryptRecords = GUILayout.TextField( g_ArgIsEncryptRecords );
+            GUILayout.Label("ServerAddr:");
+            g_ArgServerAddr = GUILayout.TextField(g_ArgServerAddr);
+            GUILayout.Space(30);
+            GUILayout.Label("ServerPort:");
+            g_ArgServerPort = GUILayout.TextField(g_ArgServerPort);
+            GUILayout.Space(30);
+            GUILayout.Label("TimeoutMsec:");
+            g_ArgTimeoutMsec = GUILayout.TextField(g_ArgTimeoutMsec);
             GUILayout.EndHorizontal();
-            
-            GUILayout.Space( 30 );
-            
-            GUILayout.BeginHorizontal();
-            GUILayout.Label( "WriteDataLen:" );
-            g_ArgWriteDataLen = GUILayout.TextField( g_ArgWriteDataLen );
-            GUILayout.Space( 30 );
-            GUILayout.Label( "WriteCount:" );
-            g_ArgWriteCount = GUILayout.TextField( g_ArgWriteCount );
-            GUILayout.Space( 30 );
-            GUILayout.Label( "Connections:" );
-            g_ArgConnections = GUILayout.TextField( g_ArgConnections );
-            GUILayout.EndHorizontal();
-            
-            GUILayout.Space( 30 );
-            
-            GUILayout.BeginHorizontal();
-            GUILayout.Label( "ServerAddr:" );
-            g_ArgServerAddr = GUILayout.TextField( g_ArgServerAddr );
-            GUILayout.Space( 30 );
-            GUILayout.Label( "ServerPort:" );
-            g_ArgServerPort = GUILayout.TextField( g_ArgServerPort );
-            GUILayout.Space( 30 );
-            GUILayout.Label( "TimeoutMsec:" );
-            g_ArgTimeoutMsec = GUILayout.TextField( g_ArgTimeoutMsec );
-            GUILayout.Space( 30 );
-            GUILayout.Label( "IsValidRecord:" );
-            g_ArgIsValidRecord = GUILayout.TextField( g_ArgIsValidRecord );
-            GUILayout.Space( 30 );
-            GUILayout.Label( "ConnectionPath:" );
-            g_ArgConnectionPath = GUILayout.TextField( g_ArgConnectionPath );
-            GUILayout.EndHorizontal();
-            
-            GUILayout.Space( 30 );
-            
-            if ( GUILayout.Button( "Start Echo Client", GUILayout.Width( 300 ), GUILayout.Height( 50 ) ) ){
+            GUILayout.Space(60);
+
+            if (GUILayout.Button("Start Game", GUILayout.Width(300), GUILayout.Height(80)))
+            {
                 m_IsRunning = true;
                 StartEchoClient();
+                //mrs.Utility.LoadScene("SampleScene");
             }
-        }else{
-            if ( GUILayout.Button( "Back", GUILayout.Width( 300 ), GUILayout.Height( 50 ) ) ){
-                mrs.Utility.LoadScene( "SampleMain" );
+        }
+        else
+        {
+            if (GUILayout.Button("Back", GUILayout.Width(300), GUILayout.Height(50)))
+            {
+                m_IsRunning = false;
+                mrs_close(g_nowconnect);
+                mrs.Utility.LoadScene("NetworkSetting");
             }
 
             if (GUILayout.Button("Send Player Data", GUILayout.Width(300), GUILayout.Height(50)))
@@ -137,8 +134,7 @@ public class SampleEchoClient : Mrs {
                 S_DataPlayer player = new S_DataPlayer();
                 player.x = g_Object.transform.position.x;
                 player.y = g_Object.transform.position.y;
-                player.z = g_Object.transform.position.z;
-                player.angle = g_Object.GetComponent<PlayerInput>().moveAngle;
+                player.angle = g_Object.transform.localEulerAngles.z;
                 player.bullets = g_Object.GetComponent<Player>().bullet;
                 player.died = false;
                 IntPtr p_data = Marshal.AllocHGlobal(Marshal.SizeOf(player));
@@ -146,18 +142,17 @@ public class SampleEchoClient : Mrs {
                 if (g_nowconnect != null)
                 {
                     g_paytype = 0x02;
-                    mrs_write_record(g_nowconnect,g_RecordOptions,g_paytype, p_data, (uint)Marshal.SizeOf(player));
+                    mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)Marshal.SizeOf(player));
                 }
                 Marshal.FreeHGlobal(p_data);
             }
 
             if (GUILayout.Button("Send Shot Data", GUILayout.Width(300), GUILayout.Height(50)))
             {
-                
+
                 S_DataShots shot = new S_DataShots();
                 shot.x = movepos;
                 shot.y = 1.0f;
-                shot.z = movepos + 1.0f;
                 shot.angle = angle;
                 IntPtr p_data = Marshal.AllocHGlobal(Marshal.SizeOf(shot));
                 Marshal.StructureToPtr(shot, p_data, false);
@@ -170,7 +165,16 @@ public class SampleEchoClient : Mrs {
             }
         }
     }
-    
+
+    private void InitMyData()
+    {
+        myData.x = 0;
+        myData.y = 0;
+        myData.angle = 0;
+        myData.bullets = 0;
+        myData.died = false;
+    }
+
     private static String connection_type_to_string( MrsConnection connection ){
         MrsConnectionType type = mrs_connection_get_type( connection );
         switch ( type ){
@@ -218,6 +222,12 @@ public class SampleEchoClient : Mrs {
                 {
                     MRS_LOG_DEBUG("RECEIVED DATA:{0}", payload);
                     S_DataPlayer data = (S_DataPlayer)Marshal.PtrToStructure(payload, typeof(S_DataPlayer));
+                    g_Object = GameObject.Find("Player");
+                    if (g_Object != null)
+                    {
+                        g_Object.transform.position = new Vector3(data.x, data.y, 0);
+                        g_Object.transform.eulerAngles = new Vector3(0.0f, 0.0f, data.angle);
+                    }
                     //MRS_LOG_DEBUG("RECEIVED DATA  pos_x:{0} pos_y:{1} pos_z:{2} look:{3} move:{4} ammos:{5}",
                     //    data.x, data.y, data.z, data.angle, data.move_a, data.ammos);
                 }break;
@@ -285,7 +295,7 @@ public class SampleEchoClient : Mrs {
     [AOT.MonoPInvokeCallback(typeof(MrsKeyExchangeCallback))]
     private static void on_key_exchange( MrsConnection connection, IntPtr connection_data ){
         MRS_LOG_DEBUG( "on_key_exchange" );
-        
+    //    mrs.Utility.LoadScene("SampleScene");
         //write_echo_all( connection );
     }
     
@@ -295,6 +305,7 @@ public class SampleEchoClient : Mrs {
         MRS_LOG_DEBUG( "on_connect local_mrs_version=0x{0:X} remote_mrs_version=0x{1:X}",
             mrs_get_version( MRS_VERSION_KEY ), mrs_connection_get_remote_version( connection, MRS_VERSION_KEY ) );
         g_paytype = 0x01;
+        connected = true;
         if ( g_IsKeyExchange ){
             mrs_set_cipher( connection, mrs_cipher_create( MrsCipherType.ECDH ) );
             mrs_key_exchange( connection, on_key_exchange );
@@ -308,6 +319,7 @@ public class SampleEchoClient : Mrs {
     private static void on_disconnect( MrsConnection connection, IntPtr connection_data ){
         MRS_LOG_DEBUG( "on_disconnect local_mrs_version=0x{0:X} remote_mrs_version=0x{1:X}",
             mrs_get_version( MRS_VERSION_KEY ), mrs_connection_get_remote_version( connection, MRS_VERSION_KEY ) );
+        connected = false;
     }
     
     // ソケットにエラーが発生した時に呼ばれる
@@ -354,7 +366,7 @@ public class SampleEchoClient : Mrs {
         mrs_connection_set_path( connection, g_ArgConnectionPath );
     }
     
-    void StartEchoClient(){
+    public void StartEchoClient(){
         MRS_LOG_DEBUG( "connection_type={0} is_key_exchange={1} is_encrypt_records={2} write_data_len={3} write_count={4} connections={5} server_addr={6} server_port={7} timeout_msec={8} is_valid_record={9} connection_path={10}",
             g_ArgConnectionType, g_ArgIsKeyExchange, g_ArgIsEncryptRecords, g_ArgWriteDataLen, g_ArgWriteCount, g_ArgConnections,
             g_ArgServerAddr, g_ArgServerPort, g_ArgTimeoutMsec, g_ArgIsValidRecord, g_ArgConnectionPath );
@@ -408,11 +420,16 @@ public class SampleEchoClient : Mrs {
         }break;
         }
         g_Connect.SetFallbackConnectCallback( on_fallback_connect );
+
+        netsettings.addr = connect_request.Addr;
+        netsettings.port = connect_request.Port;
+
         mrs_initialize();
         do{
             for ( UInt32 i = 0; i < g_Connections; ++i ){
                 MrsConnection client = g_Connect.FallbackConnect();
                 g_nowconnect = client;
+                netsettings.connection = client;
                 if ( MrsConnection.Zero == client ){
                     MRS_LOG_ERR( "mrs_connect[{0}]: {1}", i, ToString( mrs_get_error_string( mrs_get_last_error() ) ) );
                     break;
@@ -423,6 +440,14 @@ public class SampleEchoClient : Mrs {
     
     void Update(){
         mrs_update();
+        if (connected && !g_gameon) {
+            g_gameon = true;
+            mrs.Utility.LoadScene("SampleScene");
+        }
+        if (g_gameon)
+        {
+            CompareMyData();
+        }
     }
     
     void End(){
@@ -435,5 +460,27 @@ public class SampleEchoClient : Mrs {
     
     void OnApplicationPause( bool pause ){
         if ( pause ) mrs_update_keep_alive();
+    }
+
+
+    void CompareMyData()
+    {
+        g_Object = GameObject.Find("MainPlayer");
+        myNewData.x = g_Object.transform.position.x;
+        myNewData.y = g_Object.transform.position.y;
+        myNewData.angle = g_Object.transform.localEulerAngles.z;
+        myNewData.bullets = g_Object.GetComponent<Player>().bullet;
+        myNewData.died = false;
+        
+        IntPtr p_data = Marshal.AllocHGlobal(Marshal.SizeOf(myNewData));
+        Marshal.StructureToPtr(myNewData, p_data, false);
+        if (g_nowconnect != null)
+        {
+            g_paytype = 0x02;
+            mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)Marshal.SizeOf(myNewData));
+        }
+        Marshal.FreeHGlobal(p_data);
+
+        myData = myNewData;
     }
 }
