@@ -1959,6 +1959,26 @@ PrefabInstance:
       propertyPath: hitTag
       value: Bullet
       objectReference: {fileID: 0}
+    - target: {fileID: 7022449262439019187, guid: 111f939c3400d64498d1618db9508fa2,
+        type: 3}
+      propertyPath: typeArray.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7022449262439019187, guid: 111f939c3400d64498d1618db9508fa2,
+        type: 3}
+      propertyPath: typeArray.Array.data[2]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7022449262439019187, guid: 111f939c3400d64498d1618db9508fa2,
+        type: 3}
+      propertyPath: typeArray.Array.data[3]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7022449262439019187, guid: 111f939c3400d64498d1618db9508fa2,
+        type: 3}
+      propertyPath: typeArray.Array.data[4]
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 111f939c3400d64498d1618db9508fa2, type: 3}
 --- !u!1001 &8458095767106381819
