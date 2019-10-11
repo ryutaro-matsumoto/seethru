@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BulletGapHit : MonoBehaviour
 {
-	[HideInInspector]
 	public bool GapHit = false;
 
 	private void OnEnable() {

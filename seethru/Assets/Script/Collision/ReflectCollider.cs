@@ -29,9 +29,5 @@ public class ReflectCollider : MonoBehaviour{
 		ans.Normalize();
 		return ans;
 
-		Vector2 pos = transform.position;
-		Vector2 localx = (rayVector * reflectCollision.size.x) + pos ;
-
-
 	}
 }

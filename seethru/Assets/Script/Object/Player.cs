@@ -33,5 +33,4 @@ public class Player : MonoBehaviour
 	void DeadPlayer(){
 		gameObject.SetActive(false);
 	}
-	
 }
