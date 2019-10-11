@@ -16,7 +16,6 @@ namespace DataStructures
     {
         public float x, y;
         public float angle;
-        public int bullets;
         public bool died;
     }
 
