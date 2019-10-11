@@ -19,4 +19,11 @@ public class ReflectCollider : MonoBehaviour{
 		float rad = transform.eulerAngles.z * Mathf.Deg2Rad;
 		rayVector = new Vector2(Mathf.Cos(rad), Mathf.Sin(rad));
 	}
+
+	public Vector2 ReflectVector(Vector2 vec){
+		Vector2 ans = Vector2.zero;
+		ans = vec - 2 * Vector2.Dot(vec, rayVector) * rayVector;
+		ans.Normalize();
+		return ans;
+	}
 }

@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reflect: 2
-  moveSpeed: 30
+  moveSpeed: 35
   startReflect: 2
 --- !u!114 &3699605679849275893
 MonoBehaviour:

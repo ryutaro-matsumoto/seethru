@@ -11,8 +11,6 @@ public class Bullet : PoolObject
 	Rigidbody2D rb2d;
 	Timer td;
 
-
-
 	public float moveSpeed = 10.0f;
 	[SerializeField]
 	private int startReflect = 2;
@@ -43,15 +41,12 @@ public class Bullet : PoolObject
 		}
 	}
 
-	private void OnCollisionEnter2D(Collision2D collision) {
-		if(collision.gameObject.tag == "Gap"){
+	private void OnTriggerEnter2D(Collider2D collision) {
+
+		if (collision.gameObject.tag == "Gap") {
 			HitEffect();
 			return;
 		}
-	}
-
-	private void OnTriggerEnter2D(Collider2D collision) {
-		Debug.Log("a");
 
 		if (collision.gameObject.tag == "Reflecter"){
 			reflect--;
@@ -60,17 +55,12 @@ public class Bullet : PoolObject
 				return;
 			}
 
+
 			Vector2 vec = rb2d.velocity; ;
 
-			rb2d.velocity = Vector2.zero;
-			rb2d.angularVelocity = 0.0f;
-
 			ReflectCollider rc = collision.gameObject.GetComponent<ReflectCollider>();
-			Debug.Log(rc.rayVector);
 
-			Vector2 ans = vec - 2 * Vector2.Dot(vec, rc.rayVector) * rc.rayVector;
-
-			ans.Normalize();
+			Vector2 ans = rc.ReflectVector(vec);
 
 			rb2d.velocity = ans * moveSpeed;
 
@@ -78,6 +68,7 @@ public class Bullet : PoolObject
 
 			transform.eulerAngles = new Vector3(0f, 0f, angleRad * Mathf.Rad2Deg - 90f);
 		}
+
 
 	}
 
