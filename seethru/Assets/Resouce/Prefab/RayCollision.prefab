@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5315123795175175475}
   - component: {fileID: 6840567296516875627}
   - component: {fileID: 5404247570224862985}
+  - component: {fileID: 9188975187422859582}
   m_Layer: 0
   m_Name: RayCollision_Right
   m_TagString: Untagged
@@ -72,6 +73,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.15, y: 1.1}
   m_EdgeRadius: 0
+--- !u!50 &9188975187422859582
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 351778014210010316}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1683220551246646801
 GameObject:
   m_ObjectHideFlags: 0
@@ -83,6 +105,7 @@ GameObject:
   - component: {fileID: 7786002553323868038}
   - component: {fileID: 868470898772654904}
   - component: {fileID: 6634301094884014793}
+  - component: {fileID: 2042061657748392183}
   m_Layer: 0
   m_Name: RayCollision_Top
   m_TagString: Untagged
@@ -144,6 +167,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.15, y: 1.1}
   m_EdgeRadius: 0
+--- !u!50 &2042061657748392183
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683220551246646801}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1876201065058982607
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,6 +233,7 @@ GameObject:
   - component: {fileID: 966428319671766802}
   - component: {fileID: 6654001427675736171}
   - component: {fileID: 83611249224500628}
+  - component: {fileID: 777681627499024015}
   m_Layer: 0
   m_Name: RayCollision_Down
   m_TagString: Untagged
@@ -250,6 +295,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.15, y: 1.1}
   m_EdgeRadius: 0
+--- !u!50 &777681627499024015
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7683174543791864075}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &8794550181846065865
 GameObject:
   m_ObjectHideFlags: 0
@@ -261,6 +327,7 @@ GameObject:
   - component: {fileID: 3325420860725636632}
   - component: {fileID: 8254347738132414330}
   - component: {fileID: 6048643659377222740}
+  - component: {fileID: 8555744234808057285}
   m_Layer: 0
   m_Name: RayCollision_Left
   m_TagString: Untagged
@@ -322,3 +389,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.15, y: 1.1}
   m_EdgeRadius: 0
+--- !u!50 &8555744234808057285
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8794550181846065865}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
