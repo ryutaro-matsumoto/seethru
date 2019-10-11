@@ -223,8 +223,11 @@ public class MrsClient : Mrs {
                     MRS_LOG_DEBUG("RECEIVED DATA:{0}", payload);
                     S_DataPlayer data = (S_DataPlayer)Marshal.PtrToStructure(payload, typeof(S_DataPlayer));
                     g_Object = GameObject.Find("Player");
-                    g_Object.transform.position = new Vector3(data.x + 1.0f, data.y, 0);
-                    g_Object.transform.eulerAngles = new Vector3(0.0f, 0.0f, -data.angle);
+                    if (g_Object != null)
+                    {
+                        g_Object.transform.position = new Vector3(data.x, data.y, 0);
+                        g_Object.transform.eulerAngles = new Vector3(0.0f, 0.0f, data.angle);
+                    }
                     //MRS_LOG_DEBUG("RECEIVED DATA  pos_x:{0} pos_y:{1} pos_z:{2} look:{3} move:{4} ammos:{5}",
                     //    data.x, data.y, data.z, data.angle, data.move_a, data.ammos);
                 }break;
