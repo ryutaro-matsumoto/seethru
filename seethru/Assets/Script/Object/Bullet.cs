@@ -29,7 +29,7 @@ public class Bullet : PoolObject
 		moveVector.x = moveSpeed * Mathf.Cos(angleRad);
 		moveVector.y = moveSpeed * Mathf.Sin(angleRad);
 
-		rb2d.AddForce(moveVector);
+		rb2d.velocity = moveVector;
 
 		td = GetComponent<Timer>();
 		td.TimeStart();
@@ -60,7 +60,7 @@ public class Bullet : PoolObject
 				return;
 			}
 
-			Vector2 vec = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad));
+			Vector2 vec = rb2d.velocity; ;
 
 			rb2d.velocity = Vector2.zero;
 			rb2d.angularVelocity = 0.0f;
@@ -68,12 +68,13 @@ public class Bullet : PoolObject
 			ReflectCollider rc = collision.gameObject.GetComponent<ReflectCollider>();
 			Debug.Log(rc.rayVector);
 
-			vec += 2 * rc.rayVector;
-			vec.Normalize();
-			rb2d.AddForce(vec * moveSpeed);
+			Vector2 ans = vec - 2 * Vector2.Dot(vec, rc.rayVector) * rc.rayVector;
 
+			ans.Normalize();
 
-			angleRad = Mathf.Atan2(vec.y, vec.x);
+			rb2d.velocity = ans * moveSpeed;
+
+			angleRad = Mathf.Atan2(ans.y, ans.x);
 
 			transform.eulerAngles = new Vector3(0f, 0f, angleRad * Mathf.Rad2Deg - 90f);
 		}

@@ -5,8 +5,8 @@ using UnityEngine;
 public class ReflectCollider : MonoBehaviour{
 	[HideInInspector]
 	public Vector2 rayVector;
-
 	public bool isDebug = false;
+
 
     // Start is called before the first frame update
     void Start(){
