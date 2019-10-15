@@ -237,7 +237,8 @@ public class MrsClient : Mrs {
                     S_DataShots data = (S_DataShots)Marshal.PtrToStructure(payload, typeof(S_DataShots));
                     GameObject bulletPool = GameObject.Find("BulletPool");
                     Pool script = bulletPool.GetComponent<Pool>();
-                    script.Place(new Vector2(data.x, data.y), new Quaternion(0.0f, 0.0f, data.angle, 0.0f));
+                    
+                    script.Place(new Vector2(data.x, data.y), Quaternion.AngleAxis(data.angle,Vector3.forward));
                     //MRS_LOG_DEBUG("RECEIVED DATA  pos_x:{0} pos_y:{1} pos_z:{2} angle:{3}",
                     //    data.pos_x, data.pos_y, data.pos_z, data.angle);
                 }
