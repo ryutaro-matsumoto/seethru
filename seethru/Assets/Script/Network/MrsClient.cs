@@ -220,7 +220,7 @@ public class MrsClient : Mrs {
     }
     
     private static void parse_record( MrsConnection connection, IntPtr connection_data, UInt32 seqnum, UInt16 options, UInt16 payload_type, IntPtr payload, UInt32 payload_len ){
-        MRS_LOG_DEBUG( "parse_record seqnum={0} options=0x{1:X2} payload=0x{2:X2}/{3}", seqnum, options, payload_type, payload_len );
+        //MRS_LOG_DEBUG( "parse_record seqnum={0} options=0x{1:X2} payload=0x{2:X2}/{3}", seqnum, options, payload_type, payload_len );
         // MRS_PAYLOAD_TYPE_BEGIN - MRS_PAYLOAD_TYPE_ENDの範囲内で任意のIDを定義し、対応するアプリケーションコードを記述する
         switch ( payload_type ){
         case 0x01:{
@@ -240,7 +240,7 @@ public class MrsClient : Mrs {
                 }break;
             case 0x03:
                 {
-                    MRS_LOG_DEBUG("RECEIVED DATA:{0}", payload);
+                    //MRS_LOG_DEBUG("RECEIVED DATA:{0}", payload);
                     S_DataShots data = (S_DataShots)Marshal.PtrToStructure(payload, typeof(S_DataShots));
                     GameObject bulletPool = GameObject.Find("BulletPool");
                     Pool script = bulletPool.GetComponent<Pool>();
