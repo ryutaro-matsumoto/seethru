@@ -19,9 +19,7 @@ public class LobbySystem : MonoBehaviour
 {
     //\ 戻るSE
     public AudioSource ClickBackSound;
-    public  GameObject RoomCreate;
-    public  GameObject RoomJoin;
-    public  GameObject Back;
+
 
     //------------------------------------------------------------------------------
     // start function.
@@ -48,8 +46,7 @@ public class LobbySystem : MonoBehaviour
     //===========================================================
     public void ClickCreateRoomButton()
     {
-        RoomCreate.SetActive(true);
-        RoomJoin.SetActive(false);
+
     }
 
     //===========================================================
@@ -59,8 +56,7 @@ public class LobbySystem : MonoBehaviour
     //===========================================================
     public void ClickJoinRoomButton()
     {
-        RoomCreate.SetActive(false);
-        RoomJoin.SetActive(true);
+
     }
 
     //===========================================================
