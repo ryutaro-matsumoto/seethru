@@ -42,6 +42,7 @@ public class MrsClient : Mrs {
     protected static DataStructures.S_DataPlayer myData;
     protected static DataStructures.S_DataPlayer myNewData;
     protected static GameObject g_Object;
+    protected static GameObject g_EnemyObject;
     private static bool connected;
     private static bool g_gameon;
     private static bool createMrs;
@@ -222,19 +223,21 @@ public class MrsClient : Mrs {
                 {
                     MRS_LOG_DEBUG("RECEIVED DATA:{0}", payload);
                     S_DataPlayer data = (S_DataPlayer)Marshal.PtrToStructure(payload, typeof(S_DataPlayer));
-                    g_Object = GameObject.Find("Player");
-                    if (g_Object != null)
+                    if (g_EnemyObject != null)
                     {
-                        g_Object.transform.position = new Vector3(data.x, data.y, 0);
-                        g_Object.transform.eulerAngles = new Vector3(0.0f, 0.0f, data.angle);
+                        g_EnemyObject.transform.position = new Vector3(data.x, data.y, 0);
+                        g_EnemyObject.transform.eulerAngles = new Vector3(0.0f, 0.0f, data.angle);
                     }
-                    //MRS_LOG_DEBUG("RECEIVED DATA  pos_x:{0} pos_y:{1} pos_z:{2} look:{3} move:{4} ammos:{5}",
+                    //MRS_LOG_DEBUG("RECEIVED DATA  pos_x:{0} pos_y:{1} pos_z:{2} look:{3} move:{4} ammos:{5}"
                     //    data.x, data.y, data.z, data.angle, data.move_a, data.ammos);
                 }break;
             case 0x03:
                 {
                     MRS_LOG_DEBUG("RECEIVED DATA:{0}", payload);
                     S_DataShots data = (S_DataShots)Marshal.PtrToStructure(payload, typeof(S_DataShots));
+                    GameObject bulletPool = GameObject.Find("BulletPool");
+                    Pool script = bulletPool.GetComponent<Pool>();
+                    script.Place(new Vector2(data.x, data.y), new Quaternion(0.0f, 0.0f, data.angle, 0.0f));
                     //MRS_LOG_DEBUG("RECEIVED DATA  pos_x:{0} pos_y:{1} pos_z:{2} angle:{3}",
                     //    data.pos_x, data.pos_y, data.pos_z, data.angle);
                 }
@@ -306,6 +309,7 @@ public class MrsClient : Mrs {
             mrs_get_version( MRS_VERSION_KEY ), mrs_connection_get_remote_version( connection, MRS_VERSION_KEY ) );
         g_paytype = 0x01;
         connected = true;
+
         if ( g_IsKeyExchange ){
             mrs_set_cipher( connection, mrs_cipher_create( MrsCipherType.ECDH ) );
             mrs_key_exchange( connection, on_key_exchange );
@@ -440,13 +444,17 @@ public class MrsClient : Mrs {
     
     void Update(){
         mrs_update();
-        if (connected && !g_gameon) {
-            g_gameon = true;
-            mrs.Utility.LoadScene("SampleScene");
-        }
         if (g_gameon)
         {
+            if(g_Object == null) { g_Object = GameObject.Find("MainPlayer"); }
+            if (g_EnemyObject == null) { g_EnemyObject = GameObject.Find("Player"); }
             CompareMyData();
+        }
+        if (connected && !g_gameon) {
+            g_gameon = true;
+            if (g_Object != null) { g_Object = null; }
+            if (g_EnemyObject != null) { g_EnemyObject = null; }
+            mrs.Utility.LoadScene("ProtoScene");
         }
     }
     
@@ -465,22 +473,42 @@ public class MrsClient : Mrs {
 
     void CompareMyData()
     {
-        g_Object = GameObject.Find("MainPlayer");
-        myNewData.x = g_Object.transform.position.x;
-        myNewData.y = g_Object.transform.position.y;
-        myNewData.angle = g_Object.transform.localEulerAngles.z;
-        myNewData.bullets = g_Object.GetComponent<Player>().bullet;
-        myNewData.died = false;
-        
-        IntPtr p_data = Marshal.AllocHGlobal(Marshal.SizeOf(myNewData));
-        Marshal.StructureToPtr(myNewData, p_data, false);
-        if (g_nowconnect != null)
+        if (g_Object != null)
         {
-            g_paytype = 0x02;
-            mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)Marshal.SizeOf(myNewData));
-        }
-        Marshal.FreeHGlobal(p_data);
+            myNewData.x = g_Object.transform.position.x;
+            myNewData.y = g_Object.transform.position.y;
+            myNewData.angle = g_Object.transform.localEulerAngles.z;
+            myNewData.bullets = 1;
+            myNewData.died = false;
 
-        myData = myNewData;
+            IntPtr p_data = Marshal.AllocHGlobal(Marshal.SizeOf(myNewData));
+            Marshal.StructureToPtr(myNewData, p_data, false);
+            if (g_nowconnect != null)
+            {
+                g_paytype = 0x02;
+                mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)Marshal.SizeOf(myNewData));
+            }
+            Marshal.FreeHGlobal(p_data);
+            myData = myNewData;
+
+            PlayerInput inputScript = g_Object.GetComponent<PlayerInput>();
+            if (inputScript.InputAttack)
+            {
+                S_DataShots shot;
+                GameObject g_ShotStartObject = g_Object.transform.GetChild(0).gameObject;
+                shot.x = g_ShotStartObject.transform.position.x;
+                shot.y = g_ShotStartObject.transform.position.y;
+                shot.angle = g_ShotStartObject.transform.eulerAngles.z;
+                shot.died = false;
+                IntPtr p_shotdata = Marshal.AllocHGlobal(Marshal.SizeOf(shot));
+                Marshal.StructureToPtr(shot, p_shotdata, false);
+                if (g_nowconnect != null)
+                {
+                    g_paytype = 0x03;
+                    mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_shotdata, (uint)Marshal.SizeOf(shot));
+                }
+                Marshal.FreeHGlobal(p_shotdata);
+            }
+        }
     }
 }

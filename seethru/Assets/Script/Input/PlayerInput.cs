@@ -24,11 +24,12 @@ public class PlayerInput : MonoBehaviour
 
 	// プライベート
 	float inputMove;
-	bool inputAttack;
+    bool inputAttack;
 	bool inputAttackBuff;
 
 	Vector2 playerVector;
 
+    public bool InputAttack { get { return inputAttack; } }
 
 	// Start is called before the first frame update
 	void Start() {
