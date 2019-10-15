@@ -444,17 +444,17 @@ public class MrsClient : Mrs {
     
     void Update(){
         mrs_update();
-        if (connected && !g_gameon) {
-            g_gameon = true;
-            if (g_Object != null) { g_Object = null; }
-            if (g_EnemyObject != null) { g_EnemyObject = null; }
-            mrs.Utility.LoadScene("SampleScene");
-        }
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "SampleScene" && g_gameon)
+        if (g_gameon)
         {
             if(g_Object == null) { g_Object = GameObject.Find("MainPlayer"); }
             if (g_EnemyObject == null) { g_EnemyObject = GameObject.Find("Player"); }
             CompareMyData();
+        }
+        if (connected && !g_gameon) {
+            g_gameon = true;
+            if (g_Object != null) { g_Object = null; }
+            if (g_EnemyObject != null) { g_EnemyObject = null; }
+            mrs.Utility.LoadScene("ProtoScene");
         }
     }
     
@@ -473,40 +473,42 @@ public class MrsClient : Mrs {
 
     void CompareMyData()
     {
-        myNewData.x = g_Object.transform.position.x;
-        myNewData.y = g_Object.transform.position.y;
-        myNewData.angle = g_Object.transform.localEulerAngles.z;
-        myNewData.bullets = 1;
-        myNewData.died = false;
-        
-        IntPtr p_data = Marshal.AllocHGlobal(Marshal.SizeOf(myNewData));
-        Marshal.StructureToPtr(myNewData, p_data, false);
-        if (g_nowconnect != null)
+        if (g_Object != null)
         {
-            g_paytype = 0x02;
-            mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)Marshal.SizeOf(myNewData));
-        }
-        Marshal.FreeHGlobal(p_data);
-        myData = myNewData;
+            myNewData.x = g_Object.transform.position.x;
+            myNewData.y = g_Object.transform.position.y;
+            myNewData.angle = g_Object.transform.localEulerAngles.z;
+            myNewData.bullets = 1;
+            myNewData.died = false;
 
-        PlayerInput inputScript = g_Object.GetComponent<PlayerInput>();
-        if (inputScript.InputAttack)
-        {
-            S_DataShots shot;
-            GameObject g_ShotStartObject = g_Object.transform.GetChild(0).gameObject;
-            shot.x = g_ShotStartObject.transform.position.x;
-            shot.y = g_ShotStartObject.transform.position.y;
-            shot.angle = g_ShotStartObject.transform.eulerAngles.z;
-            shot.died = false;
-            IntPtr p_shotdata = Marshal.AllocHGlobal(Marshal.SizeOf(shot));
-            Marshal.StructureToPtr(shot, p_shotdata, false);
+            IntPtr p_data = Marshal.AllocHGlobal(Marshal.SizeOf(myNewData));
+            Marshal.StructureToPtr(myNewData, p_data, false);
             if (g_nowconnect != null)
             {
-                g_paytype = 0x03;
-                mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_shotdata, (uint)Marshal.SizeOf(shot));
+                g_paytype = 0x02;
+                mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)Marshal.SizeOf(myNewData));
             }
-            Marshal.FreeHGlobal(p_shotdata);
-        }
+            Marshal.FreeHGlobal(p_data);
+            myData = myNewData;
 
+            PlayerInput inputScript = g_Object.GetComponent<PlayerInput>();
+            if (inputScript.InputAttack)
+            {
+                S_DataShots shot;
+                GameObject g_ShotStartObject = g_Object.transform.GetChild(0).gameObject;
+                shot.x = g_ShotStartObject.transform.position.x;
+                shot.y = g_ShotStartObject.transform.position.y;
+                shot.angle = g_ShotStartObject.transform.eulerAngles.z;
+                shot.died = false;
+                IntPtr p_shotdata = Marshal.AllocHGlobal(Marshal.SizeOf(shot));
+                Marshal.StructureToPtr(shot, p_shotdata, false);
+                if (g_nowconnect != null)
+                {
+                    g_paytype = 0x03;
+                    mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_shotdata, (uint)Marshal.SizeOf(shot));
+                }
+                Marshal.FreeHGlobal(p_shotdata);
+            }
+        }
     }
 }
