@@ -9,6 +9,8 @@ public class BulletSencer : MonoBehaviour
 	[HideInInspector]
 	public bool isReflect = false;
 
+	public bool onSencer = true;
+
     // Start is called before the first frame update
     void OnEnable() {
 		reflecterList = new List<GameObject>();
@@ -16,14 +18,17 @@ public class BulletSencer : MonoBehaviour
 
     // Update is called once per frame
     void Update(){
-		GameObject reflecter = ReflecterJudgement();
+		GameObject reflecter = null;
 
-		if(reflecter == null){
-			isReflect = false;
-			return;
+		if(onSencer){
+			reflecter = ReflecterJudgement();
 		}
 
-		
+		reflecterList.Clear();
+
+		if(reflecter == null){
+			return;
+		}
     }
 
 	private void OnTriggerEnter2D(Collider2D collision) {
@@ -52,7 +57,9 @@ public class BulletSencer : MonoBehaviour
 			}
 		}
 
-
+		if(nearlyObject != null){
+			onSencer = true;
+		}
 		return nearlyObject;
 	}
 }
