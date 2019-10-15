@@ -14,6 +14,8 @@ public class Bullet : PoolObject
 	BulletGapHit gapHit;
 	ReflectionObject reflection;
 
+	public int id;
+
 
 	public override void Init() {
 		rb2d = GetComponent<Rigidbody2D>();
@@ -31,6 +33,8 @@ public class Bullet : PoolObject
 
 		gapHit = transform.GetChild(1).GetComponent<BulletGapHit>();
 		reflection = GetComponent<ReflectionObject>();
+
+		id = -1;
 	}
 
 	private void Update() {
