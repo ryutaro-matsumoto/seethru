@@ -8,6 +8,7 @@ public class PlayerInput : MonoBehaviour
 	Rigidbody2D rb2d;
 	Pool bulletPool;
 	Player player;
+    MrsClient mrsCli;
 
 	// ゲームオブジェクト
 	GameObject pointer;
@@ -41,6 +42,8 @@ public class PlayerInput : MonoBehaviour
 		player = GetComponent<Player>();
 
 		playerVector = new Vector2(0.0f, 1.0f);
+
+        mrsCli = GameObject.Find("ClientObject").GetComponent<MrsClient>();
     }
 
     // Update is called once per frame
@@ -121,6 +124,7 @@ public class PlayerInput : MonoBehaviour
 	private void Attack(){
 		if(inputAttack && !inputAttackBuff){
 			bulletPool.Place(bulletStart.transform.position, transform.rotation);
+            mrsCli.SendShootData(bulletStart.transform.position.x, bulletStart.transform.position.y, transform.rotation.z);
 		}
 		inputAttackBuff = inputAttack;
 	}
