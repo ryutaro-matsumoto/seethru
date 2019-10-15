@@ -6,42 +6,38 @@ public class GameManager : MonoBehaviour
 {
 	public bool onNetwork = false;
 
+
 	[HideInInspector]
 	private MrsClient connection;
 	public uint playerNum = 0;
-	public GameObject mainPlayer = null;
-	public GameObject[] otherPlayer;
+	public GameObject[] players;
+	public uint playID;
 	public GameObject bulletPool = null;
 
 	private void Start() {
 		connection = GameObject.Find("ClientObject").GetComponent<MrsClient>();
 
-		if(connection != null){
+		GameObject otherPlayerPrefab = (GameObject)Resources.Load("Object/OtherPlayer");
+
+		if (connection != null){
+			connection.InitMrsforGame();
 			onNetwork = true;
-			// connection.Init();
 		}
 
-		/*
-		 
-		 
-		 
-		 */
-
-
-		Debug.Assert(playerNum < 2);
-
-		otherPlayer = new GameObject[playerNum - 1];
-		
-		/*
-		 * 
-		 * 
-		 * player初期位置セット
-		 *
-		 * 
-		 *
-		 */
-
-
+		else{
+			playID = 0;
+			players[0] = Instantiate(mainPlayerPrefab);
+			for(int i = 1; i < 4; ++i){
+				players[i] = Instantiate(otherPlayerPrefab);
+			}
+		}
 	}
 
+	public GameObject InstantiateMainPlayer(uint id){
+		GameObject mainPlayerPrefab = (GameObject)Resources.Load("Object/MainPlayer");
+		players[id] = Instantiate(mainPlayerPrefab, Vector3.zero, Quaternion.identity);
+
+		playID = id;
+		return players[id];
+	}
 }
