@@ -473,7 +473,7 @@ public class MrsClient : Mrs {
 
     void CompareMyData()
     {
-        if (g_Object != null)
+        if (!g_Object.GetComponent<Player>().isDead)
         {
             myNewData.x = g_Object.transform.position.x;
             myNewData.y = g_Object.transform.position.y;
@@ -492,23 +492,31 @@ public class MrsClient : Mrs {
             myData = myNewData;
 
             PlayerInput inputScript = g_Object.GetComponent<PlayerInput>();
-            if (inputScript.InputAttack)
-            {
-                S_DataShots shot;
-                GameObject g_ShotStartObject = g_Object.transform.GetChild(0).gameObject;
-                shot.x = g_ShotStartObject.transform.position.x;
-                shot.y = g_ShotStartObject.transform.position.y;
-                shot.angle = g_ShotStartObject.transform.eulerAngles.z;
-                shot.died = false;
-                IntPtr p_shotdata = Marshal.AllocHGlobal(Marshal.SizeOf(shot));
-                Marshal.StructureToPtr(shot, p_shotdata, false);
-                if (g_nowconnect != null)
-                {
-                    g_paytype = 0x03;
-                    mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_shotdata, (uint)Marshal.SizeOf(shot));
-                }
-                Marshal.FreeHGlobal(p_shotdata);
-            }
+
         }
+    }
+
+    /// <summary>
+    /// 弾情報の送信（発射時に呼び出してくれればOK）
+    /// </summary>
+    /// <param name="_x">座標Ｘ</param>
+    /// <param name="_y">座標Ｙ</param>
+    /// <param name="_angle">発射角度</param>
+    public void SendShootData(float _x, float _y, float _angle)
+    {
+        S_DataShots shot;
+        shot.x = _x;
+        shot.y = _y;
+        shot.angle = _angle;
+        shot.died = false;
+
+        IntPtr p_shotdata = Marshal.AllocHGlobal(Marshal.SizeOf(shot));
+        Marshal.StructureToPtr(shot, p_shotdata, false);
+        if (g_nowconnect != null)
+        {
+            g_paytype = 0x03;
+            mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_shotdata, (uint)Marshal.SizeOf(shot));
+        }
+        Marshal.FreeHGlobal(p_shotdata);
     }
 }
