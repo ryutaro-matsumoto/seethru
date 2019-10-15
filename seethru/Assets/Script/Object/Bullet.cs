@@ -4,46 +4,42 @@ using UnityEngine;
 
 public class Bullet : PoolObject
 {
-	private float angleRad;
-
-	public float moveSpeed = 10.0f;
-	public int reflect = 2;
+	private float angle;
 
 	Rigidbody2D rb2d;
+	Timer td;
 
-	TimeDestroy td;
+	public float moveSpeed = 10.0f;
+
+	BulletGapHit gapHit;
+	ReflectionObject reflection;
+
 
 	public override void Init() {
 		rb2d = GetComponent<Rigidbody2D>();
-		angleRad = (transform.rotation.eulerAngles.z + 90f) * Mathf.Deg2Rad;
-
-		Debug.Log("eulerAngle " + transform.rotation.eulerAngles.z);
+		angle = transform.rotation.eulerAngles.z + 90f;
 
 		Vector2 moveVector = Vector2.zero;
 
-		moveVector.x = moveSpeed * Mathf.Cos(angleRad);
-		moveVector.y = moveSpeed * Mathf.Sin(angleRad);
+		moveVector.x = moveSpeed * Mathf.Cos(angle * Mathf.Deg2Rad);
+		moveVector.y = moveSpeed * Mathf.Sin(angle * Mathf.Deg2Rad);
 
-		rb2d.AddForce(moveVector);
+		rb2d.velocity = moveVector;
 
-		td = GetComponent<TimeDestroy>();
+		td = GetComponent<Timer>();
 		td.TimeStart();
+
+		gapHit = transform.GetChild(1).GetComponent<BulletGapHit>();
+		reflection = GetComponent<ReflectionObject>();
 	}
 
-	private void FixedUpdate() {
+	private void Update() {
+		angle = transform.eulerAngles.z - 90f;
 		if(td.timeUp){
 			ReturnToPool();
 		}
-	}
 
-	private void OnCollisionEnter2D(Collision2D collision) {
-		if(collision.gameObject.tag == "Gap"){
-			HitEffect();
-			return;
-		}
-
-		reflect--;
-		if(reflect < 0){
+		if(gapHit.GapHit||reflection.isDead){
 			HitEffect();
 		}
 	}

@@ -182,6 +182,8 @@ MonoBehaviour:
   angle: 0
   bullet: 3
   attackStop: 0
+  coolTime: 1
+  isReload: 0
   isDead: 0
 --- !u!50 &9054932993696119135
 Rigidbody2D:
@@ -196,7 +198,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 2
   m_AngularDrag: 10
   m_GravityScale: 0
   m_Material: {fileID: 0}

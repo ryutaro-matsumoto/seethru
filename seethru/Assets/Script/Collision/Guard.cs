@@ -22,13 +22,13 @@ public class Guard : MonoBehaviour
 
 	void SetGuard(){
 		for(int i = 0; i < 4; i++){
-			transform.GetChild(i).gameObject.SetActive(false);
-			transform.GetChild(i).GetComponent<BoxCollider2D>().enabled = false; ;
+			transform.GetChild(0).GetChild(i).gameObject.SetActive(false);
+			transform.GetChild(0).GetChild(i).GetComponent<BoxCollider2D>().enabled = false;
 		}
 
 		for (int i = 0; i < typeArray.Length; i++){
-			transform.GetChild((int)typeArray[i]).gameObject.SetActive(true);
-			transform.GetChild((int)typeArray[i]).GetComponent<BoxCollider2D>().enabled = true;
+			transform.GetChild(0).GetChild((int)typeArray[i]).gameObject.SetActive(true);
+			transform.GetChild(0).GetChild((int)typeArray[i]).GetComponent<BoxCollider2D>().enabled = true;
 		}
 	}
 }
