@@ -124,7 +124,7 @@ public class PlayerInput : MonoBehaviour
 	private void Attack(){
 		if(inputAttack && !inputAttackBuff){
 			bulletPool.Place(bulletStart.transform.position, transform.rotation);
-            mrsCli.SendShootData(bulletStart.transform.position.x, bulletStart.transform.position.y, transform.rotation.z);
+            mrsCli.SendShootData(bulletStart.transform.position.x, bulletStart.transform.position.y, transform.eulerAngles.z);
 		}
 		inputAttackBuff = inputAttack;
 	}
