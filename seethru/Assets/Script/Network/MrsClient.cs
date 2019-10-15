@@ -167,6 +167,13 @@ public class MrsClient : Mrs {
         }
     }
 
+    public void InitMrsforGame()
+    {
+        g_Object = GameObject.Find("MainPlayer");
+        g_EnemyObject = GameObject.Find("Player");
+        
+    }
+
     private void InitMyData()
     {
         myData.x = 0;
@@ -213,7 +220,7 @@ public class MrsClient : Mrs {
     }
     
     private static void parse_record( MrsConnection connection, IntPtr connection_data, UInt32 seqnum, UInt16 options, UInt16 payload_type, IntPtr payload, UInt32 payload_len ){
-        MRS_LOG_DEBUG( "parse_record seqnum={0} options=0x{1:X2} payload=0x{2:X2}/{3}", seqnum, options, payload_type, payload_len );
+        //MRS_LOG_DEBUG( "parse_record seqnum={0} options=0x{1:X2} payload=0x{2:X2}/{3}", seqnum, options, payload_type, payload_len );
         // MRS_PAYLOAD_TYPE_BEGIN - MRS_PAYLOAD_TYPE_ENDの範囲内で任意のIDを定義し、対応するアプリケーションコードを記述する
         switch ( payload_type ){
         case 0x01:{
@@ -221,7 +228,7 @@ public class MrsClient : Mrs {
         }break;
             case 0x02:
                 {
-                    MRS_LOG_DEBUG("RECEIVED DATA:{0}", payload);
+                    //MRS_LOG_DEBUG("RECEIVED DATA:{0}", payload);
                     S_DataPlayer data = (S_DataPlayer)Marshal.PtrToStructure(payload, typeof(S_DataPlayer));
                     if (g_EnemyObject != null)
                     {
@@ -233,12 +240,12 @@ public class MrsClient : Mrs {
                 }break;
             case 0x03:
                 {
-                    MRS_LOG_DEBUG("RECEIVED DATA:{0}", payload);
+                    //MRS_LOG_DEBUG("RECEIVED DATA:{0}", payload);
                     S_DataShots data = (S_DataShots)Marshal.PtrToStructure(payload, typeof(S_DataShots));
                     GameObject bulletPool = GameObject.Find("BulletPool");
                     Pool script = bulletPool.GetComponent<Pool>();
-                    
-                    script.Place(new Vector2(data.x, data.y), Quaternion.AngleAxis(data.angle,Vector3.forward));
+
+                    script.Place(new Vector2(data.x, data.y), Quaternion.AngleAxis(data.angle, Vector3.forward));
                     //MRS_LOG_DEBUG("RECEIVED DATA  pos_x:{0} pos_y:{1} pos_z:{2} angle:{3}",
                     //    data.pos_x, data.pos_y, data.pos_z, data.angle);
                 }
@@ -447,8 +454,11 @@ public class MrsClient : Mrs {
         mrs_update();
         if (g_gameon)
         {
+            // ProtoSceneの初期化でInitMrsforGame()が呼び出されれば不要
             if(g_Object == null) { g_Object = GameObject.Find("MainPlayer"); }
             if (g_EnemyObject == null) { g_EnemyObject = GameObject.Find("Player"); }
+
+
             CompareMyData();
         }
         if (connected && !g_gameon) {
