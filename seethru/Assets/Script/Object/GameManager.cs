@@ -18,19 +18,6 @@ public class GameManager : MonoBehaviour
 		connection = GameObject.Find("ClientObject").GetComponent<MrsClient>();
 
 		GameObject otherPlayerPrefab = (GameObject)Resources.Load("Object/OtherPlayer");
-
-		if (connection != null){
-			connection.InitMrsforGame();
-			onNetwork = true;
-		}
-
-		else{
-			playID = 0;
-			players[0] = Instantiate(mainPlayerPrefab);
-			for(int i = 1; i < 4; ++i){
-				players[i] = Instantiate(otherPlayerPrefab);
-			}
-		}
 	}
 
 	public GameObject InstantiateMainPlayer(uint id){
