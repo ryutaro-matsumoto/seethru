@@ -4,6 +4,8 @@ using System;
 using System.Runtime.InteropServices;
 using DataStructures;
 
+using UnityEngine.SceneManagement;
+
 using MrsServer = System.IntPtr;
 using MrsConnection = System.IntPtr;
 using MrsCipher = System.IntPtr;
@@ -47,7 +49,8 @@ public class MrsClient : Mrs {
     private static bool g_gameon;
     private static bool createMrs;
 
-    private static bool on_gui = false;
+    protected static string g_playerName;
+
     
     static MrsClient()
     {
@@ -97,87 +100,91 @@ public class MrsClient : Mrs {
 
     }
 
-    
+#if false
     void OnGUI()
     {
-        if (on_gui)
+        if (!m_IsRunning)
         {
-            if (!m_IsRunning)
+            GUILayout.Space(30);
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("ServerAddr:");
+            g_ArgServerAddr = GUILayout.TextField(g_ArgServerAddr);
+            GUILayout.Space(30);
+            GUILayout.Label("ServerPort:");
+            g_ArgServerPort = GUILayout.TextField(g_ArgServerPort);
+            GUILayout.Space(30);
+            GUILayout.Label("TimeoutMsec:");
+            g_ArgTimeoutMsec = GUILayout.TextField(g_ArgTimeoutMsec);
+            GUILayout.EndHorizontal();
+            GUILayout.Space(60);
+
+            if (GUILayout.Button("Start Game", GUILayout.Width(300), GUILayout.Height(80)))
             {
-                GUILayout.Space(30);
-
-                GUILayout.BeginHorizontal();
-                GUILayout.Label("ServerAddr:");
-                g_ArgServerAddr = GUILayout.TextField(g_ArgServerAddr);
-                GUILayout.Space(30);
-                GUILayout.Label("ServerPort:");
-                g_ArgServerPort = GUILayout.TextField(g_ArgServerPort);
-                GUILayout.Space(30);
-                GUILayout.Label("TimeoutMsec:");
-                g_ArgTimeoutMsec = GUILayout.TextField(g_ArgTimeoutMsec);
-                GUILayout.EndHorizontal();
-                GUILayout.Space(60);
-
-                if (GUILayout.Button("Start Game", GUILayout.Width(300), GUILayout.Height(80)))
-                {
-                    m_IsRunning = true;
-                    StartEchoClient();
-                    //mrs.Utility.LoadScene("SampleScene");
-                }
+                m_IsRunning = true;
+                StartEchoClient();
+                //mrs.Utility.LoadScene("SampleScene");
             }
-            else
+        }
+        else
+        {
+            if (GUILayout.Button("Back", GUILayout.Width(300), GUILayout.Height(50)))
             {
-                if (GUILayout.Button("Back", GUILayout.Width(300), GUILayout.Height(50)))
-                {
-                    m_IsRunning = false;
-                    mrs_close(g_nowconnect);
-                    mrs.Utility.LoadScene("NetworkSetting");
-                }
+                m_IsRunning = false;
+                mrs_close(g_nowconnect);
+                mrs.Utility.LoadScene("NetworkSetting");
+            }
 
-                if (GUILayout.Button("Send Player Data", GUILayout.Width(300), GUILayout.Height(50)))
+            if (GUILayout.Button("Send Player Data", GUILayout.Width(300), GUILayout.Height(50)))
+            {
+                g_Object = GameObject.Find("MainPlayer");
+                S_DataPlayer player = new S_DataPlayer();
+                player.x = g_Object.transform.position.x;
+                player.y = g_Object.transform.position.y;
+                player.angle = g_Object.transform.localEulerAngles.z;
+                player.bullets = g_Object.GetComponent<Player>().bullet;
+                player.died = false;
+                IntPtr p_data = Marshal.AllocHGlobal(Marshal.SizeOf(player));
+                Marshal.StructureToPtr(player, p_data, false);
+                if (g_nowconnect != null)
                 {
-                    g_Object = GameObject.Find("MainPlayer");
-                    S_DataPlayer player = new S_DataPlayer();
-                    player.x = g_Object.transform.position.x;
-                    player.y = g_Object.transform.position.y;
-                    player.angle = g_Object.transform.localEulerAngles.z;
-                    player.bullets = g_Object.GetComponent<Player>().bullet;
-                    player.died = false;
-                    IntPtr p_data = Marshal.AllocHGlobal(Marshal.SizeOf(player));
-                    Marshal.StructureToPtr(player, p_data, false);
-                    if (g_nowconnect != null)
-                    {
-                        g_paytype = 0x02;
-                        mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)Marshal.SizeOf(player));
-                    }
-                    Marshal.FreeHGlobal(p_data);
+                    g_paytype = 0x02;
+                    mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)Marshal.SizeOf(player));
                 }
+                Marshal.FreeHGlobal(p_data);
+            }
 
-                if (GUILayout.Button("Send Shot Data", GUILayout.Width(300), GUILayout.Height(50)))
+            if (GUILayout.Button("Send Shot Data", GUILayout.Width(300), GUILayout.Height(50)))
+            {
+
+                S_DataShots shot = new S_DataShots();
+                shot.x = movepos;
+                shot.y = 1.0f;
+                shot.angle = angle;
+                IntPtr p_data = Marshal.AllocHGlobal(Marshal.SizeOf(shot));
+                Marshal.StructureToPtr(shot, p_data, false);
+                if (g_nowconnect != null)
                 {
-
-                    S_DataShots shot = new S_DataShots();
-                    shot.x = movepos;
-                    shot.y = 1.0f;
-                    shot.angle = angle;
-                    IntPtr p_data = Marshal.AllocHGlobal(Marshal.SizeOf(shot));
-                    Marshal.StructureToPtr(shot, p_data, false);
-                    if (g_nowconnect != null)
-                    {
-                        g_paytype = 0x03;
-                        mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)Marshal.SizeOf(shot));
-                    }
-                    Marshal.FreeHGlobal(p_data);
+                    g_paytype = 0x03;
+                    mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)Marshal.SizeOf(shot));
                 }
+                Marshal.FreeHGlobal(p_data);
             }
         }
     }
+#endif
 
+    /// <summary>
+    /// ゲームが始まった時用のイニシャライズ
+    /// </summary>
     public void InitMrsforGame()
     {
+        SceneManager.LoadScene("ProtoScene");
+
         g_Object = GameObject.Find("MainPlayer");
         g_EnemyObject = GameObject.Find("Player");
-        
+
+        g_gameon = true;
     }
 
     private void InitMyData()
@@ -330,6 +337,8 @@ public class MrsClient : Mrs {
         }else{
             //write_echo_all( connection );
         }
+
+        mrs.Utility.LoadScene("MatchRoom");
     }
     
     // ソケット切断時に呼ばれる
@@ -460,18 +469,15 @@ public class MrsClient : Mrs {
         mrs_update();
         if (g_gameon)
         {
-            // ProtoSceneの初期化でInitMrsforGame()が呼び出されれば不要
-            if(g_Object == null) { g_Object = GameObject.Find("MainPlayer"); }
+            if (g_Object == null) { g_Object = GameObject.Find("MainPlayer"); }
             if (g_EnemyObject == null) { g_EnemyObject = GameObject.Find("Player"); }
-
-
             CompareMyData();
         }
         if (connected && !g_gameon) {
-            g_gameon = true;
+            //g_gameon = true;
             if (g_Object != null) { g_Object = null; }
             if (g_EnemyObject != null) { g_EnemyObject = null; }
-            mrs.Utility.LoadScene("ProtoScene");
+            //mrs.Utility.LoadScene("ProtoScene");
         }
     }
     
@@ -535,5 +541,15 @@ public class MrsClient : Mrs {
             mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_shotdata, (uint)Marshal.SizeOf(shot));
         }
         Marshal.FreeHGlobal(p_shotdata);
+    }
+
+    /// <summary>
+    /// 接続に必要な情報を外部からセット
+    /// </summary>
+    /// <param name="_ip">IPアドレス</param>
+    public void SetSettings(string _ip, string _name)
+    {
+        g_playerName = _name;
+        g_ArgServerAddr = _ip;
     }
 }

@@ -2,49 +2,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class NetworkSetting : MonoBehaviour
 {
-    public string ipAddress = "192.168.252.124";
-    public string portNummber = "22222";
+    string ipAddress = "127.0.0.1";
+    string playerName = "Anonymous";
+
+    // コンポーネント
+    public MrsClient mrsClient;
+    public InputField inputAddr;
+    public InputField inputName;
 
 
-
-    //private void OnGUI()
-    //{
-    //    if (!try2connect)
-    //    {
-    //        if (netsettings != null) { netsettings = null; } 
-    //        GUILayout.Space(30);
-
-    //        GUILayout.BeginHorizontal();
-    //        GUILayout.Label("ServerAddr:");
-    //        g_ArgServerAddr = GUILayout.TextField(g_ArgServerAddr);
-    //        GUILayout.Space(30);
-    //        GUILayout.Label("ServerPort:");
-    //        g_ArgServerPort = GUILayout.TextField(g_ArgServerPort);
-    //        GUILayout.Space(30);
-    //        GUILayout.Label("TimeoutMsec:");
-    //        g_ArgTimeoutMsec = GUILayout.TextField(g_ArgTimeoutMsec);
-    //        GUILayout.EndHorizontal();
-    //        GUILayout.Space(60);
-
-    //        if (GUILayout.Button("Start Game", GUILayout.Width(300), GUILayout.Height(80)))
-    //        {
-    //            MrsClient client = gameObject.GetComponent<MrsClient>();
-    //            netsettings = new NetworkSettingData();
-    //            try2connect = true;
-    //            trytime = Int32.Parse(g_ArgTimeoutMsec)+500;
-    //            client.StartEchoClient();
-    //            //mrs.Utility.LoadScene("SampleScene");
-    //        }
-    //    }
-    //    else
-    //    {
-    //        GUILayout.TextArea("Connecting ...");
-    //    }
-    //}
+    private void Start()
+    {
+    }
 
     void End()
     {
@@ -61,4 +35,24 @@ public class NetworkSetting : MonoBehaviour
 
     }
 
+    public void JoinServer()
+    {
+        this.gameObject.SetActive(false);
+
+        mrsClient = mrsClient.GetComponent<MrsClient>();
+        mrsClient.SetSettings(ipAddress, playerName);
+        mrsClient.StartEchoClient();
+
+        this.gameObject.SetActive(true);
+    }
+
+    public void SetAddress()
+    {
+        ipAddress = inputAddr.text;
+    }
+
+    public void SetName()
+    {
+        playerName = inputName.text;
+    }
 }
