@@ -10,6 +10,7 @@ TagManager:
   - Reflecter
   - ReflectObject
   - StartPosition
+  - Floor
   layers:
   - Default
   - TransparentFX
