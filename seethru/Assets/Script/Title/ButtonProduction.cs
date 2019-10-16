@@ -9,22 +9,14 @@
 //------------------------------------------------------------------------------
 using System.Collections;
 using System.Collections.Generic;
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-//------------------------------------------------------------------------------
-// ButtonSystem class.
-//------------------------------------------------------------------------------
 [RequireComponent(typeof(Image))]
-public class ButtonSystem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ButtonProduction : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    // カーソルImage
     public Image image { get { return GetComponent<Image>(); } }
-
-    // 選択SE
-    public AudioSource selectSound;
 
     //===========================================================
     // OnPointerEnter function.
@@ -33,9 +25,9 @@ public class ButtonSystem : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     //===========================================================
     public void OnPointerEnter(PointerEventData eventData)
     {
-       // image.color = Color.white;
-        image.color = new Color(1.0f, 1.0f, 1.0f, 0.3f);
-        selectSound.PlayOneShot(selectSound.clip);
+        // image.color = Color.white;
+        image.color = new Color(0.6f, 1.0f, 1.0f, 1.0f);
+
     }
 
     //===========================================================
@@ -45,21 +37,19 @@ public class ButtonSystem : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     //===========================================================
     public void OnPointerExit(PointerEventData eventData)
     {
-        image.color = Color.clear;
+        image.color = Color.white;
 
     }
 
-    //------------------------------------------------------------------------------
-    // start function.
-    //------------------------------------------------------------------------------
+    // Start is called before the first frame update
     void Start()
     {
+        
     }
 
-    //------------------------------------------------------------------------------
-    // update function.
-    //------------------------------------------------------------------------------
+    // Update is called once per frame
     void Update()
     {
+        
     }
 }

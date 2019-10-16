@@ -10,24 +10,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 //------------------------------------------------------------------------------
-// TitleSystem class.
+// ResultSystem class.
 //------------------------------------------------------------------------------
-public class TitleSystem : MonoBehaviour
+public class ResultSystem : MonoBehaviour
 {
     // 決定SE
     public AudioSource ClickEnter;
+    // リザルトメインBGM
+    public AudioSource resultSound;
+    // ウィンドウSE
+    public AudioSource resultmenuSound;
+
+    // スタート時BGM/SE再生
+    IEnumerator playSound()
+    {
+        yield return new WaitForSeconds(0.1f);
+        resultmenuSound.PlayOneShot(resultmenuSound.clip);
+        yield return new WaitForSeconds(1f);
+        resultSound.PlayOneShot(resultSound.clip);
+    }
 
     //------------------------------------------------------------------------------
     // start function.
     //------------------------------------------------------------------------------
     void Start()
     {
-        // フェードイン
-        FadeManeger.Fadein();
+        StartCoroutine(playSound());
     }
 
     //------------------------------------------------------------------------------
@@ -35,41 +45,28 @@ public class TitleSystem : MonoBehaviour
     //------------------------------------------------------------------------------
     void Update()
     {
-
+        
     }
 
     //===========================================================
-    // Quit function.
+    // ClickRoomBack function.
     //
-    // @note：ゲーム終了
+    // @note：「ルームに戻る」ボタンをクリック時処理
     //===========================================================
-    void Quit()
-    {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#elif UNITY_STANDALONE
-        UnityEngine.Application.Quit();
-#endif
-    }
-
-    //===========================================================
-    // ClickGameStartButton function.
-    //
-    // @note：「Game Start」ボタンをクリック時処理
-    //===========================================================
-    public void ClickGameStartButton()
+    public void ClickRoomBack()
     {
         ClickEnter.PlayOneShot(ClickEnter.clip);
-        FadeManeger.Fadeout("NetworkSetting");
+        FadeManeger.Fadeout("ResultScene");
     }
 
     //===========================================================
     // ClickExitButton function.
     //
-    // @note：「Exit」ボタンをクリック時処理
+    // @note：「ルームからでる」ボタンをクリック時処理
     //===========================================================
-    public void ClickExitButton()
+    public void ClickRoomExit()
     {
-        Quit();
+        ClickEnter.PlayOneShot(ClickEnter.clip);
+        FadeManeger.Fadeout("TitleScene");
     }
 }
