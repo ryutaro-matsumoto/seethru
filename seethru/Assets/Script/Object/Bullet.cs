@@ -16,6 +16,7 @@ public class Bullet : PoolObject
 
 	public int id;
 
+	TrailRenderer tr;
 
 	public override void Init() {
 		rb2d = GetComponent<Rigidbody2D>();
@@ -31,8 +32,12 @@ public class Bullet : PoolObject
 		td = GetComponent<Timer>();
 		td.TimeStart();
 
-		gapHit = transform.GetChild(1).GetComponent<BulletGapHit>();
+		gapHit = GetComponent<BulletGapHit>();
 		reflection = GetComponent<ReflectionObject>();
+
+		tr = transform.GetChild(0).GetComponent<TrailRenderer>();
+
+		tr.Clear();
 
 		id = -1;
 	}
