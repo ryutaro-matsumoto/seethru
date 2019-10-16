@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ReflectionObject : MonoBehaviour {
 	Rigidbody2D rigidbody2d;
-	BoxCollider2D boxCollider;
 	[SerializeField]
 	public int reflect;
 
@@ -16,7 +15,6 @@ public class ReflectionObject : MonoBehaviour {
 	void OnEnable() {
 		isDead = false;
 		rigidbody2d = GetComponent<Rigidbody2D>();
-		boxCollider = GetComponent<BoxCollider2D>();
 		reflect = startReflect;
 	}
 
