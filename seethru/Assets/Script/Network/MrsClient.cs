@@ -46,6 +46,8 @@ public class MrsClient : Mrs {
     private static bool connected;
     private static bool g_gameon;
     private static bool createMrs;
+
+    private static bool on_gui = false;
     
     static MrsClient()
     {
@@ -95,74 +97,78 @@ public class MrsClient : Mrs {
 
     }
 
+    
     void OnGUI()
     {
-        if (!m_IsRunning)
+        if (on_gui)
         {
-            GUILayout.Space(30);
-
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("ServerAddr:");
-            g_ArgServerAddr = GUILayout.TextField(g_ArgServerAddr);
-            GUILayout.Space(30);
-            GUILayout.Label("ServerPort:");
-            g_ArgServerPort = GUILayout.TextField(g_ArgServerPort);
-            GUILayout.Space(30);
-            GUILayout.Label("TimeoutMsec:");
-            g_ArgTimeoutMsec = GUILayout.TextField(g_ArgTimeoutMsec);
-            GUILayout.EndHorizontal();
-            GUILayout.Space(60);
-
-            if (GUILayout.Button("Start Game", GUILayout.Width(300), GUILayout.Height(80)))
+            if (!m_IsRunning)
             {
-                m_IsRunning = true;
-                StartEchoClient();
-                //mrs.Utility.LoadScene("SampleScene");
-            }
-        }
-        else
-        {
-            if (GUILayout.Button("Back", GUILayout.Width(300), GUILayout.Height(50)))
-            {
-                m_IsRunning = false;
-                mrs_close(g_nowconnect);
-                mrs.Utility.LoadScene("NetworkSetting");
-            }
+                GUILayout.Space(30);
 
-            if (GUILayout.Button("Send Player Data", GUILayout.Width(300), GUILayout.Height(50)))
-            {
-                g_Object = GameObject.Find("MainPlayer");
-                S_DataPlayer player = new S_DataPlayer();
-                player.x = g_Object.transform.position.x;
-                player.y = g_Object.transform.position.y;
-                player.angle = g_Object.transform.localEulerAngles.z;
-                player.bullets = g_Object.GetComponent<Player>().bullet;
-                player.died = false;
-                IntPtr p_data = Marshal.AllocHGlobal(Marshal.SizeOf(player));
-                Marshal.StructureToPtr(player, p_data, false);
-                if (g_nowconnect != null)
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("ServerAddr:");
+                g_ArgServerAddr = GUILayout.TextField(g_ArgServerAddr);
+                GUILayout.Space(30);
+                GUILayout.Label("ServerPort:");
+                g_ArgServerPort = GUILayout.TextField(g_ArgServerPort);
+                GUILayout.Space(30);
+                GUILayout.Label("TimeoutMsec:");
+                g_ArgTimeoutMsec = GUILayout.TextField(g_ArgTimeoutMsec);
+                GUILayout.EndHorizontal();
+                GUILayout.Space(60);
+
+                if (GUILayout.Button("Start Game", GUILayout.Width(300), GUILayout.Height(80)))
                 {
-                    g_paytype = 0x02;
-                    mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)Marshal.SizeOf(player));
+                    m_IsRunning = true;
+                    StartEchoClient();
+                    //mrs.Utility.LoadScene("SampleScene");
                 }
-                Marshal.FreeHGlobal(p_data);
             }
-
-            if (GUILayout.Button("Send Shot Data", GUILayout.Width(300), GUILayout.Height(50)))
+            else
             {
-
-                S_DataShots shot = new S_DataShots();
-                shot.x = movepos;
-                shot.y = 1.0f;
-                shot.angle = angle;
-                IntPtr p_data = Marshal.AllocHGlobal(Marshal.SizeOf(shot));
-                Marshal.StructureToPtr(shot, p_data, false);
-                if (g_nowconnect != null)
+                if (GUILayout.Button("Back", GUILayout.Width(300), GUILayout.Height(50)))
                 {
-                    g_paytype = 0x03;
-                    mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)Marshal.SizeOf(shot));
+                    m_IsRunning = false;
+                    mrs_close(g_nowconnect);
+                    mrs.Utility.LoadScene("NetworkSetting");
                 }
-                Marshal.FreeHGlobal(p_data);
+
+                if (GUILayout.Button("Send Player Data", GUILayout.Width(300), GUILayout.Height(50)))
+                {
+                    g_Object = GameObject.Find("MainPlayer");
+                    S_DataPlayer player = new S_DataPlayer();
+                    player.x = g_Object.transform.position.x;
+                    player.y = g_Object.transform.position.y;
+                    player.angle = g_Object.transform.localEulerAngles.z;
+                    player.bullets = g_Object.GetComponent<Player>().bullet;
+                    player.died = false;
+                    IntPtr p_data = Marshal.AllocHGlobal(Marshal.SizeOf(player));
+                    Marshal.StructureToPtr(player, p_data, false);
+                    if (g_nowconnect != null)
+                    {
+                        g_paytype = 0x02;
+                        mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)Marshal.SizeOf(player));
+                    }
+                    Marshal.FreeHGlobal(p_data);
+                }
+
+                if (GUILayout.Button("Send Shot Data", GUILayout.Width(300), GUILayout.Height(50)))
+                {
+
+                    S_DataShots shot = new S_DataShots();
+                    shot.x = movepos;
+                    shot.y = 1.0f;
+                    shot.angle = angle;
+                    IntPtr p_data = Marshal.AllocHGlobal(Marshal.SizeOf(shot));
+                    Marshal.StructureToPtr(shot, p_data, false);
+                    if (g_nowconnect != null)
+                    {
+                        g_paytype = 0x03;
+                        mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)Marshal.SizeOf(shot));
+                    }
+                    Marshal.FreeHGlobal(p_data);
+                }
             }
         }
     }
