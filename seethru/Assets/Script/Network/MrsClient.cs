@@ -4,6 +4,8 @@ using System;
 using System.Runtime.InteropServices;
 using DataStructures;
 
+using UnityEngine.SceneManagement;
+
 using MrsServer = System.IntPtr;
 using MrsConnection = System.IntPtr;
 using MrsCipher = System.IntPtr;
@@ -46,6 +48,9 @@ public class MrsClient : Mrs {
     private static bool connected;
     private static bool g_gameon;
     private static bool createMrs;
+
+    protected static string g_playerName;
+
     
     static MrsClient()
     {
@@ -95,6 +100,7 @@ public class MrsClient : Mrs {
 
     }
 
+#if false
     void OnGUI()
     {
         if (!m_IsRunning)
@@ -166,12 +172,19 @@ public class MrsClient : Mrs {
             }
         }
     }
+#endif
 
+    /// <summary>
+    /// ゲームが始まった時用のイニシャライズ
+    /// </summary>
     public void InitMrsforGame()
     {
+        SceneManager.LoadScene("ProtoScene");
+
         g_Object = GameObject.Find("MainPlayer");
         g_EnemyObject = GameObject.Find("Player");
-        
+
+        g_gameon = true;
     }
 
     private void InitMyData()
@@ -324,6 +337,8 @@ public class MrsClient : Mrs {
         }else{
             //write_echo_all( connection );
         }
+
+        mrs.Utility.LoadScene("MatchRoom");
     }
     
     // ソケット切断時に呼ばれる
@@ -454,18 +469,15 @@ public class MrsClient : Mrs {
         mrs_update();
         if (g_gameon)
         {
-            // ProtoSceneの初期化でInitMrsforGame()が呼び出されれば不要
-            if(g_Object == null) { g_Object = GameObject.Find("MainPlayer"); }
+            if (g_Object == null) { g_Object = GameObject.Find("MainPlayer"); }
             if (g_EnemyObject == null) { g_EnemyObject = GameObject.Find("Player"); }
-
-
             CompareMyData();
         }
         if (connected && !g_gameon) {
-            g_gameon = true;
+            //g_gameon = true;
             if (g_Object != null) { g_Object = null; }
             if (g_EnemyObject != null) { g_EnemyObject = null; }
-            mrs.Utility.LoadScene("ProtoScene");
+            //mrs.Utility.LoadScene("ProtoScene");
         }
     }
     
@@ -529,5 +541,15 @@ public class MrsClient : Mrs {
             mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_shotdata, (uint)Marshal.SizeOf(shot));
         }
         Marshal.FreeHGlobal(p_shotdata);
+    }
+
+    /// <summary>
+    /// 接続に必要な情報を外部からセット
+    /// </summary>
+    /// <param name="_ip">IPアドレス</param>
+    public void SetSettings(string _ip, string _name)
+    {
+        g_playerName = _name;
+        g_ArgServerAddr = _ip;
     }
 }
