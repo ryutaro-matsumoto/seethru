@@ -1,30 +1,66 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class GameManager : MonoBehaviour
 {
-	public bool onNetwork = false;
+	static public bool onNetwork = false;
 
+	static private MrsClient connection;
+	static public uint playerNum = 0;
+	static public GameObject[] players;
+	static public uint playID;
+	static public GameObject bulletPool = null;
 
-	[HideInInspector]
-	private MrsClient connection;
-	public uint playerNum = 0;
-	public GameObject[] players;
-	public uint playID;
-	public GameObject bulletPool = null;
+	static public string stageName = "Stage";
 
-	private void Start() {
-		connection = GameObject.Find("ClientObject").GetComponent<MrsClient>();
-
-		GameObject otherPlayerPrefab = (GameObject)Resources.Load("Object/OtherPlayer");
+	private void Awake() {
+		DontDestroyOnLoad(this);
 	}
 
-	public GameObject InstantiateMainPlayer(uint id){
-		GameObject mainPlayerPrefab = (GameObject)Resources.Load("Object/MainPlayer");
-		players[id] = Instantiate(mainPlayerPrefab, Vector3.zero, Quaternion.identity);
-
+	static public void ReceiveID(uint id){
 		playID = id;
-		return players[id];
+	}
+
+	static public void GameStart(uint _stageId, uint[] _tabelIds, uint _playerNum){
+		StageSceneTranslation(_stageId);
+		PlayersInit(_tabelIds, _playerNum);
+	}
+
+	static public void ProtoStart(uint[] _tabelIds, uint _playerNum) {
+		ProtoStageSceneTranslation();
+		PlayersInit(_tabelIds, _playerNum);
+	}
+
+	static private void ProtoStageSceneTranslation(){
+		SceneManager.LoadScene("ProtoScene");
+	}
+
+	static private void StageSceneTranslation(uint _stageId){
+		SceneManager.LoadScene(stageName + _stageId);
+	}
+
+	static private void PlayersInit(uint[] _tableIds, uint _playerNum){
+		if(_tableIds.Length > _playerNum) {
+			Debug.LogError("Too many table IDs");
+			return;
+		}
+
+		playerNum = _playerNum;
+
+		GameObject[] startPositions = GameObject.FindGameObjectsWithTag("StartPosition");
+
+		GameObject otherPlayerPrefab = (GameObject)Resources.Load("Object/OtherPlayer");
+		GameObject mainPlayerPrefab = (GameObject)Resources.Load("Object/MainPlayer");
+		
+		for (int i = 0; i < playerNum; ++i){
+			if(i == playID){
+				players[i] = MonoBehaviour.Instantiate(mainPlayerPrefab, startPositions[_tableIds[i]].transform.position, startPositions[_tableIds[i]].transform.rotation);
+				continue;
+			}
+			players[i] = MonoBehaviour.Instantiate(mainPlayerPrefab, startPositions[_tableIds[i]].transform.position, startPositions[_tableIds[i]].transform.rotation);
+		}
 	}
 }
