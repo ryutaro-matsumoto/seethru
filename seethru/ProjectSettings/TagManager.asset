@@ -9,6 +9,7 @@ TagManager:
   - Bullet
   - Reflecter
   - ReflectObject
+  - StartPosition
   layers:
   - Default
   - TransparentFX
