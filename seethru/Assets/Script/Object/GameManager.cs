@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+
 	static public bool onNetwork = false;
 
 	static private MrsClient connection;
@@ -15,6 +16,8 @@ public class GameManager : MonoBehaviour
 	static public GameObject bulletPool = null;
 
 	static public string stageName = "Stage";
+
+	static private uint[] startPositonIDTable;	
 
 	private void Awake() {
 		DontDestroyOnLoad(this);
@@ -26,12 +29,16 @@ public class GameManager : MonoBehaviour
 
 	static public void GameStart(uint _stageId, uint[] _tabelIds, uint _playerNum){
 		StageSceneTranslation(_stageId);
-		PlayersInit(_tabelIds, _playerNum);
+		playerNum = _playerNum;
+		startPositonIDTable = _tabelIds;
 	}
 
 	static public void ProtoStart(uint[] _tabelIds, uint _playerNum) {
 		ProtoStageSceneTranslation();
-		PlayersInit(_tabelIds, _playerNum);
+
+		playerNum = _playerNum;
+		startPositonIDTable = _tabelIds;
+		//PlayersInit(_tabelIds, _playerNum);
 	}
 
 	static private void ProtoStageSceneTranslation(){
@@ -42,25 +49,30 @@ public class GameManager : MonoBehaviour
 		SceneManager.LoadScene(stageName + _stageId);
 	}
 
-	static private void PlayersInit(uint[] _tableIds, uint _playerNum){
-		if(_tableIds.Length > _playerNum) {
+	static public void PlayersInit(){
+		if(startPositonIDTable.Length > playerNum) {
 			Debug.LogError("Too many table IDs");
 			return;
 		}
 
-		playerNum = _playerNum;
+		players = new GameObject[playerNum];
+
 
 		GameObject[] startPositions = GameObject.FindGameObjectsWithTag("StartPosition");
 
-		GameObject otherPlayerPrefab = (GameObject)Resources.Load("Object/OtherPlayer");
-		GameObject mainPlayerPrefab = (GameObject)Resources.Load("Object/MainPlayer");
-		
+		GameObject otherPlayerPrefab = (GameObject)Resources.Load("Prefab/Object/OtherPlayer");
+		GameObject mainPlayerPrefab = (GameObject)Resources.Load("Prefab/Object/MainPlayer");
+
+		Debug.Log(otherPlayerPrefab);
+
+		Debug.Log(startPositions.Length);
+
 		for (int i = 0; i < playerNum; ++i){
 			if(i == playID){
-				players[i] = MonoBehaviour.Instantiate(mainPlayerPrefab, startPositions[_tableIds[i]].transform.position, startPositions[_tableIds[i]].transform.rotation);
+				players[i] = MonoBehaviour.Instantiate(mainPlayerPrefab, startPositions[startPositonIDTable[i]].transform.position, startPositions[startPositonIDTable[i]].transform.rotation);
 				continue;
 			}
-			players[i] = MonoBehaviour.Instantiate(mainPlayerPrefab, startPositions[_tableIds[i]].transform.position, startPositions[_tableIds[i]].transform.rotation);
+			players[i] = MonoBehaviour.Instantiate(otherPlayerPrefab, startPositions[startPositonIDTable[i]].transform.position, startPositions[startPositonIDTable[i]].transform.rotation);
 		}
 	}
 }
