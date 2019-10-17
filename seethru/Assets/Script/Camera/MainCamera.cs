@@ -9,12 +9,12 @@ public class MainCamera : MonoBehaviour
 
 	private Camera c_camera;
 
-	public float moveSpeed;
-	public float scalingSpeed;
+	public float moveSpeed = 0.1f;
+	public float scalingSpeed = 0.1f;
 
-	public float size;
+	public float size = 2f;
 
-	public float minSize;
+	public float minSize = 4f;
 
 	private void Start() {
 		c_camera = GetComponent<Camera>();
