@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 	static public uint playerNum = 0;
 	static public GameObject[] players;
 	static public uint playID;
-	static public GameObject bulletPool = null;
+	static public Pool bulletPool = null;
 
 	static public string stageName = "Stage";
 
@@ -49,8 +49,8 @@ public class GameManager : MonoBehaviour
 		SceneManager.LoadScene(stageName + _stageId);
 	}
 
-	static public void PlayersInit(){
-		if(4 > playerNum) {
+	static public void PlayersInit() {
+		if (4 > playerNum) {
 			Debug.LogError("Too many players");
 			return;
 		}
@@ -67,12 +67,13 @@ public class GameManager : MonoBehaviour
 
 		Debug.Log(startPositions.Length);
 
-		for (int i = 0; i < playerNum; ++i){
-			if(i == playID){
+		for (int i = 0; i < playerNum; ++i) {
+			if (i == playID) {
 				players[i] = MonoBehaviour.Instantiate(mainPlayerPrefab, startPositions[startPositonIDTable[i]].transform.position, startPositions[startPositonIDTable[i]].transform.rotation);
 				continue;
 			}
 			players[i] = MonoBehaviour.Instantiate(otherPlayerPrefab, startPositions[startPositonIDTable[i]].transform.position, startPositions[startPositonIDTable[i]].transform.rotation);
 		}
+		bulletPool = GameObject.Find("BulletPool").GetComponent<Pool>();
 	}
 }
