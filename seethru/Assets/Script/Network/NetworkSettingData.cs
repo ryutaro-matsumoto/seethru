@@ -2,22 +2,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DataStructures;
+using System.Runtime.InteropServices;
 
-public class NetworkSettingData
+public class NetworkSettingData : MonoBehaviour
 {
     public string addr;
     public ushort port;
     public IntPtr connection;
 
-    
+    public S_DataProfile myProfile;
 
-    static NetworkSettingData()
+
+    void Start()
     {
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetProfile(int _playerid, string _name, int _spawnid)
     {
-        
+        myProfile.player_id = _playerid;
+        //myProfile.name = _name;
+        myProfile.spawn_id = _spawnid;
+    }
+
+    public S_DataProfile GetMyProfile()
+    {
+        return myProfile;
     }
 }

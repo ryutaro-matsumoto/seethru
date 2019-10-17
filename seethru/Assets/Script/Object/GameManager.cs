@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
 
 	static public string stageName = "Stage";
 
-	static private uint[] startPositonIDTable;	
+	static private int[] startPositonIDTable;	
 
 	private void Awake() {
 		DontDestroyOnLoad(this);
@@ -27,13 +27,13 @@ public class GameManager : MonoBehaviour
 		playID = id;
 	}
 
-	static public void GameStart(uint _stageId, uint[] _tabelIds, uint _playerNum){
+	static public void GameStart(uint _stageId, int[] _tabelIds, uint _playerNum){
 		StageSceneTranslation(_stageId);
 		playerNum = _playerNum;
 		startPositonIDTable = _tabelIds;
 	}
 
-	static public void ProtoStart(uint[] _tabelIds, uint _playerNum) {
+	static public void ProtoStart(int[] _tabelIds, uint _playerNum) {
 		ProtoStageSceneTranslation();
 
 		playerNum = _playerNum;

@@ -8,7 +8,7 @@ public class GameInitProto : MonoBehaviour
     void Start()
     {
 		GameManager.ReceiveID(0);
-		uint[] table = { 0, 1, 2, 3 };
+		int[] table = { 0, 1, 2, 3 };
 		GameManager.ProtoStart(table, 4);
     }
 

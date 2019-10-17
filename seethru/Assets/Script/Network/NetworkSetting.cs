@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DataStructures;
 
 
 public class NetworkSetting : MonoBehaviour
@@ -45,6 +46,7 @@ public class NetworkSetting : MonoBehaviour
 
         this.gameObject.SetActive(true);
     }
+
 
     public void SetAddress()
     {

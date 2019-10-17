@@ -80,11 +80,13 @@ public class MrsClient : Mrs {
     
     void Awake(){
         gameObject.AddComponent< mrs.ScreenLogger >();
-        
+        gameObject.AddComponent<GameManager>();
+        gameObject.AddComponent<NetworkSettingData>();
+
         m_IsRunning = false;
         g_ReadCount = 0;
         g_Connect = new mrs.Connect();
-        netsettings = new NetworkSettingData();
+        netsettings = gameObject.GetComponent<NetworkSettingData>();
         InitMyData();
 
         g_gameon = false;
@@ -177,12 +179,12 @@ public class MrsClient : Mrs {
     /// <summary>
     /// ゲームが始まった時用のイニシャライズ
     /// </summary>
-    public void InitMrsforGame()
+    public static void InitMrsforGame(S_StartingData _startdata)
     {
-        SceneManager.LoadScene("ProtoScene");
+        GameManager.ProtoStart(_startdata.spawnid,_startdata.sumplayer);
 
-        g_Object = GameObject.Find("MainPlayer");
-        g_EnemyObject = GameObject.Find("Player");
+        g_Object = GameManager.players[0];
+        g_EnemyObject = GameManager.players[1];
 
         g_gameon = true;
     }
@@ -236,10 +238,17 @@ public class MrsClient : Mrs {
         //MRS_LOG_DEBUG( "parse_record seqnum={0} options=0x{1:X2} payload=0x{2:X2}/{3}", seqnum, options, payload_type, payload_len );
         // MRS_PAYLOAD_TYPE_BEGIN - MRS_PAYLOAD_TYPE_ENDの範囲内で任意のIDを定義し、対応するアプリケーションコードを記述する
         switch ( payload_type ){
-        case 0x01:{
-            read_echo( connection, ToBytes(payload, payload_len), payload_len );
-        }break;
-            case 0x02:
+            case 0x01:
+                {
+                    S_DataProfile data = (S_DataProfile)Marshal.PtrToStructure(payload, typeof(S_DataProfile));
+                    netsettings.SetProfile(data.player_id, "a", data.spawn_id);
+                }break;
+            case 0x03:
+                {
+                    S_StartingData starting = (S_StartingData)Marshal.PtrToStructure(payload, typeof(S_StartingData));
+                    InitMrsforGame(starting);
+                }break;
+            case 0x12:
                 {
                     //MRS_LOG_DEBUG("RECEIVED DATA:{0}", payload);
                     S_DataPlayer data = (S_DataPlayer)Marshal.PtrToStructure(payload, typeof(S_DataPlayer));
@@ -251,7 +260,7 @@ public class MrsClient : Mrs {
                     //MRS_LOG_DEBUG("RECEIVED DATA  pos_x:{0} pos_y:{1} pos_z:{2} look:{3} move:{4} ammos:{5}"
                     //    data.x, data.y, data.z, data.angle, data.move_a, data.ammos);
                 }break;
-            case 0x03:
+            case 0x13:
                 {
                     //MRS_LOG_DEBUG("RECEIVED DATA:{0}", payload);
                     S_DataShots data = (S_DataShots)Marshal.PtrToStructure(payload, typeof(S_DataShots));
@@ -336,6 +345,12 @@ public class MrsClient : Mrs {
             mrs_key_exchange( connection, on_key_exchange );
         }else{
             //write_echo_all( connection );
+        }
+
+        byte[] p_data = ToBytes(g_playerName);
+        if (g_nowconnect != null)
+        {
+            mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)p_data.Length);
         }
 
         mrs.Utility.LoadScene("MatchRoom");
@@ -469,8 +484,8 @@ public class MrsClient : Mrs {
         mrs_update();
         if (g_gameon)
         {
-            if (g_Object == null) { g_Object = GameObject.Find("MainPlayer"); }
-            if (g_EnemyObject == null) { g_EnemyObject = GameObject.Find("Player"); }
+            if (g_Object == null) { g_Object = GameManager.players[0]; }
+            if (g_EnemyObject == null) { g_EnemyObject = GameManager.players[1]; }
             CompareMyData();
         }
         if (connected && !g_gameon) {
@@ -508,7 +523,7 @@ public class MrsClient : Mrs {
             Marshal.StructureToPtr(myNewData, p_data, false);
             if (g_nowconnect != null)
             {
-                g_paytype = 0x02;
+                g_paytype = 0x12;
                 mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)Marshal.SizeOf(myNewData));
             }
             Marshal.FreeHGlobal(p_data);
@@ -537,11 +552,24 @@ public class MrsClient : Mrs {
         Marshal.StructureToPtr(shot, p_shotdata, false);
         if (g_nowconnect != null)
         {
-            g_paytype = 0x03;
+            g_paytype = 0x13;
             mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_shotdata, (uint)Marshal.SizeOf(shot));
         }
         Marshal.FreeHGlobal(p_shotdata);
     }
+
+    public void SendRoomReady()
+    {
+        g_paytype = 0x03;
+        int ready = 1;
+        IntPtr blank = Marshal.AllocHGlobal(Marshal.SizeOf(myNewData));
+        Marshal.StructureToPtr(myNewData, blank, false);
+        
+        mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, blank, sizeof(int));
+
+        Marshal.FreeHGlobal(blank);
+    }
+
 
     /// <summary>
     /// 接続に必要な情報を外部からセット
@@ -551,5 +579,6 @@ public class MrsClient : Mrs {
     {
         g_playerName = _name;
         g_ArgServerAddr = _ip;
+        netsettings.SetProfile(-1, _name, -1);
     }
 }
