@@ -409,7 +409,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lookatObject: {fileID: 752819149}
-  t: 0.09
+  moveSpeed: 0.1
+  scalingSpeed: 0.1
+  size: 2
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0

@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class LookatObject : MonoBehaviour
 {	
-	public uint livePlayerNum;
-	GameObject[] livePlayers;
+	float distancey;
 
-	private void Start() {
-		livePlayerNum = GameManager.playerNum;
-		livePlayers = new GameObject[livePlayerNum];
-	}
+	Vector2 distance;
+
+	public Vector2 Distance { get { return distance; } }
+
 
 	// Update is called once per frame
 	void Update()
@@ -18,8 +17,7 @@ public class LookatObject : MonoBehaviour
 		GameObject[] playerx = { null, null };
 		GameObject[] playery = { null, null };
 
-		float distancex = 0;
-		float distancey = 0;
+		distance = Vector2.zero;
 
 		for(int i = 0; i < GameManager.playerNum - 1; ++i){
 			if(GameManager.players[i].GetComponent<Player>().isDead){
@@ -32,15 +30,15 @@ public class LookatObject : MonoBehaviour
 				}
 
 				Vector2 wvec = GameManager.players[j].transform.position - GameManager.players[i].transform.position;
-				if (distancex < Mathf.Abs(wvec.x)) {
+				if (distance.x < Mathf.Abs(wvec.x)) {
 					playerx[0] = GameManager.players[i];
 					playerx[1] = GameManager.players[j];
-					distancex = Mathf.Abs(wvec.x);
+					distance.x = Mathf.Abs(wvec.x);
 				}
-				if (distancey < Mathf.Abs(wvec.y)) {
+				if (distance.y < Mathf.Abs(wvec.y)) {
 					playery[0] = GameManager.players[i];
 					playery[1] = GameManager.players[j];
-					distancey = Mathf.Abs(wvec.y);
+					distance.y = Mathf.Abs(wvec.y);
 				}
 			}
 		}
@@ -51,6 +49,5 @@ public class LookatObject : MonoBehaviour
 		Vector2 newPosition = new Vector2(vecx.x, vecy.y);
 
 		transform.position = newPosition;
-
     }
 }

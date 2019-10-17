@@ -7,19 +7,33 @@ public class MainCamera : MonoBehaviour
 	[SerializeField]
 	private LookatObject lookatObject;
 
-	public float t;
+	private Camera c_camera;
 
+	public float moveSpeed;
+	public float scalingSpeed;
 
-    // Update is called once per frame
-    void LateUpdate()
-    {
+	public float size;
+
+	private void Start() {
+		c_camera = GetComponent<Camera>();
+	}
+
+	// Update is called once per frame
+	void LateUpdate(){
 		Vector3 newPosition = transform.position;
-		newPosition = Vector3.Lerp(transform.position, lookatObject.transform.position, t);
+		newPosition = Vector3.Lerp(transform.position, lookatObject.transform.position, moveSpeed);
 
 		newPosition.z = transform.position.z;
 
 		transform.position = newPosition;
 
+		Debug.Log(lookatObject.Distance);
 
-    }
+		if (lookatObject.Distance.y * ((float)Screen.width / (float)Screen.height) < lookatObject.Distance.x){
+			c_camera.orthographicSize = Mathf.Lerp(c_camera.orthographicSize, ((lookatObject.Distance.x * ((float)Screen.height / (float)Screen.width)) / 2f) + size, scalingSpeed);
+		}
+		else{
+			c_camera.orthographicSize = Mathf.Lerp(c_camera.orthographicSize, (lookatObject.Distance.y / 2f) + size, scalingSpeed);
+		}
+	}
 }
