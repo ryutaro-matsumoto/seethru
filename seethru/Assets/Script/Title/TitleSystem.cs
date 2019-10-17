@@ -4,22 +4,29 @@
 // @note：
 //------------------------------------------------------------------------------
 
+//------------------------------------------------------------------------------
+// namespace declaration.
+//------------------------------------------------------------------------------
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 //------------------------------------------------------------------------------
 // TitleSystem class.
 //------------------------------------------------------------------------------
 public class TitleSystem : MonoBehaviour
 {
-    public AudioSource ClicjGameStartSound;
+    // 決定SE
+    public AudioSource clickEnter;
 
     //------------------------------------------------------------------------------
     // start function.
     //------------------------------------------------------------------------------
     void Start()
     {
+        // フェードイン
         FadeManeger.Fadein();
     }
 
@@ -45,7 +52,6 @@ public class TitleSystem : MonoBehaviour
 #endif
     }
 
-
     //===========================================================
     // ClickGameStartButton function.
     //
@@ -53,8 +59,8 @@ public class TitleSystem : MonoBehaviour
     //===========================================================
     public void ClickGameStartButton()
     {
-        ClicjGameStartSound.PlayOneShot(ClicjGameStartSound.clip);
-        FadeManeger.Fadeout("ProtoScene");
+        clickEnter.PlayOneShot(clickEnter.clip);
+        FadeManeger.Fadeout("ResultScene");
     }
 
     //===========================================================
@@ -66,6 +72,4 @@ public class TitleSystem : MonoBehaviour
     {
         Quit();
     }
-
-
 }
