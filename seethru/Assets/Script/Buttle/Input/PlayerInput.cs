@@ -16,7 +16,6 @@ public class PlayerInput : MonoBehaviour
 
 	// インスペクター調整値
 	public float moveSpeed;
-	public float moveAngle;
 	public float rotateSpeed;
 	public float moveForceMultiplier;
 
@@ -64,27 +63,37 @@ public class PlayerInput : MonoBehaviour
 	/// </summary>
 	private void AngleCalc(){
 		Vector2 pointerPosition = pointer.transform.position;
-		Vector2 pointerVector = pointerPosition - (Vector2)transform.position;
+		Vector2 pos = transform.position;
+		Vector2 pointerVector = pointerPosition - pos;
 		float cross = Vector2Cross(playerVector, pointerVector);
 
-
-		float rad = Mathf.Asin(cross / playerVector.magnitude/ pointerVector.magnitude);
+		
+		float rad = Mathf.Asin(cross / (playerVector.magnitude * pointerVector.magnitude));
 		float angle = rad * Mathf.Rad2Deg;
+
 
 		Quaternion qt = transform.rotation;
 
-		if(cross < 0){
-			qt.eulerAngles -= new Vector3(0f, 0f, rotateSpeed);
-			if(qt.eulerAngles.z < angle + transform.eulerAngles.z){
-				qt.eulerAngles = new Vector3(0f, 0f, angle + transform.eulerAngles.z);
+		float movedAngle = transform.eulerAngles.z + 360f;
+		float pointAngle = angle + transform.eulerAngles.z + 360f;
+
+
+		if (cross < 0){
+			movedAngle -= rotateSpeed;
+
+			if (movedAngle < pointAngle){
+				movedAngle = pointAngle;
 			}
 		}
 		else {
-			qt.eulerAngles += new Vector3(0f, 0f, rotateSpeed);
-			if (qt.eulerAngles.z > angle + transform.eulerAngles.z) {
-				qt.eulerAngles = new Vector3(0f, 0f, angle + transform.eulerAngles.z);
+			movedAngle += rotateSpeed;
+
+			if (movedAngle > pointAngle) {
+				movedAngle = pointAngle;
 			}
 		}
+
+		qt.eulerAngles = new Vector3(0, 0, movedAngle);
 
 		transform.rotation = qt;
 

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ReflectionObject : MonoBehaviour {
 	Rigidbody2D rigidbody2d;
-	BoxCollider2D boxCollider;
 	[SerializeField]
 	public int reflect;
 
@@ -16,7 +15,6 @@ public class ReflectionObject : MonoBehaviour {
 	void OnEnable() {
 		isDead = false;
 		rigidbody2d = GetComponent<Rigidbody2D>();
-		boxCollider = GetComponent<BoxCollider2D>();
 		reflect = startReflect;
 	}
 
@@ -38,14 +36,9 @@ public class ReflectionObject : MonoBehaviour {
 			Debug.Log(vec);
 
 
-			Vector2 pos = transform.position;
-			transform.position = pos + (boxCollider.offset.y + boxCollider.size.y / 2.0f) * rigidbody2d.velocity.normalized;
-
-
 			ReflectCollider rc = collision.gameObject.GetComponent<ReflectCollider>();
 			Vector2 ans = rc.ReflectVector(vec);
 			rigidbody2d.velocity = ans * vec.magnitude;
-
 
 
 			float angleRad = Mathf.Atan2(ans.y, ans.x);
