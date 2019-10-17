@@ -1,5 +1,5 @@
 ﻿//------------------------------------------------------------------------------
-// @name：TitleSystem.cs
+// @name：ResultSystem.cs
 //
 // @note：
 //------------------------------------------------------------------------------
@@ -7,9 +7,11 @@
 //------------------------------------------------------------------------------
 // namespace declaration.
 //------------------------------------------------------------------------------
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //------------------------------------------------------------------------------
 // ResultSystem class.
@@ -17,17 +19,19 @@ using UnityEngine;
 public class ResultSystem : MonoBehaviour
 {
     // 決定SE
-    public AudioSource ClickEnter;
+    public AudioSource clickEnter;
     // リザルトメインBGM
     public AudioSource resultSound;
     // ウィンドウSE
-    public AudioSource resultmenuSound;
+    public AudioSource resultwindowSound;
+    // ウィンドウイメージ
+    public Image image;
 
     // スタート時BGM/SE再生
-    IEnumerator playSound()
+    IEnumerator Playsound()
     {
         yield return new WaitForSeconds(0.1f);
-        resultmenuSound.PlayOneShot(resultmenuSound.clip);
+        resultwindowSound.PlayOneShot(resultwindowSound.clip);
         yield return new WaitForSeconds(1f);
         resultSound.PlayOneShot(resultSound.clip);
     }
@@ -37,7 +41,8 @@ public class ResultSystem : MonoBehaviour
     //------------------------------------------------------------------------------
     void Start()
     {
-        StartCoroutine(playSound());
+        StartCoroutine(Playsound());
+        image.color = new Color(0.0f, 0.0f, 0.0f, 0.5f);
     }
 
     //------------------------------------------------------------------------------
@@ -55,7 +60,7 @@ public class ResultSystem : MonoBehaviour
     //===========================================================
     public void ClickRoomBack()
     {
-        ClickEnter.PlayOneShot(ClickEnter.clip);
+        clickEnter.PlayOneShot(clickEnter.clip);
         FadeManeger.Fadeout("ResultScene");
     }
 
@@ -66,7 +71,7 @@ public class ResultSystem : MonoBehaviour
     //===========================================================
     public void ClickRoomExit()
     {
-        ClickEnter.PlayOneShot(ClickEnter.clip);
+        clickEnter.PlayOneShot(clickEnter.clip);
         FadeManeger.Fadeout("TitleScene");
     }
 }

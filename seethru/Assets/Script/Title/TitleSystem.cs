@@ -19,7 +19,7 @@ using UnityEngine.EventSystems;
 public class TitleSystem : MonoBehaviour
 {
     // 決定SE
-    public AudioSource ClickEnter;
+    public AudioSource clickEnter;
 
     //------------------------------------------------------------------------------
     // start function.
@@ -59,8 +59,8 @@ public class TitleSystem : MonoBehaviour
     //===========================================================
     public void ClickGameStartButton()
     {
-        ClickEnter.PlayOneShot(ClickEnter.clip);
-        FadeManeger.Fadeout("NetworkSetting");
+        clickEnter.PlayOneShot(clickEnter.clip);
+        FadeManeger.Fadeout("ResultScene");
     }
 
     //===========================================================
