@@ -412,6 +412,7 @@ MonoBehaviour:
   moveSpeed: 0.1
   scalingSpeed: 0.1
   size: 2
+  minSize: 4
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -618,6 +619,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60aee41201bf55c4fac9b46087222975, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  adjust: 0.4
 --- !u!4 &752819150
 Transform:
   m_ObjectHideFlags: 0

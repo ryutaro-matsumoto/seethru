@@ -10,6 +10,8 @@ public class LookatObject : MonoBehaviour
 
 	public Vector2 Distance { get { return distance; } }
 
+	public float adjust = 0f;
+
 
 	// Update is called once per frame
 	void Update()
@@ -47,6 +49,9 @@ public class LookatObject : MonoBehaviour
 		Vector2 vecy = Vector2.Lerp(playery[0].transform.position, playery[1].transform.position, 0.5f);
 
 		Vector2 newPosition = new Vector2(vecx.x, vecy.y);
+
+		newPosition = Vector2.Lerp(newPosition, GameManager.players[GameManager.playID].transform.position, adjust);
+
 
 		transform.position = newPosition;
     }

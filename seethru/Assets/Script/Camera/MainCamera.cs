@@ -14,6 +14,8 @@ public class MainCamera : MonoBehaviour
 
 	public float size;
 
+	public float minSize;
+
 	private void Start() {
 		c_camera = GetComponent<Camera>();
 	}
@@ -34,6 +36,10 @@ public class MainCamera : MonoBehaviour
 		}
 		else{
 			c_camera.orthographicSize = Mathf.Lerp(c_camera.orthographicSize, (lookatObject.Distance.y / 2f) + size, scalingSpeed);
+		}
+
+		if(c_camera.orthographicSize < minSize){
+			c_camera.orthographicSize = minSize;
 		}
 	}
 }
