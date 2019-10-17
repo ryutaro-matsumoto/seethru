@@ -183,9 +183,6 @@ public class MrsClient : Mrs {
     {
         GameManager.ProtoStart(_startdata.spawnid,_startdata.sumplayer);
 
-        g_Object = GameManager.players[0];
-        g_EnemyObject = GameManager.players[1];
-
         g_gameon = true;
     }
 
@@ -484,14 +481,10 @@ public class MrsClient : Mrs {
         mrs_update();
         if (g_gameon)
         {
-            if (g_Object == null) { g_Object = GameManager.players[0]; }
-            if (g_EnemyObject == null) { g_EnemyObject = GameManager.players[1]; }
             CompareMyData();
         }
         if (connected && !g_gameon) {
             //g_gameon = true;
-            if (g_Object != null) { g_Object = null; }
-            if (g_EnemyObject != null) { g_EnemyObject = null; }
             //mrs.Utility.LoadScene("ProtoScene");
         }
     }
@@ -511,11 +504,11 @@ public class MrsClient : Mrs {
 
     void CompareMyData()
     {
-        if (!g_Object.GetComponent<Player>().isDead)
+        if (!GameManager.players[GameManager.playID].GetComponent<Player>().isDead)
         {
-            myNewData.x = g_Object.transform.position.x;
-            myNewData.y = g_Object.transform.position.y;
-            myNewData.angle = g_Object.transform.localEulerAngles.z;
+            myNewData.x = GameManager.players[GameManager.playID].transform.position.x;
+            myNewData.y = GameManager.players[GameManager.playID].transform.position.y;
+            myNewData.angle = GameManager.players[GameManager.playID].transform.localEulerAngles.z;
             myNewData.bullets = 1;
             myNewData.died = false;
 
@@ -529,7 +522,7 @@ public class MrsClient : Mrs {
             Marshal.FreeHGlobal(p_data);
             myData = myNewData;
 
-            PlayerInput inputScript = g_Object.GetComponent<PlayerInput>();
+            PlayerInput inputScript = GameManager.players[GameManager.playID].GetComponent<PlayerInput>();
 
         }
     }
