@@ -20,6 +20,8 @@ public class LobbySystem : MonoBehaviour
     //\ 戻るSE
     public AudioSource ClickBackSound;
 
+    public GameObject effectHit;
+    private static bool flg;
 
     //------------------------------------------------------------------------------
     // start function.
@@ -35,7 +37,18 @@ public class LobbySystem : MonoBehaviour
     //------------------------------------------------------------------------------
     void Update()
     {
-     
+        if (Input.GetMouseButtonDown(0))
+        {
+            effectHit.SetActive(true);
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            effectHit.SetActive(false);
+        }
+        //if (Input.GetMouseButtonUp(0))
+        //{
+        //    effectHit.SetActive(false);
+        //}
     }
 
 
