@@ -51,6 +51,8 @@ public class MrsClient : Mrs {
 
     protected static string g_playerName;
 
+    private static MrsClient myClient;
+
     
     static MrsClient()
     {
@@ -82,6 +84,8 @@ public class MrsClient : Mrs {
         gameObject.AddComponent< mrs.ScreenLogger >();
         gameObject.AddComponent<GameManager>();
         gameObject.AddComponent<NetworkSettingData>();
+
+        myClient = this;
 
         m_IsRunning = false;
         g_ReadCount = 0;
@@ -238,7 +242,8 @@ public class MrsClient : Mrs {
             case 0x01:
                 {
                     S_DataProfile data = (S_DataProfile)Marshal.PtrToStructure(payload, typeof(S_DataProfile));
-                    GameManager.ReceiveID((uint)data.player_id);
+
+                    GameManager.ConnectionServer((uint)data.player_id, myClient);
                     netsettings.SetProfile(data.player_id, "a", data.spawn_id);
                 }break;
             case 0x02:
@@ -346,7 +351,6 @@ public class MrsClient : Mrs {
             mrs_get_version( MRS_VERSION_KEY ), mrs_connection_get_remote_version( connection, MRS_VERSION_KEY ) );
         g_paytype = 0x01;
         connected = true;
-        GameManager.ReceiveID(9);
 
         if ( g_IsKeyExchange ){
             mrs_set_cipher( connection, mrs_cipher_create( MrsCipherType.ECDH ) );
