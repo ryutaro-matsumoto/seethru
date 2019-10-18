@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
 
 	//------------------------------------------------------------------------
 	/// <summary>
-	/// 接続成功時、この関数を呼び出してね
+	/// 接続成功時、この関数を呼び出してね(MrsClient側で使用)
 	/// </summary>
 	/// <param name="id">サーバーから送られてきたID</param>
 	/// <param name="client">接続成功したクライアントクラス</param>
@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
 
 	//------------------------------------------------------------------------
 	/// <summary>
-	/// サーバーからの指示を受けたときに実行。これでステージシーンに移動する。
+	/// サーバーからの指示を受けたときに実行。これでステージシーンに移動する。(MrsClient側で使用)
 	/// </summary>
 	/// <param name="_stageId">ステージのID</param>
 	/// <param name="_tabelIds">初期位置のID</param>
@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
 
 	//------------------------------------------------------------------------
 	/// <summary>
-	/// ステージシーンに移った直後に実行
+	/// ステージシーンに移った直後に実行(ゲーム側で使用)
 	/// </summary>
 	static public void PlayersInit() {
 		if (4 < playerNum) {
@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour
 
 	//------------------------------------------------------------------------
 	/// <summary>
-	/// 接続終了時呼び出し
+	/// 接続終了時呼び出し(MrsClient側で使用)
 	/// </summary>
 	public static void OffConnection(){
 		connection = null;
