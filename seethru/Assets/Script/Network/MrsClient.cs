@@ -239,20 +239,26 @@ public class MrsClient : Mrs {
         //MRS_LOG_DEBUG( "parse_record seqnum={0} options=0x{1:X2} payload=0x{2:X2}/{3}", seqnum, options, payload_type, payload_len );
         // MRS_PAYLOAD_TYPE_BEGIN - MRS_PAYLOAD_TYPE_ENDの範囲内で任意のIDを定義し、対応するアプリケーションコードを記述する
         switch ( payload_type ){
+
+                // 0x01 : 自分のプロファイルが返送されてきた
             case 0x01:
                 {
                     S_DataProfile data = (S_DataProfile)Marshal.PtrToStructure(payload, typeof(S_DataProfile));
 
                     GameManager.ConnectionServer((uint)data.player_id, myClient);
-                    netsettings.SetProfile(data.player_id, "a", data.spawn_id);
+                    netsettings.SetProfile(data.player_id, g_playerName, data.spawn_id);
                 }break;
+
+                // 0x02 : 誰かのプロファイルが送られてきた
             case 0x02:
                 {
                     S_DataProfile data = (S_DataProfile)Marshal.PtrToStructure(payload, typeof(S_DataProfile));
-                    
-                    //netsettings.SetProfile(data.player_id, "a", data.spawn_id);
+
+                    MRS_LOG_DEBUG("JOINED No:{0}", data.player_id);
                 }
                 break;
+
+                // 0x03 : ゲームスタートの合図が送られてきた
             case 0x03:
                 {
                     S_StartingData starting = (S_StartingData)Marshal.PtrToStructure(payload, typeof(S_StartingData));
@@ -260,6 +266,8 @@ public class MrsClient : Mrs {
                     MRS_LOG_DEBUG("My player number is : {0} !", GameManager.playID);
                     InitMrsforGame(starting);
                 }break;
+
+                // 0x12 : [data.id]番目のプレイヤーの座標データが送られてきた
             case 0x12:
                 {
                     //MRS_LOG_DEBUG("RECEIVED DATA:{0}", payload);
@@ -272,20 +280,20 @@ public class MrsClient : Mrs {
                     //MRS_LOG_DEBUG("RECEIVED DATA  pos_x:{0} pos_y:{1} pos_z:{2} look:{3} move:{4} ammos:{5}"
                     //    data.x, data.y, data.z, data.angle, data.move_a, data.ammos);
                 }break;
+
+                // 0x13 : 発射された弾の座標と角度のデータが送られてきた
             case 0x13:
                 {
                     //MRS_LOG_DEBUG("RECEIVED DATA:{0}", payload);
                     S_DataShots data = (S_DataShots)Marshal.PtrToStructure(payload, typeof(S_DataShots));
-                    GameObject bulletPool = GameObject.Find("BulletPool");
-                    Pool script = bulletPool.GetComponent<Pool>();
-
-                    script.Place(new Vector2(data.x, data.y), Quaternion.AngleAxis(data.angle, Vector3.forward));
+                    
+                    GameManager.bulletPool.Place(new Vector2(data.x, data.y), Quaternion.AngleAxis(data.angle,   Vector3.forward));
                     //MRS_LOG_DEBUG("RECEIVED DATA  pos_x:{0} pos_y:{1} pos_z:{2} angle:{3}",
                     //    data.pos_x, data.pos_y, data.pos_z, data.angle);
                 }
                 break;
 
-            // 毎フレームデータ受信
+                // 0x11 : 10/18現在未使用のゲーム中情報送受信用
             case 0x11:
                 {
                     MRS_LOG_DEBUG("RECEIVED WRAP:{0}", payload);
@@ -340,8 +348,16 @@ public class MrsClient : Mrs {
     [AOT.MonoPInvokeCallback(typeof(MrsKeyExchangeCallback))]
     private static void on_key_exchange( MrsConnection connection, IntPtr connection_data ){
         MRS_LOG_DEBUG( "on_key_exchange" );
-    //    mrs.Utility.LoadScene("SampleScene");
-        //write_echo_all( connection );
+        connected = true;
+        g_paytype = 0x01;
+        IntPtr p_data = Marshal.AllocHGlobal(Marshal.SizeOf(netsettings.GetMyProfile()));
+        Marshal.StructureToPtr(netsettings.GetMyProfile(), p_data, false);
+        if (g_nowconnect != null)
+        {
+            mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)Marshal.SizeOf(netsettings.GetMyProfile()));
+        }
+        Marshal.FreeHGlobal(p_data);
+        mrs.Utility.LoadScene("MatchRoom");
     }
     
     // ソケット接続時に呼ばれる
@@ -349,23 +365,13 @@ public class MrsClient : Mrs {
     private static void on_connect( MrsConnection connection, IntPtr connection_data ){
         MRS_LOG_DEBUG( "on_connect local_mrs_version=0x{0:X} remote_mrs_version=0x{1:X}",
             mrs_get_version( MRS_VERSION_KEY ), mrs_connection_get_remote_version( connection, MRS_VERSION_KEY ) );
-        g_paytype = 0x01;
-        connected = true;
 
         if ( g_IsKeyExchange ){
             mrs_set_cipher( connection, mrs_cipher_create( MrsCipherType.ECDH ) );
             mrs_key_exchange( connection, on_key_exchange );
         }else{
-            //write_echo_all( connection );
         }
 
-        byte[] p_data = ToBytes(g_playerName);
-        if (g_nowconnect != null)
-        {
-            mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)p_data.Length);
-        }
-
-        mrs.Utility.LoadScene("MatchRoom");
     }
     
     // ソケット切断時に呼ばれる
@@ -374,7 +380,6 @@ public class MrsClient : Mrs {
         MRS_LOG_DEBUG( "on_disconnect local_mrs_version=0x{0:X} remote_mrs_version=0x{1:X}",
             mrs_get_version( MRS_VERSION_KEY ), mrs_connection_get_remote_version( connection, MRS_VERSION_KEY ) );
         connected = false;
-        GameManager.ReceiveID(9);
     }
     
     // ソケットにエラーが発生した時に呼ばれる
@@ -517,7 +522,9 @@ public class MrsClient : Mrs {
         if ( pause ) mrs_update_keep_alive();
     }
 
-
+    /// <summary>
+    /// 毎フレーム自分のデータを送信
+    /// </summary>
     void CompareMyData()
     {
         if (!GameManager.players[GameManager.playID].GetComponent<Player>().isDead)
@@ -569,6 +576,9 @@ public class MrsClient : Mrs {
         Marshal.FreeHGlobal(p_shotdata);
     }
 
+    /// <summary>
+    /// サーバーへ準備ができた合図を送る
+    /// </summary>
     public void SendRoomReady()
     {
         g_paytype = 0x03;

@@ -36,6 +36,9 @@ public class NetworkSetting : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// JoinServerボタンが押されるとMrsの接続が呼び出される
+    /// </summary>
     public void JoinServer()
     {
         this.gameObject.SetActive(false);
@@ -47,12 +50,17 @@ public class NetworkSetting : MonoBehaviour
         this.gameObject.SetActive(true);
     }
 
-
+    /// <summary>
+    /// IPアドレスの入力ボックス
+    /// </summary>
     public void SetAddress()
     {
         ipAddress = inputAddr.text;
     }
 
+    /// <summary>
+    /// 名前の入力ボックス
+    /// </summary>
     public void SetName()
     {
         playerName = inputName.text;
