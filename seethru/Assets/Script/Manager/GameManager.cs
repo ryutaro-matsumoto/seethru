@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
 	/// ステージシーンに移った直後に実行
 	/// </summary>
 	static public void PlayersInit() {
-		if (4 > playerNum) {
+		if (4 < playerNum) {
 			Debug.LogError("Too many players");
 			return;
 		}
