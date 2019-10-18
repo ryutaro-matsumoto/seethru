@@ -238,21 +238,31 @@ public class MrsClient : Mrs {
             case 0x01:
                 {
                     S_DataProfile data = (S_DataProfile)Marshal.PtrToStructure(payload, typeof(S_DataProfile));
+                    GameManager.ReceiveID((uint)data.player_id);
                     netsettings.SetProfile(data.player_id, "a", data.spawn_id);
                 }break;
+            case 0x02:
+                {
+                    S_DataProfile data = (S_DataProfile)Marshal.PtrToStructure(payload, typeof(S_DataProfile));
+                    
+                    //netsettings.SetProfile(data.player_id, "a", data.spawn_id);
+                }
+                break;
             case 0x03:
                 {
                     S_StartingData starting = (S_StartingData)Marshal.PtrToStructure(payload, typeof(S_StartingData));
+                    MRS_LOG_DEBUG("Starting... Table:{0} countPlayers:{1}", String.Join(", ",starting.spawnid), starting.sumplayer);
+                    MRS_LOG_DEBUG("My player number is : {0} !", GameManager.playID);
                     InitMrsforGame(starting);
                 }break;
             case 0x12:
                 {
                     //MRS_LOG_DEBUG("RECEIVED DATA:{0}", payload);
                     S_DataPlayer data = (S_DataPlayer)Marshal.PtrToStructure(payload, typeof(S_DataPlayer));
-                    if (g_EnemyObject != null)
+                    if (GameManager.players[data.id] != null)
                     {
-                        g_EnemyObject.transform.position = new Vector3(data.x, data.y, 0);
-                        g_EnemyObject.transform.eulerAngles = new Vector3(0.0f, 0.0f, data.angle);
+                        GameManager.players[data.id].transform.position = new Vector3(data.x, data.y, 0);
+                        GameManager.players[data.id].transform.eulerAngles = new Vector3(0.0f, 0.0f, data.angle);
                     }
                     //MRS_LOG_DEBUG("RECEIVED DATA  pos_x:{0} pos_y:{1} pos_z:{2} look:{3} move:{4} ammos:{5}"
                     //    data.x, data.y, data.z, data.angle, data.move_a, data.ammos);
@@ -336,6 +346,7 @@ public class MrsClient : Mrs {
             mrs_get_version( MRS_VERSION_KEY ), mrs_connection_get_remote_version( connection, MRS_VERSION_KEY ) );
         g_paytype = 0x01;
         connected = true;
+        GameManager.ReceiveID(9);
 
         if ( g_IsKeyExchange ){
             mrs_set_cipher( connection, mrs_cipher_create( MrsCipherType.ECDH ) );
@@ -359,6 +370,7 @@ public class MrsClient : Mrs {
         MRS_LOG_DEBUG( "on_disconnect local_mrs_version=0x{0:X} remote_mrs_version=0x{1:X}",
             mrs_get_version( MRS_VERSION_KEY ), mrs_connection_get_remote_version( connection, MRS_VERSION_KEY ) );
         connected = false;
+        GameManager.ReceiveID(9);
     }
     
     // ソケットにエラーが発生した時に呼ばれる
@@ -506,6 +518,7 @@ public class MrsClient : Mrs {
     {
         if (!GameManager.players[GameManager.playID].GetComponent<Player>().isDead)
         {
+            myNewData.id = GameManager.playID;
             myNewData.x = GameManager.players[GameManager.playID].transform.position.x;
             myNewData.y = GameManager.players[GameManager.playID].transform.position.y;
             myNewData.angle = GameManager.players[GameManager.playID].transform.localEulerAngles.z;
@@ -518,6 +531,7 @@ public class MrsClient : Mrs {
             {
                 g_paytype = 0x12;
                 mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)Marshal.SizeOf(myNewData));
+                MRS_LOG_DEBUG("SEND MY DATA");
             }
             Marshal.FreeHGlobal(p_data);
             myData = myNewData;

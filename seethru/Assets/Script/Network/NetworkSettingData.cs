@@ -24,6 +24,7 @@ public class NetworkSettingData : MonoBehaviour
         myProfile.player_id = _playerid;
         //myProfile.name = _name;
         myProfile.spawn_id = _spawnid;
+        Console.WriteLine("SetProfile id:{0} ", myProfile.player_id);
     }
 
     public S_DataProfile GetMyProfile()

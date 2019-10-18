@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
 	}
 
 	static public void PlayersInit(){
-		if(4 > playerNum) {
+		if(4 < playerNum) {
 			Debug.LogError("Too many players");
 			return;
 		}
@@ -73,6 +73,7 @@ public class GameManager : MonoBehaviour
 				continue;
 			}
 			players[i] = MonoBehaviour.Instantiate(otherPlayerPrefab, startPositions[startPositonIDTable[i]].transform.position, startPositions[startPositonIDTable[i]].transform.rotation);
+            System.Console.WriteLine("PlayerNumber:[{0}] PosX:{1} PosY:{2}", i, players[i].transform.position.x, players[i].transform.position.y);
 		}
 	}
 }

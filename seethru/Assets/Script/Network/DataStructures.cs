@@ -14,6 +14,7 @@ namespace DataStructures
 
     public struct S_DataPlayer
     {
+        public uint id;
         public float x, y;
         public float angle;
         public int bullets;
