@@ -11,6 +11,7 @@ TagManager:
   - ReflectObject
   - StartPosition
   - Floor
+  - Reload
   layers:
   - Default
   - TransparentFX
