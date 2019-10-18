@@ -8,23 +8,23 @@ public class Player : MonoBehaviour
 	/// プレイヤーのオイラー角
 	/// </summary>
 	public float angle;
-	public int bullet = 3;
+	public int startBullet = 2;
+	public int bullet;
 	public bool attackStop = false;
 
 	[SerializeField]
 	private float coolTime = 1.0f;
 
 	[HideInInspector]
-	public bool isReload = false;
-
-	[HideInInspector]
 	public bool isDead = false;
 
-	
 
+	private void Start() {
+		bullet = startBullet;
+	}
 
-    // Update is called once per frame
-    void FixedUpdate() {
+	// Update is called once per frame
+	void FixedUpdate() {
         if(isDead){
 			DeadPlayer();
 		}

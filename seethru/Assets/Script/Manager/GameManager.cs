@@ -7,9 +7,9 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 
-	static public bool onNetwork = false;
+	static public bool onNetwork{ get{ return connection != null; } }
 
-	static private MrsClient connection;
+	static public MrsClient connection;
 	static public uint playerNum = 0;
 	static public GameObject[] players;
 	static public uint playID;
@@ -23,10 +23,43 @@ public class GameManager : MonoBehaviour
 		DontDestroyOnLoad(this);
 	}
 
+
+	//------------------------------------------------------------------------
+	/// <summary>
+	/// 接続成功時、この関数を呼び出してね
+	/// </summary>
+	/// <param name="id">サーバーから送られてきたID</param>
+	/// <param name="client">接続成功したクライアントクラス</param>
+	static public void ConnectionServer(uint id, MrsClient client){
+		ReceiveID(id);
+		SetConnection(client);
+	}
+
+	//------------------------------------------------------------------------
+	/// <summary>
+	/// ID設定
+	/// </summary>
+	/// <param name="id">設定するID</param>
 	static public void ReceiveID(uint id){
 		playID = id;
 	}
 
+	//------------------------------------------------------------------------
+	/// <summary>
+	/// 接続成功時、この関数を呼び出してコネクションを保持させてね
+	/// </summary>
+	/// <param name="client">接続したクライアントクラス</param>
+	public static void SetConnection(MrsClient client) {
+		connection = client;
+	}
+
+	//------------------------------------------------------------------------
+	/// <summary>
+	/// サーバーからの指示を受けたときに実行。これでステージシーンに移動する。
+	/// </summary>
+	/// <param name="_stageId">ステージのID</param>
+	/// <param name="_tabelIds">初期位置のID</param>
+	/// <param name="_playerNum">playerの数</param>
 	static public void GameStart(uint _stageId, int[] _tabelIds, uint _playerNum){
 		StageSceneTranslation(_stageId);
 		playerNum = _playerNum;
@@ -49,6 +82,10 @@ public class GameManager : MonoBehaviour
 		SceneManager.LoadScene(stageName + _stageId);
 	}
 
+	//------------------------------------------------------------------------
+	/// <summary>
+	/// ステージシーンに移った直後に実行
+	/// </summary>
 	static public void PlayersInit() {
 		if (4 > playerNum) {
 			Debug.LogError("Too many players");
@@ -75,5 +112,14 @@ public class GameManager : MonoBehaviour
 			players[i] = MonoBehaviour.Instantiate(otherPlayerPrefab, startPositions[startPositonIDTable[i]].transform.position, startPositions[startPositonIDTable[i]].transform.rotation);
 		}
 		bulletPool = GameObject.Find("BulletPool").GetComponent<Pool>();
+	}
+
+
+	//------------------------------------------------------------------------
+	/// <summary>
+	/// 接続終了時呼び出し
+	/// </summary>
+	public static void OffConnection(){
+		connection = null;
 	}
 }
