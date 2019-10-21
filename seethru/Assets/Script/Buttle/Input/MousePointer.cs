@@ -17,12 +17,23 @@ public class MousePointer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		position = Input.mousePosition;
+		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		RaycastHit hit;
+		int layerMask = (1 << LayerMask.NameToLayer("MouseScreen")); //適当なレイヤーマスクを設定するよ
 
-		position.z = 10f;
+		if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask)) {
+			//レイが当たった位置を得るよ
+			Vector3 pos = hit.point;
+			transform.position = pos;
+		}
 
-		screenToWorldPoint = Camera.main.ScreenToWorldPoint(position);
+		//position = Input.mousePosition;
+		//position.z = 10f;
 
-		gameObject.transform.position = screenToWorldPoint;
+
+		//screenToWorldPoint = Camera.main.ScreenToWorldPoint(position, Camera.MonoOrStereoscopicEye.Mono);
+		//screenToWorldPoint.z = 0f;
+
+		//gameObject.transform.position = screenToWorldPoint;
     }
 }

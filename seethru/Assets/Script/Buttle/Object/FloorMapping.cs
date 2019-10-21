@@ -44,6 +44,5 @@ public class FloorMapping : MonoBehaviour
 			yield return new WaitForSeconds(floorFallSeconds);
 		}
 		++fallCount;
-
 	}
 }

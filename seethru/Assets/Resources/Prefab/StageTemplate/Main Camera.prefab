@@ -98,6 +98,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lookatObject: {fileID: 0}
   scalingSpeed: 0.05
-  size: 5
+  size: 3
   minSize: 4
-  adjustPos: 2
+  adjustPos: 3

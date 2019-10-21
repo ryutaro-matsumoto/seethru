@@ -16604,7 +16604,7 @@ GameObject:
   - component: {fileID: 2152594336591448180}
   - component: {fileID: 2152594336591448179}
   - component: {fileID: 2152594336591448178}
-  - component: {fileID: 2152594336591448177}
+  - component: {fileID: 5128130852493110510}
   m_Layer: 0
   m_Name: FloorMapTemplate
   m_TagString: Floor
@@ -23285,7 +23285,7 @@ CompositeCollider2D:
       - {x: -15, y: 9.999994}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.000005
---- !u!114 &2152594336591448177
+--- !u!114 &5128130852493110510
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -23294,13 +23294,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2152594336591448176}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7977c91c3c418af42bcc84965efc6399, type: 3}
+  m_Script: {fileID: 11500000, guid: fef2628c844090340b88eca7c4824191, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 30
-  height: 20
-  fallCount: 0
-  floorFallSeconds: 0.2
 --- !u!1 &2162622050396654334
 GameObject:
   m_ObjectHideFlags: 0
