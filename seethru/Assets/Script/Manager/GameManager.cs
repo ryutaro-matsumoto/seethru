@@ -127,6 +127,10 @@ public class GameManager : MonoBehaviour
 			players[i].transform.GetChild(4).GetChild(2).GetChild(1).gameObject.GetComponent<SkinnedMeshRenderer>().material.color = playerColor[i];
 			players[i].transform.GetChild(4).GetChild(2).GetChild(3).gameObject.GetComponent<SkinnedMeshRenderer>().material.color = playerColor[i];
 			players[i].transform.GetChild(4).GetChild(2).GetChild(5).gameObject.GetComponent<SkinnedMeshRenderer>().material.color = playerColor[i];
+			if(GameManager.onNetwork){
+				players[i].transform.GetChild(2).gameObject.SetActive(false);
+				players[i].transform.GetChild(3).gameObject.SetActive(false);
+			}
 		}
 
 		bulletPool = GameObject.Find("BulletPool").GetComponent<Pool>();

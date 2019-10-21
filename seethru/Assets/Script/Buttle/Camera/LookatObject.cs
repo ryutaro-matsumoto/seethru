@@ -8,6 +8,8 @@ public class LookatObject : MonoBehaviour
 
 	Vector2 distance;
 
+	public float moveSpeed = 0.5f;
+
 	public Vector2 Distance { get { return distance; } }
 
 	public float adjust = 0f;
@@ -52,7 +54,7 @@ public class LookatObject : MonoBehaviour
 		Vector2 newPosition = new Vector2(vecx.x, vecy.y);
 
 		newPosition = Vector2.Lerp(newPosition, GameManager.players[GameManager.playID].transform.position, adjust);
-
+		newPosition = Vector2.Lerp(transform.position, newPosition, moveSpeed);
 
 		transform.position = newPosition;
     }
