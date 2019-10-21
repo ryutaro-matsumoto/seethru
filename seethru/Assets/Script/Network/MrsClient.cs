@@ -48,6 +48,7 @@ public class MrsClient : Mrs {
     private static bool connected;
     private static bool g_gameon;
     private static bool createMrs;
+    private static bool imAlive;
 
     protected static string g_playerName;
 
@@ -195,8 +196,7 @@ public class MrsClient : Mrs {
         myData.x = 0;
         myData.y = 0;
         myData.angle = 0;
-        myData.bullets = 0;
-        myData.died = false;
+        imAlive = false;
     }
 
     private static String connection_type_to_string( MrsConnection connection ){
@@ -276,6 +276,9 @@ public class MrsClient : Mrs {
                     {
                         GameManager.players[data.id].transform.position = new Vector3(data.x, data.y, 0);
                         GameManager.players[data.id].transform.eulerAngles = new Vector3(0.0f, 0.0f, data.angle);
+                        
+                        // 送信側プレイヤーが死んでいるなら受信側のクライアントでも死なす
+                        if (data.dead) { GameManager.players[data.id].transform.GetComponent<Player>().isDead = data.dead;}
                     }
                     //MRS_LOG_DEBUG("RECEIVED DATA  pos_x:{0} pos_y:{1} pos_z:{2} look:{3} move:{4} ammos:{5}"
                     //    data.x, data.y, data.z, data.angle, data.move_a, data.ammos);
@@ -527,15 +530,14 @@ public class MrsClient : Mrs {
     /// </summary>
     void CompareMyData()
     {
-        if (!GameManager.players[GameManager.playID].GetComponent<Player>().isDead)
+        // 前フレームで死んでいるなら、他プレイヤーに座標データは送信しない
+        if (!myNewData.dead)
         {
             myNewData.id = GameManager.playID;
             myNewData.x = GameManager.players[GameManager.playID].transform.position.x;
             myNewData.y = GameManager.players[GameManager.playID].transform.position.y;
             myNewData.angle = GameManager.players[GameManager.playID].transform.localEulerAngles.z;
-            myNewData.bullets = 1;
-            myNewData.died = false;
-
+            myNewData.dead = GameManager.players[GameManager.playID].transform.GetComponent<Player>().isDead;
             IntPtr p_data = Marshal.AllocHGlobal(Marshal.SizeOf(myNewData));
             Marshal.StructureToPtr(myNewData, p_data, false);
             if (g_nowconnect != null)
@@ -546,8 +548,6 @@ public class MrsClient : Mrs {
             }
             Marshal.FreeHGlobal(p_data);
             myData = myNewData;
-
-            PlayerInput inputScript = GameManager.players[GameManager.playID].GetComponent<PlayerInput>();
 
         }
     }
@@ -564,7 +564,6 @@ public class MrsClient : Mrs {
         shot.x = _x;
         shot.y = _y;
         shot.angle = _angle;
-        shot.died = false;
 
         IntPtr p_shotdata = Marshal.AllocHGlobal(Marshal.SizeOf(shot));
         Marshal.StructureToPtr(shot, p_shotdata, false);
@@ -591,6 +590,11 @@ public class MrsClient : Mrs {
         Marshal.FreeHGlobal(blank);
     }
 
+    
+    public void SendPlayerDied()
+    {
+    }
+
 
     /// <summary>
     /// 接続に必要な情報を外部からセット
@@ -602,4 +606,5 @@ public class MrsClient : Mrs {
         g_ArgServerAddr = _ip;
         netsettings.SetProfile(-1, _name, -1);
     }
+
 }

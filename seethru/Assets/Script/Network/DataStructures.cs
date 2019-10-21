@@ -8,6 +8,7 @@ namespace DataStructures
     /// <summary>
     /// プレイヤーのプロファイル構造体
     /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
     public struct S_DataProfile
     {
         //[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 20)]
@@ -20,13 +21,13 @@ namespace DataStructures
     /// <summary>
     /// プレイヤーの座標等データ
     /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
     public struct S_DataPlayer
     {
         public uint id;
         public float x, y;
         public float angle;
-        public int bullets;
-        public bool died;
+        public bool dead;
     }
 
     /// <summary>
@@ -36,12 +37,12 @@ namespace DataStructures
     {
         public float x, y;
         public float angle;
-        public bool died;
     }
 
     /// <summary>
     ///  ゲーム開始用の初期化データ構造体
     /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
     public struct S_StartingData
     {
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
