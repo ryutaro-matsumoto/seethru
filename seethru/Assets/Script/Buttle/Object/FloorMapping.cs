@@ -15,7 +15,6 @@ public class FloorMapping : MonoBehaviour
     // Start is called before the first frame update
     void Awake(){
 		GameObject floorPrefab = Resources.Load("Prefab/Object/FloorChip") as  GameObject;
-
 		
 		for(int i = 0; i < width / 2 && i < height / 2; i++ ){
 			for(int j = i; j < width - i; ++j){
@@ -31,8 +30,6 @@ public class FloorMapping : MonoBehaviour
 				Instantiate(floorPrefab, new Vector3((float)i - width / 2f + 0.5f, (float)j - (float)height / 2f + 0.5f, 0f), Quaternion.identity).transform.SetParent(transform);
 			}
 		}
-
-		FallFloor();
 	}
 
 	public void FallFloor(){
