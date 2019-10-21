@@ -533,22 +533,24 @@ public class MrsClient : Mrs {
         // 前フレームで死んでいるなら、他プレイヤーに座標データは送信しない
         if (!myNewData.dead)
         {
-            myNewData.id = GameManager.playID;
-            myNewData.x = GameManager.players[GameManager.playID].transform.position.x;
-            myNewData.y = GameManager.players[GameManager.playID].transform.position.y;
-            myNewData.angle = GameManager.players[GameManager.playID].transform.localEulerAngles.z;
-            myNewData.dead = GameManager.players[GameManager.playID].transform.GetComponent<Player>().isDead;
-            IntPtr p_data = Marshal.AllocHGlobal(Marshal.SizeOf(myNewData));
-            Marshal.StructureToPtr(myNewData, p_data, false);
-            if (g_nowconnect != null)
+            if (GameManager.players != null)
             {
-                g_paytype = 0x12;
-                mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)Marshal.SizeOf(myNewData));
-                MRS_LOG_DEBUG("SEND MY DATA");
+                myNewData.id = GameManager.playID;
+                myNewData.x = GameManager.players[GameManager.playID].transform.position.x;
+                myNewData.y = GameManager.players[GameManager.playID].transform.position.y;
+                myNewData.angle = GameManager.players[GameManager.playID].transform.localEulerAngles.z;
+                myNewData.dead = GameManager.players[GameManager.playID].transform.GetComponent<Player>().isDead;
+                IntPtr p_data = Marshal.AllocHGlobal(Marshal.SizeOf(myNewData));
+                Marshal.StructureToPtr(myNewData, p_data, false);
+                if (g_nowconnect != null)
+                {
+                    g_paytype = 0x12;
+                    mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)Marshal.SizeOf(myNewData));
+                    MRS_LOG_DEBUG("SEND MY DATA");
+                }
+                Marshal.FreeHGlobal(p_data);
+                myData = myNewData;
             }
-            Marshal.FreeHGlobal(p_data);
-            myData = myNewData;
-
         }
     }
 
