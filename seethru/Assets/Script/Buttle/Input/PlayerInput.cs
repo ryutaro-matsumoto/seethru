@@ -8,6 +8,7 @@ public class PlayerInput : MonoBehaviour
 	Rigidbody2D rb2d;
 	Pool bulletPool;
 	Player player;
+	Animator anim;
 
 	// ゲームオブジェクト
 	GameObject pointer;
@@ -40,6 +41,8 @@ public class PlayerInput : MonoBehaviour
 		player = GetComponent<Player>();
 
 		playerVector = new Vector2(0.0f, 1.0f);
+
+		anim = transform.GetChild(6).GetComponent<Animator>();
 	}
 
 	// Update is called once per frame
@@ -122,14 +125,26 @@ public class PlayerInput : MonoBehaviour
 	/// 移動処理
 	/// </summary>
 	private void Move(){
+		
 		Vector2 moveVector = playerVector * inputMove;
 		rb2d.AddForce(moveForceMultiplier * (moveVector - rb2d.velocity));
+
+		anim.SetFloat("RunSpeed", inputMove);
+
+		if(inputMove != 0f){
+			anim.SetBool("Run", true);
+			Debug.Log("anim Run");
+		}
+		else {
+			anim.SetBool("Run", false);
+		}
 	}
 
 
 	private void Attack(){
 		if(inputAttack && !inputAttackBuff){
 			if(player.bullet > 0){
+				//anim.SetBool("Attack", true);
 				bulletPool.Place(bulletStart.transform.position, transform.rotation);
 				if (GameManager.onNetwork) {
 					GameManager.connection.SendShootData(bulletStart.transform.position.x, bulletStart.transform.position.y, transform.eulerAngles.z);

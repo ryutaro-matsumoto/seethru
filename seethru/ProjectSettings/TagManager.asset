@@ -12,6 +12,7 @@ TagManager:
   - StartPosition
   - Floor
   - Reload
+  - Model
   layers:
   - Default
   - TransparentFX
