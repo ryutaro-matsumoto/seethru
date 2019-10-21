@@ -19,8 +19,10 @@ public class GameManager : MonoBehaviour
 
 	static private int[] startPositonIDTable;	
 
-	private void Awake() {
+	static private Color[] playerColor = new Color[4];
+ 	private void Awake() {
 		DontDestroyOnLoad(this);
+
 	}
 
 
@@ -92,8 +94,12 @@ public class GameManager : MonoBehaviour
 			return;
 		}
 
-		players = new GameObject[playerNum];
+		playerColor[0] = new Color(1f, 1f, 1f);
+		playerColor[1] = new Color(0f, 1f, 0f);
+		playerColor[2] = new Color(0f, 0f, 1f);
+		playerColor[3] = new Color(1f, 0f, 0f);
 
+		players = new GameObject[playerNum];
 
 		GameObject[] startPositions = GameObject.FindGameObjectsWithTag("StartPosition");
 
@@ -107,11 +113,20 @@ public class GameManager : MonoBehaviour
 		for (int i = 0; i < playerNum; ++i) {
 			if (i == playID) {
 				players[i] = MonoBehaviour.Instantiate(mainPlayerPrefab, startPositions[startPositonIDTable[i]].transform.position, startPositions[startPositonIDTable[i]].transform.rotation);
+				players[i].transform.GetChild(6).GetChild(2).GetChild(1).gameObject.GetComponent<SkinnedMeshRenderer>().material.color = playerColor[i];
+				players[i].transform.GetChild(6).GetChild(2).GetChild(3).gameObject.GetComponent<SkinnedMeshRenderer>().material.color = playerColor[i];
+				players[i].transform.GetChild(6).GetChild(2).GetChild(5).gameObject.GetComponent<SkinnedMeshRenderer>().material.color = playerColor[i];
 				continue;
 			}
 			players[i] = MonoBehaviour.Instantiate(otherPlayerPrefab, startPositions[startPositonIDTable[i]].transform.position, startPositions[startPositonIDTable[i]].transform.rotation);
+			players[i].transform.GetChild(4).GetChild(2).GetChild(1).gameObject.GetComponent<SkinnedMeshRenderer>().material.color = playerColor[i];
+			players[i].transform.GetChild(4).GetChild(2).GetChild(3).gameObject.GetComponent<SkinnedMeshRenderer>().material.color = playerColor[i];
+			players[i].transform.GetChild(4).GetChild(2).GetChild(5).gameObject.GetComponent<SkinnedMeshRenderer>().material.color = playerColor[i];
 		}
+
 		bulletPool = GameObject.Find("BulletPool").GetComponent<Pool>();
+
+
 	}
 
 
