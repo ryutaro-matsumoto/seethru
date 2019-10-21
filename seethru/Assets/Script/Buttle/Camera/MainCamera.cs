@@ -21,6 +21,7 @@ public class MainCamera : MonoBehaviour
 	private Vector3 oldPostion = Vector3.zero;
 	private void Start() {
 		c_camera = GetComponent<Camera>();
+		lookatObject = GameObject.Find("LookatObject").GetComponent<LookatObject>();
 	}
 
 	// Update is called once per frame

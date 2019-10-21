@@ -27,6 +27,9 @@ public class ResultSystem : MonoBehaviour
     // ウィンドウイメージ
     public Image image;
 
+	public string backTitle = "TitleScene";
+	public string backRoom = "MatchRoom";
+
     // スタート時BGM/SE再生
     IEnumerator Playsound()
     {
@@ -61,7 +64,7 @@ public class ResultSystem : MonoBehaviour
     public void ClickRoomBack()
     {
         clickEnter.PlayOneShot(clickEnter.clip);
-        FadeManeger.Fadeout("ResultScene");
+        FadeManeger.Fadeout(backRoom);
     }
 
     //===========================================================
@@ -72,6 +75,7 @@ public class ResultSystem : MonoBehaviour
     public void ClickRoomExit()
     {
         clickEnter.PlayOneShot(clickEnter.clip);
-        FadeManeger.Fadeout("TitleScene");
+        FadeManeger.Fadeout(backTitle);
+		GameManager.connection.DisconnectRoom();
     }
 }
