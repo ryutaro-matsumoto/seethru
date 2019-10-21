@@ -5,6 +5,7 @@ using UnityEngine;
 public class FloorChip : MonoBehaviour
 {
 	public float fallSpeed = 1f;
+	public float scaleSpeed = 2f;
 
 	private bool isFall = false;
 
@@ -14,6 +15,10 @@ public class FloorChip : MonoBehaviour
 		scale = transform.localScale.x;
 	}
 
+
+	private void FixedUpdate() {
+		
+	}
 	private void Update() {
 		if(isFall){
 			scale -= fallSpeed * Time.deltaTime;
@@ -21,6 +26,11 @@ public class FloorChip : MonoBehaviour
 			if (scale <= 0) {
 				gameObject.SetActive(false);
 			}
+
+			Vector3 newPosition = transform.position;
+			newPosition.z += scaleSpeed * Time.deltaTime; ;
+
+			transform.position = newPosition;
 		}
 	}
 

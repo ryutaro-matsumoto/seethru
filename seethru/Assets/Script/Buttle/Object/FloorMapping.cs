@@ -19,16 +19,16 @@ public class FloorMapping : MonoBehaviour
 		
 		for(int i = 0; i < width / 2 && i < height / 2; i++ ){
 			for(int j = i; j < width - i; ++j){
-				Instantiate(floorPrefab, new Vector3((float)j - (float)width / 2f + 0.5f, (float)i - (float)height / 2f + 0.5f, 1f), Quaternion.identity).transform.SetParent(transform);
+				Instantiate(floorPrefab, new Vector3((float)j - (float)width / 2f + 0.5f, (float)i - (float)height / 2f + 0.5f, 0f), Quaternion.identity).transform.SetParent(transform);
 			}
 			for (int j = i + 1; j < height - i; ++j) {
-				Instantiate(floorPrefab, new Vector3((float)(width - 1 - i) - width / 2f + 0.5f, (float)j - (float)height / 2f + 0.5f, 1f), Quaternion.identity).transform.SetParent(transform);
+				Instantiate(floorPrefab, new Vector3((float)(width - 1 - i) - width / 2f + 0.5f, (float)j - (float)height / 2f + 0.5f, 0f), Quaternion.identity).transform.SetParent(transform);
 			}
 			for (int j = width - i - 2; j >= i; --j) {
-				Instantiate(floorPrefab, new Vector3((float)j - (float)width / 2f + 0.5f, (float)(height - i - 1) - (float)height / 2f + 0.5f, 1f), Quaternion.identity).transform.SetParent(transform);
+				Instantiate(floorPrefab, new Vector3((float)j - (float)width / 2f + 0.5f, (float)(height - i - 1) - (float)height / 2f + 0.5f, 0f), Quaternion.identity).transform.SetParent(transform);
 			}
 			for (int j = height - i - 2; j >= i + 1; --j) {
-				Instantiate(floorPrefab, new Vector3((float)i - width / 2f + 0.5f, (float)j - (float)height / 2f + 0.5f, 1f), Quaternion.identity).transform.SetParent(transform);
+				Instantiate(floorPrefab, new Vector3((float)i - width / 2f + 0.5f, (float)j - (float)height / 2f + 0.5f, 0f), Quaternion.identity).transform.SetParent(transform);
 			}
 		}
 
