@@ -16,6 +16,7 @@ public class LookatObject : MonoBehaviour
 	// Update is called once per frame
 	void Update()
     {
+		if(GameManager.livePlayer <= 1){ return; }
 		GameObject[] playerx = { null, null };
 		GameObject[] playery = { null, null };
 

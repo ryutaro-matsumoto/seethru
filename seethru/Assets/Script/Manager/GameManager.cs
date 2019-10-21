@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour
 	static private int[] startPositonIDTable;	
 
 	static private Color[] playerColor = new Color[4];
+
+	static public uint livePlayer = 0;
+
  	private void Awake() {
 		DontDestroyOnLoad(this);
 
@@ -94,6 +97,8 @@ public class GameManager : MonoBehaviour
 			return;
 		}
 
+		livePlayer = playerNum;
+
 		playerColor[0] = new Color(1f, 1f, 1f);
 		playerColor[1] = new Color(0f, 1f, 0f);
 		playerColor[2] = new Color(0f, 0f, 1f);
@@ -125,8 +130,6 @@ public class GameManager : MonoBehaviour
 		}
 
 		bulletPool = GameObject.Find("BulletPool").GetComponent<Pool>();
-
-
 	}
 
 
