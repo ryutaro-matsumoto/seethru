@@ -609,4 +609,11 @@ public class MrsClient : Mrs {
         netsettings.SetProfile(-1, _name, -1);
     }
 
+
+
+    public void DisconnectRoom()
+    {
+        mrs_close(g_nowconnect);
+        g_gameon = false;
+    }
 }
