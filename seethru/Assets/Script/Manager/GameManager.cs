@@ -144,4 +144,6 @@ public class GameManager : MonoBehaviour
 	public static void OffConnection(){
 		connection = null;
 	}
+
+	public static void FallFloor(){ }
 }
