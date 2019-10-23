@@ -7,29 +7,30 @@ public class FallTimer : MonoBehaviour
 	public float fallInterval = 20f;
 
 	private FloorMap floormap;
-	private MMJGameServer.Timer timer = new MMJGameServer.Timer();
+	private readonly MMJGameServer.Timer timer = new MMJGameServer.Timer();
 
-	private int fallCount = 1;
-
+	bool onTimer = false;
 	// Start is called before the first frame update
 	void Start()
     {
 		floormap = GameManager.floorMap;
-		StartTimer();
     }
 
     // Update is called once per frame
     void Update(){
-		if (timer.FElapsedSeconds > fallInterval) {
-			timer.Stop();
-			timer.Reset();
-			timer.Start();
-			Fall();
+		if(onTimer){
+			if (timer.FElapsedSeconds > fallInterval) {
+				timer.Stop();
+				timer.Reset();
+				timer.Start();
+				Fall();
+			}
 		}
-    }
+	}
 
 	public void StartTimer(){
 		timer.Start();
+		onTimer = true;
 	}
 
 	private void Fall(){

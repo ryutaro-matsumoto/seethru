@@ -5,40 +5,55 @@ using UnityEngine;
 public class CountDownTimer : MonoBehaviour
 {
 	MMJGameServer.Timer timer = new MMJGameServer.Timer();
-	public int StartCount = 3;
+	public int startCount = 0;
 
-	private int nowCount = 0;
-	private int prevCount = 0;
+	public float interval = 3f;
 
 	private bool isCountDown = false;
     // Start is called before the first frame update
     void Start()
     {
-        
+		CountStart();
     }
 
     // Update is called once per frame
     void Update()
     {
 		if(isCountDown){
-			nowCount = StartCount - timer.IElapsedSeconds;
-			if (nowCount < prevCount) {
-				CountDown(nowCount);
+			if (timer.FElapsedSeconds > interval) {
+				timer.Stop();
+				timer.Reset();
+				timer.Start();
+				SendCountDown(startCount);
+				startCount++;
 			}
-			prevCount = nowCount;
 		}
 	}
 
 	public void CountStart(){
 		timer.Start();
-		nowCount = StartCount;
-		prevCount = StartCount;
-		CountDown(StartCount);
+		transform.GetChild(0).gameObject.SetActive(true);
+		startCount++;
 		isCountDown = true;
 	}
 
-	private void CountDown(int cnt){
+	public void CountDown(int cnt){
+		transform.GetChild(cnt - 1).gameObject.SetActive(false);
+		transform.GetChild(cnt).gameObject.SetActive(true);
 
+		if(cnt >= transform.childCount - 1){
+			GetComponent<FallTimer>().StartTimer();
+			GameManager.players[GameManager.playID].GetComponent<PlayerInput>().isInput = true;
+ 			isCountDown = false; 
+		}
+	}
 
+	private void SendCountDown(int cnt){
+		if(GameManager.onNetwork){
+			
+		}
+		else{
+			CountDown(cnt);
+		}
 	}
 }
