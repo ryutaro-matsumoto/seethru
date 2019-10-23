@@ -19,7 +19,7 @@ public class PlayerInput : MonoBehaviour
 	public float rotateSpeed;
 	public float moveForceMultiplier;
 
-	public bool isInput = true;
+	public bool isInput = false;
 
 	[SerializeField]
 	private GameObject bulletStart;

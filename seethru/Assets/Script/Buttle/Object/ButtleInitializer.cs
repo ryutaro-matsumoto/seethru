@@ -17,5 +17,7 @@ public class ButtleInitializer : MonoBehaviour
 			GameManager.players[i].name = "player" + i;
 		}
     }
-
+	private void Start() {
+		FadeManeger.Fadein();
+	}
 }
