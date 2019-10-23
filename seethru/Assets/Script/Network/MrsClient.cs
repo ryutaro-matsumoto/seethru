@@ -301,6 +301,16 @@ public class MrsClient : Mrs {
                 }
                 break;
 
+                // 0x07 : 選択中のステージ番号
+            case 0x07:
+                {
+                    byte[] data = new byte[payload_len];
+                    Marshal.Copy(data, 0, payload, (int)payload_len);
+
+                    //GameManager.SetStageNumber_FUNCTION(BitConverter.ToInt32(data, 0));
+                }
+                break;
+
             // 0x12 : [data.id]番目のプレイヤーの座標データが送られてきた
             case 0x12:
                 {
@@ -738,6 +748,21 @@ public class MrsClient : Mrs {
         MRS_LOG_DEBUG("SENT COUNT DOWN TIME  TIMES LEFT: {0}",_second);
     }
 
+    /// <summary>
+    /// 現在選択中のステージ番号を送信
+    /// </summary>
+    /// <param name="_stagenum">ステージ番号</param>
+    public void SendStageNumber(int _stagenum)
+    {
+        g_paytype = 0x07;
+        byte[] sendTime = System.Text.Encoding.ASCII.GetBytes(string.Format("{0}", _stagenum));
+        mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, sendTime, (uint)sendTime.Length);
+        MRS_LOG_DEBUG("SENT STAGE NUMBER : {0}", _stagenum);
+    }
+
+    /// <summary>
+    /// ゲームスタートしたらオンにして
+    /// </summary>
     public void setGameStartFlag()
     {
         g_gameon = true;

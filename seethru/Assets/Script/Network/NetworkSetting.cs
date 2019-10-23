@@ -43,7 +43,7 @@ public class NetworkSetting : MonoBehaviour
     {
         this.gameObject.SetActive(false);
 
-        mrsClient = mrsClient.GetComponent<MrsClient>();
+        mrsClient = GameObject.Find("ClientObject").GetComponent<MrsClient>();
         mrsClient.SetSettings(ipAddress, playerName);
         mrsClient.StartEchoClient();
 
