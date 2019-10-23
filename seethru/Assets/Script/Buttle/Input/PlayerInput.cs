@@ -19,6 +19,8 @@ public class PlayerInput : MonoBehaviour
 	public float rotateSpeed;
 	public float moveForceMultiplier;
 
+	public bool isInput = true;
+
 	[SerializeField]
 	private GameObject bulletStart;
 
@@ -47,11 +49,16 @@ public class PlayerInput : MonoBehaviour
 
 	// Update is called once per frame
 	void Update() {
-		GetInput();
-    }
+		if(isInput){
+			GetInput();
+			AngleCalc();
+		}
+		else {
+			inputMove = 0f;
+		}
+	}
 
 	private void FixedUpdate() {
-		AngleCalc();
 
 		Move();
 

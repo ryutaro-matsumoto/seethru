@@ -9,8 +9,7 @@ public class MainCamera : MonoBehaviour
 
 	private Camera c_camera;
 
-	public float moveSpeed = 0.1f;
-	public float scalingSpeed = 0.1f;
+	public float scalingSpeed = 0.05f;
 
 	public float size = 2f;
 
@@ -22,32 +21,32 @@ public class MainCamera : MonoBehaviour
 	private Vector3 oldPostion = Vector3.zero;
 	private void Start() {
 		c_camera = GetComponent<Camera>();
+		lookatObject = GameObject.Find("LookatObject").GetComponent<LookatObject>();
 	}
 
 	// Update is called once per frame
 	void LateUpdate(){
-		Vector3 newPosition = transform.position;
+		Vector3 newPosition = lookatObject.transform.position;
 
-		newPosition = Vector3.Lerp(oldPostion, lookatObject.transform.position, moveSpeed);
-
-		transform.LookAt(newPosition);
-
-		oldPostion = newPosition;
+		transform.LookAt(lookatObject.transform);
 
 		newPosition.y -= adjustPos;
-		newPosition.z = transform.position.z;
 
-		transform.position = newPosition;
 
 		if (lookatObject.Distance.y * ((float)Screen.width / (float)Screen.height) < lookatObject.Distance.x){
+			newPosition.z = Mathf.Lerp(transform.position.z, -(((lookatObject.Distance.x * ((float)Screen.height / (float)Screen.width)) / 2f) / Mathf.Tan(30f * Mathf.Deg2Rad) + size), scalingSpeed);
 			c_camera.orthographicSize = Mathf.Lerp(c_camera.orthographicSize, ((lookatObject.Distance.x * ((float)Screen.height / (float)Screen.width)) / 2f) + size, scalingSpeed);
 		}
 		else{
+			newPosition.z = Mathf.Lerp(transform.position.z, -((lookatObject.Distance.y / 2) / Mathf.Tan(30f * Mathf.Deg2Rad) + size), scalingSpeed);
 			c_camera.orthographicSize = Mathf.Lerp(c_camera.orthographicSize, (lookatObject.Distance.y / 2f) + size, scalingSpeed);
 		}
 
 		if(c_camera.orthographicSize < minSize){
 			c_camera.orthographicSize = minSize;
 		}
+
+		transform.position = newPosition;
+
 	}
 }
