@@ -240,7 +240,7 @@ public class MrsClient : Mrs {
     }
     
     private static void parse_record( MrsConnection connection, IntPtr connection_data, UInt32 seqnum, UInt16 options, UInt16 payload_type, IntPtr payload, UInt32 payload_len ){
-        //MRS_LOG_DEBUG( "parse_record seqnum={0} options=0x{1:X2} payload=0x{2:X2}/{3}", seqnum, options, payload_type, payload_len );
+        MRS_LOG_DEBUG( "parse_record seqnum={0} options=0x{1:X2} payload=0x{2:X2}/{3}", seqnum, options, payload_type, payload_len );
         // MRS_PAYLOAD_TYPE_BEGIN - MRS_PAYLOAD_TYPE_ENDの範囲内で任意のIDを定義し、対応するアプリケーションコードを記述する
         switch (payload_type)
         {
@@ -251,7 +251,9 @@ public class MrsClient : Mrs {
                     S_DataProfile data = (S_DataProfile)Marshal.PtrToStructure(payload, typeof(S_DataProfile));
 
                     GameManager.ConnectionServer((uint)data.player_id, myClient);
-                    netsettings.SetProfile(data.player_id, g_playerName, data.spawn_id);
+                    netsettings.SetProfile(data.player_id, g_playerName);
+                    g_roomManager.setMyID(data.player_id);
+                    g_roomManager.UpdateProfileList(data.player_id, g_playerName);
                 }
                 break;
 
@@ -260,8 +262,7 @@ public class MrsClient : Mrs {
                 {
                     S_DataProfile data = (S_DataProfile)Marshal.PtrToStructure(payload, typeof(S_DataProfile));
 
-                    MRS_LOG_DEBUG("JOINED No:{0}", data.player_id);
-                    g_roomManager.UpdateNameList(data.player_id, string.Format("Player {0}", data.player_id + 1));
+                    g_roomManager.UpdateProfileList(data.player_id, data.name);
                 }
                 break;
 
@@ -270,7 +271,7 @@ public class MrsClient : Mrs {
                 {
                     S_StartingData starting = (S_StartingData)Marshal.PtrToStructure(payload, typeof(S_StartingData));
                     MRS_LOG_DEBUG("Starting... Table:{0} countPlayers:{1}", String.Join(", ", starting.spawnid), starting.sumplayer);
-                    MRS_LOG_DEBUG("My player number is : {0} !", GameManager.playID);
+
                     InitMrsforGame(starting);
                     g_playercount = starting.sumplayer;
                 }
@@ -280,6 +281,23 @@ public class MrsClient : Mrs {
             case 0x04:
                 {
                     g_gameon = true;
+                }
+                break;
+
+                // 0x05 : カウントダウン開始タイミング受け取り
+            case 0x05:
+                {
+                    //GameManager.COUNTDOWNSTART_FUNCTION;
+                }
+                break;
+
+                // 0x06 : 試合開始のカウントダウン時間受け取り
+            case 0x06:
+                {
+                    byte[] data = new byte[payload_len];
+                    Marshal.Copy(data, 0, payload, (int)payload_len);
+
+                    //GameManager.SetCountDown(BitConverter.ToInt32(data, 0));
                 }
                 break;
 
@@ -403,7 +421,7 @@ public class MrsClient : Mrs {
     // 鍵交換した時に呼ばれる
     [AOT.MonoPInvokeCallback(typeof(MrsKeyExchangeCallback))]
     private static void on_key_exchange( MrsConnection connection, IntPtr connection_data ){
-        MRS_LOG_DEBUG( "on_key_exchange" );
+        //MRS_LOG_DEBUG( "on_key_exchange" );
         connected = true;
         g_paytype = 0x01;
         IntPtr p_data = Marshal.AllocHGlobal(Marshal.SizeOf(netsettings.GetMyProfile()));
@@ -469,7 +487,7 @@ public class MrsClient : Mrs {
     
     // フォールバック接続時に呼ばれる
     private static void on_fallback_connect( MrsConnection connection, mrs.Connect.Request request ){
-        MRS_LOG_DEBUG( "on_fallback_connect connection_type="+ request.ConnectionType +" addr="+ request.Addr +" port="+ request.Port +" timeout_msec="+ request.TimeoutMsec );
+        //MRS_LOG_DEBUG( "on_fallback_connect connection_type="+ request.ConnectionType +" addr="+ request.Addr +" port="+ request.Port +" timeout_msec="+ request.TimeoutMsec );
         mrs_set_connect_callback( connection, on_connect );
         mrs_set_disconnect_callback( connection, on_disconnect );
         mrs_set_error_callback( connection, on_error );
@@ -483,9 +501,9 @@ public class MrsClient : Mrs {
     }
     
     public void StartEchoClient(){
-        MRS_LOG_DEBUG( "connection_type={0} is_key_exchange={1} is_encrypt_records={2} write_data_len={3} write_count={4} connections={5} server_addr={6} server_port={7} timeout_msec={8} is_valid_record={9} connection_path={10}",
-            g_ArgConnectionType, g_ArgIsKeyExchange, g_ArgIsEncryptRecords, g_ArgWriteDataLen, g_ArgWriteCount, g_ArgConnections,
-            g_ArgServerAddr, g_ArgServerPort, g_ArgTimeoutMsec, g_ArgIsValidRecord, g_ArgConnectionPath );
+        //MRS_LOG_DEBUG( "connection_type={0} is_key_exchange={1} is_encrypt_records={2} write_data_len={3} write_count={4} connections={5} server_addr={6} server_port={7} timeout_msec={8} is_valid_record={9} connection_path={10}",
+        //    g_ArgConnectionType, g_ArgIsKeyExchange, g_ArgIsEncryptRecords, g_ArgWriteDataLen, g_ArgWriteCount, g_ArgConnections,
+        //    g_ArgServerAddr, g_ArgServerPort, g_ArgTimeoutMsec, g_ArgIsValidRecord, g_ArgConnectionPath );
 
         g_nowconnect = new MrsConnection();
 
@@ -547,7 +565,7 @@ public class MrsClient : Mrs {
                 g_nowconnect = client;
                 netsettings.connection = client;
                 if ( MrsConnection.Zero == client ){
-                    MRS_LOG_ERR( "mrs_connect[{0}]: {1}", i, ToString( mrs_get_error_string( mrs_get_last_error() ) ) );
+                    //MRS_LOG_ERR( "mrs_connect[{0}]: {1}", i, ToString( mrs_get_error_string( mrs_get_last_error() ) ) );
                     break;
                 }
             }
@@ -605,7 +623,6 @@ public class MrsClient : Mrs {
                 {
                     mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)Marshal.SizeOf(myNewData));
                     //MRS_LOG_DEBUG("SEND MY DATA");
-                    MRS_LOG_DEBUG("angle : {0}", myNewData.angle);
                 }
                 Marshal.FreeHGlobal(p_data);
                 myData = myNewData;
@@ -664,7 +681,7 @@ public class MrsClient : Mrs {
     {
         g_playerName = _name;
         g_ArgServerAddr = _ip;
-        netsettings.SetProfile(-1, _name, -1);
+        netsettings.SetProfile(-1, _name);
     }
 
 
@@ -691,11 +708,38 @@ public class MrsClient : Mrs {
         g_roomManager = _roomMng;
     }
 
+    /// <summary>
+    /// 床落下のタイミングを送信
+    /// </summary>
     public void SendFallFloor()
     {
         g_paytype = 0x15;
         byte[] blank = System.Text.Encoding.ASCII.GetBytes("1");
         mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, blank, (uint)blank.Length);
         MRS_LOG_DEBUG("SENT FALL FLOOR");
+    }
+
+    public void SendCountDownStart()
+    {
+        g_paytype = 0x05;
+        byte[] blank = System.Text.Encoding.ASCII.GetBytes("1");
+        mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, blank, (uint)blank.Length);
+    }
+
+    /// <summary>
+    /// あと＊秒のカウントダウンをサーバーに送信
+    /// </summary>
+    /// <param name="_second">残りのカウントダウン時間</param>
+    public void SendCountDown(int _second)
+    {
+        g_paytype = 0x06;
+        byte[] sendTime = System.Text.Encoding.ASCII.GetBytes(string.Format("{0}",_second));
+        mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, sendTime, (uint)sendTime.Length);
+        MRS_LOG_DEBUG("SENT COUNT DOWN TIME  TIMES LEFT: {0}",_second);
+    }
+
+    public void setGameStartFlag()
+    {
+        g_gameon = true;
     }
 }

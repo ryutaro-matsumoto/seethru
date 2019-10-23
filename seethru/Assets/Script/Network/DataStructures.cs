@@ -11,11 +11,10 @@ namespace DataStructures
     [StructLayout(LayoutKind.Sequential)]
     public struct S_DataProfile
     {
-        //[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 20)]
-        //public string name;
-
         public int player_id;
-        public int spawn_id;
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 20)]
+        public string name;
     }
 
     /// <summary>

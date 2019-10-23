@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class RoomManager : MonoBehaviour
 {
+    DataStructures.S_DataProfile[] profile;
 
     string[] playerName;
     bool[] readyFlag;
@@ -16,15 +17,20 @@ public class RoomManager : MonoBehaviour
 
     MrsClient mrsClient;
 
+    
+
     // Start is called before the first frame update
     void Start()
     {
         playerList = GameObject.Find("PlayerList");
+        profile = new DataStructures.S_DataProfile[4];
         playerName = new string[4];
         readyFlag = new bool[4];
         for (int i = 0; i < 4; i++)
         {
-            playerName[i] = "";
+            profile[i] = new DataStructures.S_DataProfile();
+            profile[i].player_id = i;
+            profile[i].name = "";
             readyFlag[i] = false;
         }
         playerName[0] = "hostman";
@@ -40,15 +46,21 @@ public class RoomManager : MonoBehaviour
                 
     }
 
-    public void UpdateNameList(int _id, string _name)
+    public void UpdateNameList()
     {
-        playerName[_id] = _name;
-
         for(int i = 0; i < 4; i++)
         {
-            if (playerName[i] == "") { playerList.transform.GetChild(i).GetComponent<Text>().text = "Waiting other player..."; }
-            else { playerList.transform.GetChild(i).GetComponent<Text>().text = playerName[i]; }
+            if (profile[i].name == "") { playerList.transform.GetChild(i).GetComponent<Text>().text = "Waiting other player..."; }
+            else { playerList.transform.GetChild(i).GetComponent<Text>().text = profile[i].name; }
+            if(myID == i) { playerList.transform.GetChild(i).GetComponent<Text>().text = "ITS ME"; }
         }
+    }
+
+    public void UpdateProfileList(int _id, string _name)
+    {
+        profile[_id].player_id = _id;
+        profile[_id].name = _name;
+        UpdateNameList();
     }
 
     public void PressReady()
@@ -72,4 +84,6 @@ public class RoomManager : MonoBehaviour
             mrsClient.SendRoomReady();
         }
     }
+
+    public void setMyID(int _id) { myID = _id; }
 }

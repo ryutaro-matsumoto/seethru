@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
 	/// 接続成功時、この関数を呼び出してね(MrsClient側で使用)
 	/// </summary>
 	/// <param name="id">サーバーから送られてきたID</param>
-	/// <param name="client">接続成功したクライアントクラス</param>
+	/// data<param name="client">接続成功したクライアントクラス</param>
 	static public void ConnectionServer(uint id, MrsClient client){
 		ReceiveID(id);
 		SetConnection(client);

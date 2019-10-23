@@ -25,12 +25,11 @@ public class NetworkSettingData : MonoBehaviour
     /// <param name="_playerid">プレイヤーのID</param>
     /// <param name="_name">プレイヤーの名前</param>
     /// <param name="_spawnid">スポーンエリア番号</param>
-    public void SetProfile(int _playerid, string _name, int _spawnid)
+    public void SetProfile(int _playerid, string _name)
     {
         myProfile.player_id = _playerid;
-        //myProfile.name = _name;
-        myProfile.spawn_id = _spawnid;
-        Console.WriteLine("SetProfile id:{0} ", myProfile.player_id);
+        myProfile.name = _name;
+        Console.WriteLine("SetProfile id:{0} name:{1}", myProfile.player_id,myProfile.name);
     }
 
     /// <summary>
