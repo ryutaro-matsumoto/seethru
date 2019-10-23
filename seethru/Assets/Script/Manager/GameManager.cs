@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
 	static public FloorMap floorMap;
 	static public GameObject timeControler;
 
+	static public StageSelect stageSelect;
+
  	private void Awake() {
 		DontDestroyOnLoad(this);
 	}
@@ -152,15 +154,38 @@ public class GameManager : MonoBehaviour
 		connection = null;
 	}
 
+	//------------------------------------------------------------------------
+	/// <summary>
+	/// 床を落とす指示を受信時に実行
+	/// </summary>
 	public static void FallFloor(){
 		floorMap.FallFloor();
 	}
 
+	//------------------------------------------------------------------------
+	/// <summary>
+	/// 開始時のカウントダウン同期
+	/// </summary>
 	public static void CountDown(int cnt){
 		timeControler.GetComponent<CountDownTimer>().CountDown(cnt);
 	}
 
+	//------------------------------------------------------------------------
+	/// <summary>
+	/// カウントダウンの開始の同期
+	/// </summary>
 	public static void CountStart(){
 		timeControler.GetComponent<CountDownTimer>().CountStart();
+	}
+
+	//------------------------------------------------------------------------
+	/// <summary>
+	/// ホストが選択したステージの同期
+	/// </summary>
+	/// <param name="stage">ステージの番号</param>
+	public static void StageNumSelect(int stage){
+		stageSelect.transform.GetChild(0).GetChild(stageSelect.selectStage - 1).gameObject.SetActive(false);
+		stageSelect.selectStage = stage;
+		stageSelect.transform.GetChild(0).GetChild(stageSelect.selectStage - 1).gameObject.SetActive(true);
 	}
 }
