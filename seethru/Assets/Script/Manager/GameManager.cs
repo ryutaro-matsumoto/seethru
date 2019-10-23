@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
 
 	static public uint livePlayer = 0;
 
+	static public FloorMap floorMap;
+
  	private void Awake() {
 		DontDestroyOnLoad(this);
 
@@ -145,5 +147,7 @@ public class GameManager : MonoBehaviour
 		connection = null;
 	}
 
-	public static void FallFloor(){ }
+	public static void FallFloor(){
+		floorMap.FallFloor();
+	}
 }
