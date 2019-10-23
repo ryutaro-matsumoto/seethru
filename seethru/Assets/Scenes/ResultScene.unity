@@ -204,6 +204,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 151535168}
+  - component: {fileID: 151535169}
   m_Layer: 5
   m_Name: Result_Main
   m_TagString: Untagged
@@ -232,6 +233,18 @@ RectTransform:
   m_AnchoredPosition: {x: 7.9085, y: 90.850006}
   m_SizeDelta: {x: 292, y: 78}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &151535169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 151535167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 891800a12e921d04282f377a41c1ea33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &346811276
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,7 +510,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectSound: {fileID: 346811284}
-  effect: {fileID: 0}
 --- !u!82 &346811284
 AudioSource:
   m_ObjectHideFlags: 0
@@ -752,7 +764,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &605601352
 RectTransform:
   m_ObjectHideFlags: 0
@@ -934,6 +946,8 @@ MonoBehaviour:
   resultSound: {fileID: 1112166545}
   resultwindowSound: {fileID: 1112166546}
   image: {fileID: 1043679684}
+  backTitle: TitleScene
+  backRoom: MatchRoom
 --- !u!82 &1112166545
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1471,7 +1485,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectSound: {fileID: 1343418344}
-  effect: {fileID: 0}
 --- !u!82 &1343418344
 AudioSource:
   m_ObjectHideFlags: 0

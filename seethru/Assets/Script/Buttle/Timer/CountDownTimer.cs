@@ -13,13 +13,17 @@ public class CountDownTimer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-		CountStart();
+		SendCountStart();
     }
 
-    // Update is called once per frame
-    void Update()
+	private void Awake() {
+		GameManager.timeControler = gameObject;
+	}
+
+	// Update is called once per frame
+	void Update()
     {
-		if(isCountDown){
+		if(isCountDown && GameManager.playID == 0){
 			if (timer.FElapsedSeconds > interval) {
 				timer.Stop();
 				timer.Reset();
@@ -54,6 +58,15 @@ public class CountDownTimer : MonoBehaviour
 		}
 		else{
 			CountDown(cnt);
+		}
+	}
+
+	private void SendCountStart(){
+		if (GameManager.onNetwork) {
+
+		}
+		else {
+			CountStart();
 		}
 	}
 }

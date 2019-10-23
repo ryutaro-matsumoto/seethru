@@ -24,10 +24,10 @@ public class GameManager : MonoBehaviour
 	static public uint livePlayer = 0;
 
 	static public FloorMap floorMap;
+	static public GameObject timeControler;
 
  	private void Awake() {
 		DontDestroyOnLoad(this);
-
 	}
 
 
@@ -82,7 +82,8 @@ public class GameManager : MonoBehaviour
 	}
 
 	static private void ProtoStageSceneTranslation(){
-		SceneManager.LoadScene("ProtoScene");
+		FadeManeger.Fadeout("ProtoScene");
+		//SceneManager.LoadScene("ProtoScene");
 	}
 
 	static private void StageSceneTranslation(uint _stageId){
@@ -137,7 +138,9 @@ public class GameManager : MonoBehaviour
 
 		bulletPool = GameObject.Find("BulletPool").GetComponent<Pool>();
 
-        connection.SendStartingPos();
+		if(onNetwork){
+			connection.SendStartingPos();
+		}
 	}
 
 
@@ -153,5 +156,11 @@ public class GameManager : MonoBehaviour
 		floorMap.FallFloor();
 	}
 
-	public static void CountDown(int cnt){ }
+	public static void CountDown(int cnt){
+		timeControler.GetComponent<CountDownTimer>().CountDown(cnt);
+	}
+
+	public static void CountStart(){
+		timeControler.GetComponent<CountDownTimer>().CountStart();
+	}
 }
