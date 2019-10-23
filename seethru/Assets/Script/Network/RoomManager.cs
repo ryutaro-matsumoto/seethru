@@ -31,6 +31,7 @@ public class RoomManager : MonoBehaviour
 
 
         mrsClient = GameObject.Find("ClientObject").GetComponent<MrsClient>();
+        mrsClient.setRoomManager(this);
     }
 
     // Update is called once per frame
@@ -39,8 +40,10 @@ public class RoomManager : MonoBehaviour
                 
     }
 
-    void UpdateNameList()
+    public void UpdateNameList(int _id, string _name)
     {
+        playerName[_id] = _name;
+
         for(int i = 0; i < 4; i++)
         {
             if (playerName[i] == "") { playerList.transform.GetChild(i).GetComponent<Text>().text = "Waiting other player..."; }

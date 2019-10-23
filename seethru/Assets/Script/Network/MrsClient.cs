@@ -48,12 +48,16 @@ public class MrsClient : Mrs {
     private static bool connected;
     private static bool g_gameon;
     private static bool createMrs;
-    private static bool imAlive;
+    private static uint g_playercount = 0;
 
     protected static string g_playerName;
 
     private static MrsClient myClient;
+    private static RoomManager g_roomManager;
 
+    private bool updatefix = false;
+
+    private static System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
     
     static MrsClient()
     {
@@ -93,6 +97,7 @@ public class MrsClient : Mrs {
         g_Connect = new mrs.Connect();
         netsettings = gameObject.GetComponent<NetworkSettingData>();
         InitMyData();
+
 
         g_gameon = false;
         if (!createMrs)
@@ -188,7 +193,6 @@ public class MrsClient : Mrs {
     {
         GameManager.ProtoStart(_startdata.spawnid,_startdata.sumplayer);
 
-        g_gameon = true;
     }
 
     private void InitMyData()
@@ -196,7 +200,7 @@ public class MrsClient : Mrs {
         myData.x = 0;
         myData.y = 0;
         myData.angle = 0;
-        imAlive = false;
+        myData.dead = false;
     }
 
     private static String connection_type_to_string( MrsConnection connection ){
@@ -238,36 +242,48 @@ public class MrsClient : Mrs {
     private static void parse_record( MrsConnection connection, IntPtr connection_data, UInt32 seqnum, UInt16 options, UInt16 payload_type, IntPtr payload, UInt32 payload_len ){
         //MRS_LOG_DEBUG( "parse_record seqnum={0} options=0x{1:X2} payload=0x{2:X2}/{3}", seqnum, options, payload_type, payload_len );
         // MRS_PAYLOAD_TYPE_BEGIN - MRS_PAYLOAD_TYPE_ENDの範囲内で任意のIDを定義し、対応するアプリケーションコードを記述する
-        switch ( payload_type ){
+        switch (payload_type)
+        {
 
-                // 0x01 : 自分のプロファイルが返送されてきた
+            // 0x01 : 自分のプロファイルが返送されてきた
             case 0x01:
                 {
                     S_DataProfile data = (S_DataProfile)Marshal.PtrToStructure(payload, typeof(S_DataProfile));
 
                     GameManager.ConnectionServer((uint)data.player_id, myClient);
                     netsettings.SetProfile(data.player_id, g_playerName, data.spawn_id);
-                }break;
+                }
+                break;
 
-                // 0x02 : 誰かのプロファイルが送られてきた
+            // 0x02 : 誰かのプロファイルが送られてきた
             case 0x02:
                 {
                     S_DataProfile data = (S_DataProfile)Marshal.PtrToStructure(payload, typeof(S_DataProfile));
 
                     MRS_LOG_DEBUG("JOINED No:{0}", data.player_id);
+                    g_roomManager.UpdateNameList(data.player_id, string.Format("Player {0}", data.player_id + 1));
                 }
                 break;
 
-                // 0x03 : ゲームスタートの合図が送られてきた
+            // 0x03 : ゲームスタートの合図が送られてきた
             case 0x03:
                 {
                     S_StartingData starting = (S_StartingData)Marshal.PtrToStructure(payload, typeof(S_StartingData));
-                    MRS_LOG_DEBUG("Starting... Table:{0} countPlayers:{1}", String.Join(", ",starting.spawnid), starting.sumplayer);
+                    MRS_LOG_DEBUG("Starting... Table:{0} countPlayers:{1}", String.Join(", ", starting.spawnid), starting.sumplayer);
                     MRS_LOG_DEBUG("My player number is : {0} !", GameManager.playID);
                     InitMrsforGame(starting);
-                }break;
+                    g_playercount = starting.sumplayer;
+                }
+                break;
 
-                // 0x12 : [data.id]番目のプレイヤーの座標データが送られてきた
+            // 0x04 : サーバーサイドの全員の初期化同期完了
+            case 0x04:
+                {
+                    g_gameon = true;
+                }
+                break;
+
+            // 0x12 : [data.id]番目のプレイヤーの座標データが送られてきた
             case 0x12:
                 {
                     //MRS_LOG_DEBUG("RECEIVED DATA:{0}", payload);
@@ -276,41 +292,77 @@ public class MrsClient : Mrs {
                     {
                         GameManager.players[data.id].transform.position = new Vector3(data.x, data.y, 0);
                         GameManager.players[data.id].transform.eulerAngles = new Vector3(0.0f, 0.0f, data.angle);
-                        
+
                         // 送信側プレイヤーが死んでいるなら受信側のクライアントでも死なす
-                        if (data.dead) { GameManager.players[data.id].transform.GetComponent<Player>().isDead = data.dead;}
+                        if (data.dead) { GameManager.players[data.id].transform.GetComponent<Player>().isDead = data.dead; }
                     }
                     //MRS_LOG_DEBUG("RECEIVED DATA  pos_x:{0} pos_y:{1} pos_z:{2} look:{3} move:{4} ammos:{5}"
                     //    data.x, data.y, data.z, data.angle, data.move_a, data.ammos);
-                }break;
+                }
+                break;
 
-                // 0x13 : 発射された弾の座標と角度のデータが送られてきた
+            // 0x13 : 発射された弾の座標と角度のデータが送られてきた
             case 0x13:
                 {
                     //MRS_LOG_DEBUG("RECEIVED DATA:{0}", payload);
                     S_DataShots data = (S_DataShots)Marshal.PtrToStructure(payload, typeof(S_DataShots));
-                    
-                    GameManager.bulletPool.Place(new Vector2(data.x, data.y), Quaternion.AngleAxis(data.angle,   Vector3.forward));
+
+                    GameManager.bulletPool.Place(new Vector2(data.x, data.y), Quaternion.AngleAxis(data.angle, Vector3.forward));
                     //MRS_LOG_DEBUG("RECEIVED DATA  pos_x:{0} pos_y:{1} pos_z:{2} angle:{3}",
                     //    data.pos_x, data.pos_y, data.pos_z, data.angle);
                 }
                 break;
 
-                // 0x11 : 10/18現在未使用のゲーム中情報送受信用
+            // 0x11 : 10/18現在未使用のゲーム中情報送受信用
             case 0x11:
                 {
-                    MRS_LOG_DEBUG("RECEIVED WRAP:{0}", payload);
-                    //S_WrapData s_Wrap = (S_WrapData)Marshal.PtrToStructure(payload, typeof(S_WrapData));
-                    //for (int i = 0; i < s_Wrap.num; i++)
-                    //{
+                    stopwatch.Start();
+                    //MRS_LOG_DEBUG("RECEIVED PACK:{0}", payload);
+                    unsafe
+                    {
+                        S_DataPlayerPackage package = *(S_DataPlayerPackage*)payload;
+                        S_DataPlayer[] data = new S_DataPlayer[g_playercount];
 
-                    //    MRS_LOG_DEBUG("RECEIVED DATA  pos_x:{0} pos_y:{1} pos_z:{2} look:{3} move:{4} ammos:{5}",
-                    //        s_Wrap.s_Data[i].pos_x, s_Wrap.s_Data[i].pos_y, s_Wrap.s_Data[i].pos_z, s_Wrap.s_Data[i].look_a, s_Wrap.s_Data[i].move_a, s_Wrap.s_Data[i].ammos);
-                    //}
+                        data[0] = new S_DataPlayer();
+                        data[0] = package.data0;
+                        data[1] = new S_DataPlayer();
+                        data[1] = package.data1;
+                        data[2] = new S_DataPlayer();
+                        data[2] = package.data2;
+                        data[3] = new S_DataPlayer();
+                        data[3] = package.data3;
+
+                        for (int i = 0; i < g_playercount; i++)
+                        {
+                            if (GameManager.players[i] != null && GameManager.playID != i)
+                            {
+                                if (!GameManager.players[i].GetComponent<Player>().isDead)
+                                {
+                                    GameManager.players[i].transform.position = new Vector3(data[i].x, data[i].y, 0);
+                                    GameManager.players[i].transform.eulerAngles = new Vector3(0.0f, 0.0f, data[i].angle);
+
+                                    // 送信側プレイヤーが死んでいるなら受信側のクライアントでも死なす
+                                    if (data[i].dead) { GameManager.players[i].transform.GetComponent<Player>().isDead = data[i].dead; }
+                                    //MRS_LOG_DEBUG("RECEIVED DATA  id:{0} pos_x:{1} pos_y:{2} look:{3} dead:{4}",
+                                    //data[i].id, data[i].x, data[i].y, data[i].angle, data[i].dead);
+                                }
+                            }
+                        }
+                        stopwatch.Stop();
+                        //MRS_LOG_DEBUG("RECEIVED DATA TIME : {0}", stopwatch.ElapsedMilliseconds);
+                        stopwatch.Reset();
+                    }
                 }
                 break;
 
-            default: {}break;
+                // 0x15 床の落下の合図
+            case 0x15:
+                {
+
+                }
+                break;
+
+            default: { } break;
         }
     }
     
@@ -501,16 +553,22 @@ public class MrsClient : Mrs {
         }while ( false );
     }
     
-    void Update(){
-        mrs_update();
-        if (g_gameon)
+    void FixedUpdate(){
+        updatefix = !updatefix;
+        if (updatefix)
         {
-            CompareMyData();
+            if (g_gameon)
+            {
+                g_paytype = 0x12;
+                CompareMyData();
+            }
+            if (connected && !g_gameon)
+            {
+                //g_gameon = true;
+                //mrs.Utility.LoadScene("ProtoScene");
+            }
         }
-        if (connected && !g_gameon) {
-            //g_gameon = true;
-            //mrs.Utility.LoadScene("ProtoScene");
-        }
+            mrs_update();
     }
     
     void End(){
@@ -528,7 +586,7 @@ public class MrsClient : Mrs {
     /// <summary>
     /// 毎フレーム自分のデータを送信
     /// </summary>
-    void CompareMyData()
+    public static void CompareMyData()
     {
         // 前フレームで死んでいるなら、他プレイヤーに座標データは送信しない
         if (!myNewData.dead)
@@ -538,15 +596,15 @@ public class MrsClient : Mrs {
                 myNewData.id = GameManager.playID;
                 myNewData.x = GameManager.players[GameManager.playID].transform.position.x;
                 myNewData.y = GameManager.players[GameManager.playID].transform.position.y;
-                myNewData.angle = GameManager.players[GameManager.playID].transform.localEulerAngles.z;
+                myNewData.angle = GameManager.players[GameManager.playID].transform.eulerAngles.z;
                 myNewData.dead = GameManager.players[GameManager.playID].transform.GetComponent<Player>().isDead;
                 IntPtr p_data = Marshal.AllocHGlobal(Marshal.SizeOf(myNewData));
                 Marshal.StructureToPtr(myNewData, p_data, false);
                 if (g_nowconnect != null)
                 {
-                    g_paytype = 0x12;
                     mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)Marshal.SizeOf(myNewData));
-                    MRS_LOG_DEBUG("SEND MY DATA");
+                    //MRS_LOG_DEBUG("SEND MY DATA");
+                    MRS_LOG_DEBUG("angle : {0}", myNewData.angle);
                 }
                 Marshal.FreeHGlobal(p_data);
                 myData = myNewData;
@@ -583,7 +641,6 @@ public class MrsClient : Mrs {
     public void SendRoomReady()
     {
         g_paytype = 0x03;
-        int ready = 1;
         IntPtr blank = Marshal.AllocHGlobal(Marshal.SizeOf(myNewData));
         Marshal.StructureToPtr(myNewData, blank, false);
         
@@ -610,10 +667,33 @@ public class MrsClient : Mrs {
     }
 
 
-
+    /// <summary>
+    /// サーバー接続の切断
+    /// </summary>
     public void DisconnectRoom()
     {
         mrs_close(g_nowconnect);
         g_gameon = false;
+    }
+
+    /// <summary>
+    /// スタート前にスポーン位置の送信
+    /// </summary>
+    public void SendStartingPos()
+    {
+        g_paytype = 0x04;
+        CompareMyData();
+    }
+
+    public void setRoomManager(RoomManager _roomMng)
+    {
+        g_roomManager = _roomMng;
+    }
+
+    public void SendPrepareFall()
+    {
+        g_paytype = 0x15;
+        byte[] blank = System.Text.Encoding.ASCII.GetBytes("1");
+        mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, blank, (uint)blank.Length);
     }
 }
