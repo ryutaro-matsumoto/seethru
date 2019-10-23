@@ -13,10 +13,9 @@ public class FloorMap : MonoBehaviour
 	}
 
 	public void FallFloor(){
-		if(fallCount < transform.childCount - 1){
+		if(fallCount < transform.childCount){
 			transform.GetChild(fallCount).GetComponent<FloorSet>().StartFallFloor(floorFallSeconds);
+			fallCount++;
 		}
 	}
-
-
 }

@@ -34,6 +34,7 @@ namespace MMJGameServer {
 		public void Reset(){ stopwatch.Reset(); }
 
 		public void Restart(){ stopwatch.Restart(); }
+		public void Stop(){ stopwatch.Stop(); }
 	}
 
 

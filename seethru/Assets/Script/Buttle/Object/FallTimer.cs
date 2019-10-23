@@ -20,8 +20,10 @@ public class FallTimer : MonoBehaviour
 
     // Update is called once per frame
     void Update(){
-		if (timer.FElapsedSeconds > fallInterval * (float)fallCount) {
-			fallCount++;
+		if (timer.FElapsedSeconds > fallInterval) {
+			timer.Stop();
+			timer.Reset();
+			timer.Start();
 			Fall();
 		}
     }
