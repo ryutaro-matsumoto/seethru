@@ -152,4 +152,6 @@ public class GameManager : MonoBehaviour
 	public static void FallFloor(){
 		floorMap.FallFloor();
 	}
+
+	public static void CountDown(int cnt){ }
 }
