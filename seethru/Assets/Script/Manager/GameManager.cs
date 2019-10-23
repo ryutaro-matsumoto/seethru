@@ -136,6 +136,8 @@ public class GameManager : MonoBehaviour
 		}
 
 		bulletPool = GameObject.Find("BulletPool").GetComponent<Pool>();
+
+        connection.SendStartingPos();
 	}
 
 

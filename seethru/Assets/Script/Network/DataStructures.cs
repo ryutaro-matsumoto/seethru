@@ -51,4 +51,15 @@ namespace DataStructures
 
     }
 
+    /// <summary>
+    /// 4人分プレイヤーデータのパッケージ
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
+    public struct S_DataPlayerPackage
+    {
+        public S_DataPlayer data0;
+        public S_DataPlayer data1;
+        public S_DataPlayer data2;
+        public S_DataPlayer data3;
+    } 
 }
