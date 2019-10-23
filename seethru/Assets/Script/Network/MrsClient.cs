@@ -358,7 +358,8 @@ public class MrsClient : Mrs {
                 // 0x15 床の落下の合図
             case 0x15:
                 {
-
+                    MRS_LOG_DEBUG("RECEIVE 0x15 Turn on to FALL FLOOR");
+                    GameManager.FallFloor();
                 }
                 break;
 
@@ -690,10 +691,11 @@ public class MrsClient : Mrs {
         g_roomManager = _roomMng;
     }
 
-    public void SendPrepareFall()
+    public void SendFallFloor()
     {
         g_paytype = 0x15;
         byte[] blank = System.Text.Encoding.ASCII.GetBytes("1");
         mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, blank, (uint)blank.Length);
+        MRS_LOG_DEBUG("SENT FALL FLOOR");
     }
 }
