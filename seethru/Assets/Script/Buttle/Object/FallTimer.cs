@@ -15,6 +15,7 @@ public class FallTimer : MonoBehaviour
 	void Start()
     {
 		floormap = GameManager.floorMap;
+		StartTimer();
     }
 
     // Update is called once per frame
@@ -30,6 +31,11 @@ public class FallTimer : MonoBehaviour
 	}
 
 	private void Fall(){
-		
+		if(GameManager.onNetwork){
+			GameManager.connection.SendFallFloor();
+		}
+		else{
+			floormap.FallFloor();
+		}
 	}
 }
