@@ -13,6 +13,9 @@ public class ResultCheck : MonoBehaviour
 		if(GameManager.livePlayer <= 1 && !onResult){
 			SceneManager.LoadScene(resultScene, LoadSceneMode.Additive);
 			onResult = true;
+			if(GameManager.players[GameManager.playID] != null){
+				GameManager.players[GameManager.playID].GetComponent<PlayerInput>().isInput = false;
+			}
 		}   
     }
 }
