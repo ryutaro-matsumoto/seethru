@@ -6,13 +6,14 @@ public class StageSelect : MonoBehaviour
 {
 	public int stageMax = 1;
 
-	[SerializeField]
-	private int selectStage = 1;
-
+	public int selectStage = 1;
 
 	private void Start() {
 		stageMax = transform.GetChild(0).childCount;
+		GameManager.stageSelect = this;
 	}
+
+
 
 	public void StageNumAdd(){
 		transform.GetChild(0).GetChild(selectStage - 1).gameObject.SetActive(false);
