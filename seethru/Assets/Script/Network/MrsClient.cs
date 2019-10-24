@@ -339,12 +339,10 @@ public class MrsClient : Mrs {
             // 0x13 : 発射された弾の座標と角度のデータが送られてきた
             case 0x13:
                 {
-                    //MRS_LOG_DEBUG("RECEIVED DATA:{0}", payload);
                     S_DataShots data = (S_DataShots)Marshal.PtrToStructure(payload, typeof(S_DataShots));
 
                     GameManager.bulletPool.Place(new Vector2(data.x, data.y), Quaternion.AngleAxis(data.angle, Vector3.forward));
-                    //MRS_LOG_DEBUG("RECEIVED DATA  pos_x:{0} pos_y:{1} pos_z:{2} angle:{3}",
-                    //    data.pos_x, data.pos_y, data.pos_z, data.angle);
+
                 }
                 break;
 
@@ -656,6 +654,8 @@ public class MrsClient : Mrs {
     public void SendShootData(float _x, float _y, float _angle)
     {
         S_DataShots shot;
+        shot.bullet_id = -1;
+        shot.whos_shot = GameManager.playID;
         shot.x = _x;
         shot.y = _y;
         shot.angle = _angle;
@@ -780,5 +780,12 @@ public class MrsClient : Mrs {
     public void setGameStartFlag()
     {
         g_gameon = true;
+    }
+
+    public void backToRoom()
+    {
+        g_gameon = false;
+
+
     }
 }

@@ -34,6 +34,8 @@ namespace DataStructures
     /// </summary>
     public struct S_DataShots
     {
+        public int bullet_id;
+        public uint whos_shot;
         public float x, y;
         public float angle;
     }
