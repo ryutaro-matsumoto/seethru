@@ -53,18 +53,20 @@ public class CountDownTimer : MonoBehaviour
 	}
 
 	private void SendCountDown(int cnt){
-		if(GameManager.onNetwork){
-			
-		}
+		if(GameManager.onNetwork)
+        {
+            GameManager.connection.SendCountDown(cnt);
+        }
 		else{
 			CountDown(cnt);
 		}
 	}
 
 	private void SendCountStart(){
-		if (GameManager.onNetwork) {
-
-		}
+		if (GameManager.onNetwork)
+        {
+            GameManager.connection.SendCountDownStart();
+        }
 		else {
 			CountStart();
 		}
