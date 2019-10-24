@@ -39,6 +39,7 @@ public class CountDownTimer : MonoBehaviour
 		transform.GetChild(0).gameObject.SetActive(true);
 		startCount++;
 		isCountDown = true;
+        GameManager.connection.SendCountDownStart();
 	}
 
 	public void CountDown(int cnt){

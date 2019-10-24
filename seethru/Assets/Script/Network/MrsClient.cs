@@ -287,17 +287,15 @@ public class MrsClient : Mrs {
                 // 0x05 : カウントダウン開始タイミング受け取り
             case 0x05:
                 {
-                    //GameManager.COUNTDOWNSTART_FUNCTION;
+                    GameManager.CountStart();
                 }
                 break;
 
                 // 0x06 : 試合開始のカウントダウン時間受け取り
             case 0x06:
-                {
-                    byte[] data = new byte[payload_len];
-                    Marshal.Copy(data, 0, payload, (int)payload_len);
-
-                    //GameManager.SetCountDown(BitConverter.ToInt32(data, 0));
+                unsafe{
+                    Int32 countDown = *(Int32*) payload;
+                    GameManager.CountDown(countDown);
                 }
                 break;
 
@@ -744,12 +742,14 @@ public class MrsClient : Mrs {
     /// あと＊秒のカウントダウンをサーバーに送信
     /// </summary>
     /// <param name="_second">残りのカウントダウン時間</param>
-    public void SendCountDown(int _second)
+    public unsafe void SendCountDown(int _second)
     {
         g_paytype = 0x06;
-        byte[] sendTime = System.Text.Encoding.ASCII.GetBytes(string.Format("{0}",_second));
-        mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, sendTime, (uint)sendTime.Length);
+        IntPtr sendTime = Marshal.AllocHGlobal(sizeof(Int32));
+        *(Int32*)sendTime = _second;
+        mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, sendTime, (uint)sizeof(Int32));
         MRS_LOG_DEBUG("SENT COUNT DOWN TIME  TIMES LEFT: {0}",_second);
+        Marshal.FreeHGlobal(sendTime);
     }
 
     /// <summary>
@@ -759,16 +759,13 @@ public class MrsClient : Mrs {
     public unsafe void SendStageNumber(int _stagenum)
     {
         g_paytype = 0x07;
-        IntPtr sendTime = Marshal.AllocHGlobal(sizeof(Int32));
-        *(Int32*)sendTime = _stagenum;
+        IntPtr send = Marshal.AllocHGlobal(sizeof(Int32));
+        *(Int32*)send = _stagenum;
 
-
-        // MISS !!!!!!!!!!!!!!
-        // STRING でBYTE変換してるので、INT32からBYTE変換する！
-        //
-
-        mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, sendTime, (uint)sizeof(Int32));
+        mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, send, (uint)sizeof(Int32));
         MRS_LOG_DEBUG("SENT STAGE NUMBER : {0}", _stagenum);
+
+        Marshal.FreeHGlobal(send);
     }
 
     /// <summary>
