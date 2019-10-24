@@ -22,7 +22,8 @@ public class StageSelect : MonoBehaviour
 			selectStage = 1;
 		}
 		transform.GetChild(0).GetChild(selectStage - 1).gameObject.SetActive(true);
-	}
+        GameManager.connection.SendStageNumber(selectStage);
+    }
 
 	public void StageNumSub() {
 		transform.GetChild(0).GetChild(selectStage - 1).gameObject.SetActive(false);
@@ -31,5 +32,6 @@ public class StageSelect : MonoBehaviour
 			selectStage = stageMax;
 		}
 		transform.GetChild(0).GetChild(selectStage - 1).gameObject.SetActive(true);
+        GameManager.connection.SendStageNumber(selectStage);
 	}
 }

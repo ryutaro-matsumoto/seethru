@@ -303,11 +303,15 @@ public class MrsClient : Mrs {
 
                 // 0x07 : 選択中のステージ番号
             case 0x07:
-                {
-                    byte[] data = new byte[payload_len];
-                    Marshal.Copy(data, 0, payload, (int)payload_len);
+                unsafe{
+                    //byte[] data = new byte[payload_len];
+                    //Marshal.Copy(data, 0, payload, (int)payload_len);
+                    //string str = BitConverter.ToString(data, 0);
+                    IntPtr ptr = payload;
+                    Int32 stagenum = *(Int32*)ptr;
+                    MRS_LOG_DEBUG("STAGE NUM: {0}", stagenum);
 
-                    //GameManager.SetStageNumber_FUNCTION(BitConverter.ToInt32(data, 0));
+                    GameManager.StageNumSelect(stagenum);
                 }
                 break;
 
@@ -752,11 +756,18 @@ public class MrsClient : Mrs {
     /// 現在選択中のステージ番号を送信
     /// </summary>
     /// <param name="_stagenum">ステージ番号</param>
-    public void SendStageNumber(int _stagenum)
+    public unsafe void SendStageNumber(int _stagenum)
     {
         g_paytype = 0x07;
-        byte[] sendTime = System.Text.Encoding.ASCII.GetBytes(string.Format("{0}", _stagenum));
-        mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, sendTime, (uint)sendTime.Length);
+        IntPtr sendTime = Marshal.AllocHGlobal(sizeof(Int32));
+        *(Int32*)sendTime = _stagenum;
+
+
+        // MISS !!!!!!!!!!!!!!
+        // STRING でBYTE変換してるので、INT32からBYTE変換する！
+        //
+
+        mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, sendTime, (uint)sizeof(Int32));
         MRS_LOG_DEBUG("SENT STAGE NUMBER : {0}", _stagenum);
     }
 
