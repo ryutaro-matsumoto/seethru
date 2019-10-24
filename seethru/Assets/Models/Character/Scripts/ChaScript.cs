@@ -4,7 +4,6 @@ using System.Collections;
 public class ChaScript : MonoBehaviour
 {
     private Animator anim;
-    public GameObject effect;
 
     void Start()
     {
@@ -51,7 +50,6 @@ public class ChaScript : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space))
         {
-            effect.SetActive(true);
             anim.SetBool("Attack", true);
         }
         else
