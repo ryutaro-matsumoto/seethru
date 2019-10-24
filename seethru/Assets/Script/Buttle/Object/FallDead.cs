@@ -35,7 +35,7 @@ public class FallDead : MonoBehaviour
 	public void SendFall(){
 		if(GameManager.onNetwork){
 			/* MrsClientの関数待ち */
-
+			GameManager.connection.SendPlayerDeadFall();
 		}
 		else{
 			Fall();

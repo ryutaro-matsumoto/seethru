@@ -35,18 +35,15 @@ public class Player : MonoBehaviour
 
 	// Update is called once per frame
 	void Update() {
-        if(isHit){
-			SendDeadHit();
-		}
 		if(isDead){
 			DeadPlayer();
 		}
     }
 
-	private void SendDeadHit(){
+	public void SendDeadHit(int bulletID){
 		if(GameManager.onNetwork){
 			/*MrsClient待ち*/
-
+			GameManager.connection.SendPlayerDeadHit(bulletID);
 		}
 		else {
 			DeadPlayer();
