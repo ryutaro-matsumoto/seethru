@@ -191,7 +191,7 @@ public class MrsClient : Mrs {
     /// </summary>
     public static void InitMrsforGame(S_StartingData _startdata)
     {
-        GameManager.ProtoStart(_startdata.spawnid,_startdata.sumplayer);
+        GameManager.GameStart((uint)_startdata.stageid,_startdata.spawnid,_startdata.sumplayer);
 
     }
 

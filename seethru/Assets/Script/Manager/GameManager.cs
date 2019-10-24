@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
 	}
 
 	static private void StageSceneTranslation(uint _stageId){
-		SceneManager.LoadScene(stageName + _stageId);
+		FadeManeger.Fadeout(stageName + _stageId);
 	}
 
 	//------------------------------------------------------------------------

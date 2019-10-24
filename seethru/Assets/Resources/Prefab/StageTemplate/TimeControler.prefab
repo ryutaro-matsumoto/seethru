@@ -188,7 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70dc0d8ef7412c44e97c6eeebe44151d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fallInterval: 10
+  fallInterval: 20
 --- !u!114 &6175501113914950222
 MonoBehaviour:
   m_ObjectHideFlags: 0

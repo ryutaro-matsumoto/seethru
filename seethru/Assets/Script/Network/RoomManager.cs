@@ -35,7 +35,6 @@ public class RoomManager : MonoBehaviour
         }
         playerName[0] = "hostman";
 
-
         mrsClient = GameObject.Find("ClientObject").GetComponent<MrsClient>();
         mrsClient.setRoomManager(this);
     }

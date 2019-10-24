@@ -47,7 +47,7 @@ namespace DataStructures
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
         public int[] spawnid;
         public uint sumplayer;
-
+        public int stageid;
     }
 
     /// <summary>
