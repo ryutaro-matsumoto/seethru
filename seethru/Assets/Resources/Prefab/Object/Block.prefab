@@ -137,11 +137,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 167445357258661910}
     m_Modifications:
-    - target: {fileID: 1876201065058982607, guid: 7173ff93c4de4664b8b8f6190ae312d2,
-        type: 3}
-      propertyPath: m_Name
-      value: RayCollision
-      objectReference: {fileID: 0}
     - target: {fileID: 1577537711779738223, guid: 7173ff93c4de4664b8b8f6190ae312d2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -206,6 +201,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 3.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1876201065058982607, guid: 7173ff93c4de4664b8b8f6190ae312d2,
+        type: 3}
+      propertyPath: m_Name
+      value: RayCollision
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7173ff93c4de4664b8b8f6190ae312d2, type: 3}
