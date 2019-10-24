@@ -29,8 +29,10 @@ public class FallTimer : MonoBehaviour
 	}
 
 	public void StartTimer(){
-		timer.Start();
-		onTimer = true;
+		if(GameManager.playID == 0){
+			timer.Start();
+			onTimer = true;
+		}
 	}
 
 	private void Fall(){
