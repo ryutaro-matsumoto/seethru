@@ -35,16 +35,10 @@ public class ReflectionObject : MonoBehaviour {
 				if(contact.otherCollider.gameObject == gameObject){
 					Vector2 vec = vector;
 
-					Debug.Log(contact.normal);
-					Debug.Log("vec" + vec);
-
 					Vector2 ans = vec + 2 * Vector2.Dot(-vec, contact.normal) * contact.normal;
-
-					Debug.Log("ans" + ans);
 
 					rigidbody2d.velocity = ans.normalized * vec.magnitude;
 
-					Debug.Log(rigidbody2d.velocity);
 
 					float angleRad = Mathf.Atan2(ans.y, ans.x);
 					transform.eulerAngles = new Vector3(0f, 0f, angleRad * Mathf.Rad2Deg - 90f);
@@ -55,34 +49,32 @@ public class ReflectionObject : MonoBehaviour {
 
 					vector = ans.normalized * vec.magnitude;
 				}
-				print(contact.collider + " hit " + contact.otherCollider.name);
-				Debug.DrawRay(contact.point, contact.normal, Color.white);
 			}
 		}
 	}
 
 
-	private void OnTriggerEnter2D(Collider2D collision) {
-		if (collision.gameObject.tag == "Reflecter") {
-			reflect--;
-			if (reflect < 0) {
-				isDead = true;
-				return;
-			}
-			Vector2 vec = rigidbody2d.velocity;
+	//private void OnTriggerEnter2D(Collider2D collision) {
+	//	if (collision.gameObject.tag == "Reflecter") {
+	//		reflect--;
+	//		if (reflect < 0) {
+	//			isDead = true;
+	//			return;
+	//		}
+	//		Vector2 vec = rigidbody2d.velocity;
 
-			Debug.Log(vec);
-
-
-			ReflectCollider rc = collision.gameObject.GetComponent<ReflectCollider>();
-			Vector2 ans = rc.ReflectVector(vec);
-			rigidbody2d.velocity = ans * vec.magnitude;
+	//		Debug.Log(vec);
 
 
-			float angleRad = Mathf.Atan2(ans.y, ans.x);
-			transform.eulerAngles = new Vector3(0f, 0f, angleRad * Mathf.Rad2Deg - 90f);
+	//		ReflectCollider rc = collision.gameObject.GetComponent<ReflectCollider>();
+	//		Vector2 ans = rc.ReflectVector(vec);
+	//		rigidbody2d.velocity = ans * vec.magnitude;
 
-			rigidbody2d.angularVelocity = 0f;
-		}
-	}
+
+	//		float angleRad = Mathf.Atan2(ans.y, ans.x);
+	//		transform.eulerAngles = new Vector3(0f, 0f, angleRad * Mathf.Rad2Deg - 90f);
+
+	//		rigidbody2d.angularVelocity = 0f;
+	//	}
+	//}
 }
