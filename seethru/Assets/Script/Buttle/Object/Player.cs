@@ -25,7 +25,12 @@ public class Player : MonoBehaviour
 
 	private void Start() {
 		bullet = startBullet;
-		anim = transform.GetChild(6).GetComponent<Animator>();
+		if(GetComponent<PlayerInput>() != null){
+			anim = transform.GetChild(6).GetComponent<Animator>();
+		}
+		else{
+			anim = transform.GetChild(4).GetComponent<Animator>();
+		}
 	}
 
 	// Update is called once per frame

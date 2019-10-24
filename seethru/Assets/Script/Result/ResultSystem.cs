@@ -76,6 +76,8 @@ public class ResultSystem : MonoBehaviour
     {
         clickEnter.PlayOneShot(clickEnter.clip);
         FadeManeger.Fadeout(backTitle);
-		GameManager.connection.DisconnectRoom();
-    }
+		if(GameManager.onNetwork){
+			GameManager.connection.DisconnectRoom();
+		}
+	}
 }
