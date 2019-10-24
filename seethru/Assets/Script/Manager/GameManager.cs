@@ -192,12 +192,48 @@ public class GameManager : MonoBehaviour
 	}
 
 
+	//------------------------------------------------------------------------
+	/// <summary>
+	/// 弾の発射を受信時に使用
+	/// </summary>
+	/// <param name="vec"></param>
+	/// <param name="qt"></param>
+	/// <param name="playerID"></param>
+	/// <param name="bulletID"></param>
 	public static void BulletPlace(Vector2 vec, Quaternion qt, uint playerID, int bulletID){
 		
 		Bullet bullet = bulletPool.Place<Bullet>(vec, qt);
 		bullet.id = bulletID;
 
 		//players[playerID].GetComponent<Player>().anim.SetBool("Attack", true);
+	}
+
+	//------------------------------------------------------------------------
+	/// <summary>
+	/// プレイヤーの落下判定受信時に使用
+	/// </summary>
+	/// <param name="playerID"></param>
+	public static void PlayerDeadFall(int playerID){
+		
+	}
+
+	//------------------------------------------------------------------------
+	/// <summary>
+	/// 弾に当たった判定を受信時に使用
+	/// </summary>
+	/// <param name="playerID"></param>
+	/// <param name="bulletID"></param>
+	public static void PlayerDeadHit(int playerID, int bulletID){
 
 	}
+
+	//------------------------------------------------------------------------
+	/// <summary>
+	/// 弾の反射を受信時に使用
+	/// </summary>
+	/// <param name="bulletID"></param>
+	public static void BulletReflection(int bulletID){
+
+	}
+
 }

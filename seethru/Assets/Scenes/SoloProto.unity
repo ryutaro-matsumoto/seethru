@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stagenum: 2
-  id: 1
+  id: 0
 --- !u!4 &120225255
 Transform:
   m_ObjectHideFlags: 0
