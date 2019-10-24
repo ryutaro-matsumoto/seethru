@@ -207,10 +207,11 @@ public class GameManager : MonoBehaviour
 		for(int i = 0; i < bullets.Count; ++i){
 			if(bullets[i] != null){
 				bullets[i] = bullet;
-				break;
+				return;
 			}
 		}
 
+		bullets.Add(bullet);
 		//players[playerID].GetComponent<Player>().anim.SetBool("Attack", true);
 	}
 
