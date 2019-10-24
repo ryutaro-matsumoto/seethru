@@ -18,9 +18,12 @@ public class Player : MonoBehaviour
 	[HideInInspector]
 	public bool isDead = false;
 
+	[HideInInspector]
+	public Animator anim;
 
 	private void Start() {
 		bullet = startBullet;
+		anim = transform.GetChild(6).GetComponent<Animator>();
 	}
 
 	// Update is called once per frame

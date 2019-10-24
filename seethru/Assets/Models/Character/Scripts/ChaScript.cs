@@ -57,7 +57,6 @@ public class ChaScript : MonoBehaviour
         else
         {
             anim.SetBool("Attack", false);
-            effect.SetActive(false);
         }
     }
 }

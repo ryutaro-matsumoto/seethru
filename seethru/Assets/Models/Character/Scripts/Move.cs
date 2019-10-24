@@ -1,22 +1,32 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(UnityEngine.AI.NavMeshAgent), typeof(Animator))]
 public class Move : MonoBehaviour
 {
-    [SerializeField, HideInInspector]
-    UnityEngine.AI.NavMeshAgent agent;
-    [SerializeField, HideInInspector]
-    Animator animator;
+    public float speed = 3.0f;
 
-    void Reset()
+    void Start()
     {
-        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-        animator = GetComponent<Animator>();
+        
     }
 
-
+    // Update is called once per frame
     void Update()
     {
-        animator.SetFloat("Speed", agent.velocity.sqrMagnitude);
+        if (Input.GetKey("up"))
+        {
+            transform.position += transform.forward * speed * Time.deltaTime;
+        }
+        if (Input.GetKey("down"))
+        {
+            transform.position -= transform.forward * speed * Time.deltaTime;
+        }
+        if (Input.GetKey("right"))
+        {
+            transform.position += transform.right * speed * Time.deltaTime;
+        }
+        if (Input.GetKey("left"))
+        {
+            transform.position -= transform.right * speed * Time.deltaTime;
+        }
     }
 }
