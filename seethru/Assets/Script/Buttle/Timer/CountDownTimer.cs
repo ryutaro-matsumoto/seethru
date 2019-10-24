@@ -13,7 +13,10 @@ public class CountDownTimer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-		SendCountStart();
+        if (GameManager.playID == 0)
+        {
+            SendCountStart();
+        }
     }
 
 	private void Awake() {

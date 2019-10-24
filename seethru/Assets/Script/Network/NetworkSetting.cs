@@ -8,8 +8,8 @@ using DataStructures;
 
 public class NetworkSetting : MonoBehaviour
 {
-    string ipAddress = "127.0.0.1";
-    string playerName = "Anonymous";
+    public string ipAddress = "192.168.252.120";
+    public string playerName = "Anonymous";
 
     // コンポーネント
     public MrsClient mrsClient;

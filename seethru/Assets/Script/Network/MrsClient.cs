@@ -318,6 +318,8 @@ public class MrsClient : Mrs {
                 }
                 break;
 
+            //---------------------------------------------- ゲーム進行中の座標系 0x1#
+
             // 0x12 : [data.id]番目のプレイヤーの座標データが送られてきた
             case 0x12:
                 {
@@ -339,12 +341,10 @@ public class MrsClient : Mrs {
             // 0x13 : 発射された弾の座標と角度のデータが送られてきた
             case 0x13:
                 {
-                    //MRS_LOG_DEBUG("RECEIVED DATA:{0}", payload);
                     S_DataShots data = (S_DataShots)Marshal.PtrToStructure(payload, typeof(S_DataShots));
 
-                    GameManager.bulletPool.Place(new Vector2(data.x, data.y), Quaternion.AngleAxis(data.angle, Vector3.forward));
-                    //MRS_LOG_DEBUG("RECEIVED DATA  pos_x:{0} pos_y:{1} pos_z:{2} angle:{3}",
-                    //    data.pos_x, data.pos_y, data.pos_z, data.angle);
+                    GameManager.BulletPlace(new Vector2(data.x, data.y), Quaternion.AngleAxis(data.angle, Vector3.forward), data.whos_shot, data.bullet_id);
+
                 }
                 break;
 
@@ -390,11 +390,34 @@ public class MrsClient : Mrs {
                 }
                 break;
 
-                // 0x15 床の落下の合図
+            // 0x15 床の落下の合図
             case 0x15:
                 {
                     MRS_LOG_DEBUG("RECEIVE 0x15 Turn on to FALL FLOOR");
                     GameManager.FallFloor();
+                }
+                break;
+
+
+            //--------------------------------------- 死亡関係 0x2#
+
+            // 0x21 落下死したプレイヤーのID
+            case 0x21:
+                unsafe{
+                    Int32 fellPlayerID = *(Int32*)payload;
+                    MRS_LOG_DEBUG("Player No.{0} was falling out",fellPlayerID);
+                    GameManager.PlayerDeadFall(fellPlayerID);
+                }
+                break;
+
+            // 0x22 被弾死したプレイヤーのID
+            case 0x22:
+                unsafe
+                {
+                    S_DeadHit data = (S_DeadHit)Marshal.PtrToStructure(payload, typeof(S_DeadHit));
+
+                    MRS_LOG_DEBUG("Player No.{0} was shot by Player No.{1} at Bullet No.{2}", data.player_id, data.whosby_id, data.bullet_id);
+                    GameManager.PlayerDeadHit(data.player_id, data.bullet_id);
                 }
                 break;
 
@@ -656,6 +679,8 @@ public class MrsClient : Mrs {
     public void SendShootData(float _x, float _y, float _angle)
     {
         S_DataShots shot;
+        shot.bullet_id = -1;
+        shot.whos_shot = GameManager.playID;
         shot.x = _x;
         shot.y = _y;
         shot.angle = _angle;
@@ -780,5 +805,47 @@ public class MrsClient : Mrs {
     public void setGameStartFlag()
     {
         g_gameon = true;
+    }
+
+    public void backToRoom()
+    {
+        g_gameon = false;
+
+    }
+
+    /// <summary>
+    /// 落下死したらサーバーに自分のIDを送信
+    /// </summary>
+    public unsafe void SendPlayerDeadFall()
+    {
+        g_paytype = 0x21;
+        IntPtr send = Marshal.AllocHGlobal(sizeof(Int32));
+        *(Int32*)send = (Int32)GameManager.playID;
+
+        mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, send, (uint)sizeof(Int32));
+        MRS_LOG_DEBUG("SENT FELL NUMBER : {0}", GameManager.playID);
+
+        Marshal.FreeHGlobal(send);
+    }
+
+    /// <summary>
+    /// 被弾死したらサーバーに自分のIDと当たった弾のIDを送信
+    /// </summary>
+    /// <param name="_bulletID"></param>
+    public unsafe void SendPlayerDeadHit(int _bulletID)
+    {
+        S_DeadHit sendHit = new S_DeadHit();
+        sendHit.bullet_id = _bulletID;
+        sendHit.player_id = (int)GameManager.playID;
+        sendHit.whosby_id = -1;
+
+        g_paytype = 0x22;
+        IntPtr send = Marshal.AllocHGlobal(sizeof(S_DeadHit));
+        *(S_DeadHit*)send = (S_DeadHit)sendHit;
+
+        mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, send, (uint)sizeof(S_DeadHit));
+        MRS_LOG_DEBUG("SENT FELL NUMBER : {0}", GameManager.playID);
+
+        Marshal.FreeHGlobal(send);
     }
 }
