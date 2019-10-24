@@ -16,6 +16,8 @@ public class RoomManager : MonoBehaviour
 
     MrsClient mrsClient;
 
+	StageSelect stageSelect;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +31,7 @@ public class RoomManager : MonoBehaviour
         }
         playerName[0] = "hostman";
 
+		stageSelect = GameObject.Find("Canvas").transform.GetChild(0).GetComponent<StageSelect>();
 
         mrsClient = GameObject.Find("ClientObject").GetComponent<MrsClient>();
         mrsClient.setRoomManager(this);
@@ -69,7 +72,7 @@ public class RoomManager : MonoBehaviour
         //UpdateNameList();
         if (!not_ready)
         {
-            mrsClient.SendRoomReady();
+            mrsClient.SendRoomReady(stageSelect.selectStage);
         }
     }
 }
