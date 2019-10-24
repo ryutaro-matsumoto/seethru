@@ -140,7 +140,7 @@ public class PlayerInput : MonoBehaviour
 
 		if(inputMove != 0f){
 			anim.SetBool("Run", true);
-			Debug.Log("anim Run");
+			//Debug.Log("anim Run");
 		}
 		else {
 			anim.SetBool("Run", false);

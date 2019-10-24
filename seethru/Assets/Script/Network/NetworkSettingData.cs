@@ -16,7 +16,9 @@ public class NetworkSettingData : MonoBehaviour
 
     void Start()
     {
-
+        myProfile = new S_DataProfile();
+        myProfile.name = "";
+        myProfile.player_id = -1;
     }
 
     /// <summary>
