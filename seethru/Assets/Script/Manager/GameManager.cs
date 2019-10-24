@@ -142,9 +142,9 @@ public class GameManager : MonoBehaviour
 
 		bulletPool = GameObject.Find("BulletPool").GetComponent<Pool>();
 
-		//if(onNetwork){
-		//	connection.SendStartingPos();
-		//}
+		if(onNetwork){
+			connection.SendStartingPos();
+		}
 	}
 
 

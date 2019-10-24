@@ -249,7 +249,7 @@ public class MrsClient : Mrs {
             case 0x01:
                 {
                     S_DataProfile data = (S_DataProfile)Marshal.PtrToStructure(payload, typeof(S_DataProfile));
-                    MRS_LOG_DEBUG("ID: {0}", data.player_id);
+
                     GameManager.ConnectionServer((uint)data.player_id, myClient);
                     netsettings.SetProfile(data.player_id, g_playerName);
                     if (g_roomManager != null)
@@ -323,14 +323,16 @@ public class MrsClient : Mrs {
                 {
                     //MRS_LOG_DEBUG("RECEIVED DATA:{0}", payload);
                     S_DataPlayer data = (S_DataPlayer)Marshal.PtrToStructure(payload, typeof(S_DataPlayer));
+                    if (GameManager.players[data.id] != null)
+                    {
+                        GameManager.players[data.id].transform.position = new Vector3(data.x, data.y, 0);
+                        GameManager.players[data.id].transform.eulerAngles = new Vector3(0.0f, 0.0f, data.angle);
 
-                    GameManager.players[data.id].transform.position = new Vector3(data.x, data.y, 0);
-                    GameManager.players[data.id].transform.eulerAngles = new Vector3(0.0f, 0.0f, data.angle);
-
-                    MRS_LOG_DEBUG("Received ID: {0} X: {1} Y: {2}", data.id, GameManager.players[data.id].transform.position.x, GameManager.players[data.id].transform.position.y);
-                    // 送信側プレイヤーが死んでいるなら受信側のクライアントでも死なす
-                    if (data.dead) { GameManager.players[data.id].transform.GetComponent<Player>().isDead = data.dead; }
-
+                        // 送信側プレイヤーが死んでいるなら受信側のクライアントでも死なす
+                        if (data.dead) { GameManager.players[data.id].transform.GetComponent<Player>().isDead = data.dead; }
+                    }
+                    //MRS_LOG_DEBUG("RECEIVED DATA  pos_x:{0} pos_y:{1} pos_z:{2} look:{3} move:{4} ammos:{5}"
+                    //    data.x, data.y, data.z, data.angle, data.move_a, data.ammos);
                 }
                 break;
 
@@ -339,7 +341,7 @@ public class MrsClient : Mrs {
                 {
                     S_DataShots data = (S_DataShots)Marshal.PtrToStructure(payload, typeof(S_DataShots));
 
-                    GameManager.BulletPlace(new Vector2(data.x, data.y), Quaternion.AngleAxis(data.angle, Vector3.forward), data.whos_shot, data.bullet_id);
+                    GameManager.bulletPool.Place(new Vector2(data.x, data.y), Quaternion.AngleAxis(data.angle, Vector3.forward));
 
                 }
                 break;
@@ -630,8 +632,6 @@ public class MrsClient : Mrs {
                 myNewData.y = GameManager.players[GameManager.playID].transform.position.y;
                 myNewData.angle = GameManager.players[GameManager.playID].transform.eulerAngles.z;
                 myNewData.dead = GameManager.players[GameManager.playID].transform.GetComponent<Player>().isDead;
-
-                MRS_LOG_DEBUG("ID: {0} X: {1} Y: {2} Angle: {3}", myNewData.id, myNewData.x, myNewData.y, myNewData.angle);
                 IntPtr p_data = Marshal.AllocHGlobal(Marshal.SizeOf(myNewData));
                 Marshal.StructureToPtr(myNewData, p_data, false);
                 if (g_nowconnect != null)
