@@ -38,6 +38,9 @@ public class Player : MonoBehaviour
         if(isHit){
 			SendDeadHit();
 		}
+		if(isDead){
+			DeadPlayer();
+		}
     }
 
 	private void SendDeadHit(){

@@ -8,9 +8,9 @@ public class ReflectionObject : MonoBehaviour {
 	public int reflect;
 
 	public bool isDead = false;
-
 	public int startReflect = 2;
 
+	public Vector2 vector;
 	// Start is called before the first frame update
 	void OnEnable() {
 		isDead = false;
@@ -20,7 +20,45 @@ public class ReflectionObject : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
+		vector = rigidbody2d.velocity;
+	}
 
+	private void OnCollisionEnter2D(Collision2D collision) {
+		if(collision.gameObject.tag == "Reflecter"){
+			reflect--;
+			if (reflect < 0) {
+				isDead = true;
+				return;
+			}
+
+			foreach (ContactPoint2D contact in collision.contacts) {
+				if(contact.otherCollider.gameObject == gameObject){
+					Vector2 vec = vector;
+
+					Debug.Log(contact.normal);
+					Debug.Log("vec" + vec);
+
+					Vector2 ans = vec + 2 * Vector2.Dot(-vec, contact.normal) * contact.normal;
+
+					Debug.Log("ans" + ans);
+
+					rigidbody2d.velocity = ans.normalized * vec.magnitude;
+
+					Debug.Log(rigidbody2d.velocity);
+
+					float angleRad = Mathf.Atan2(ans.y, ans.x);
+					transform.eulerAngles = new Vector3(0f, 0f, angleRad * Mathf.Rad2Deg - 90f);
+
+					rigidbody2d.angularVelocity = 0f;
+
+					transform.position = contact.point;
+
+					vector = ans.normalized * vec.magnitude;
+				}
+				print(contact.collider + " hit " + contact.otherCollider.name);
+				Debug.DrawRay(contact.point, contact.normal, Color.white);
+			}
+		}
 	}
 
 
