@@ -17,23 +17,40 @@ public class Player : MonoBehaviour
 
 	[HideInInspector]
 	public bool isDead = false;
+	[HideInInspector]
+	public bool isHit = false;
 
 	[HideInInspector]
 	public Animator anim;
 
 	private void Start() {
 		bullet = startBullet;
-		anim = transform.GetChild(6).GetComponent<Animator>();
+		if(GetComponent<PlayerInput>() != null){
+			anim = transform.GetChild(6).GetComponent<Animator>();
+		}
+		else{
+			anim = transform.GetChild(4).GetComponent<Animator>();
+		}
 	}
 
 	// Update is called once per frame
-	void FixedUpdate() {
-        if(isDead){
-			DeadPlayer();
+	void Update() {
+        if(isHit){
+			SendDeadHit();
 		}
     }
 
-	void DeadPlayer(){
+	private void SendDeadHit(){
+		if(GameManager.onNetwork){
+			/*MrsClient待ち*/
+
+		}
+		else {
+			DeadPlayer();
+		}
+	}
+
+	public void DeadPlayer(){
 		GameManager.livePlayer--;
 		gameObject.SetActive(false);
 	}

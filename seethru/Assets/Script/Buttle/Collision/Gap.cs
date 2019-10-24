@@ -18,7 +18,6 @@ public class Gap : MonoBehaviour {
 		if(collision.gameObject.tag == "Bullet"){
 			Hit = true;
 			player.isDead = true;
-			Debug.Log("Hit");
 		}
 	}
 
