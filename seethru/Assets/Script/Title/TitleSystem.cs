@@ -21,6 +21,8 @@ public class TitleSystem : MonoBehaviour
     // 決定SE
     public AudioSource clickEnter;
 
+	public string gameStart;
+
     //------------------------------------------------------------------------------
     // start function.
     //------------------------------------------------------------------------------
@@ -60,7 +62,7 @@ public class TitleSystem : MonoBehaviour
     public void ClickGameStartButton()
     {
         clickEnter.PlayOneShot(clickEnter.clip);
-        FadeManeger.Fadeout("ResultScene");
+        FadeManeger.Fadeout(gameStart);
     }
 
     //===========================================================

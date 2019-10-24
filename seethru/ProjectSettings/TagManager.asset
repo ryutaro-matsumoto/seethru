@@ -11,6 +11,8 @@ TagManager:
   - ReflectObject
   - StartPosition
   - Floor
+  - Reload
+  - Model
   layers:
   - Default
   - TransparentFX
@@ -41,7 +43,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - MouseScreen
   - Reflecter
   - ReflectObject
   m_SortingLayers:

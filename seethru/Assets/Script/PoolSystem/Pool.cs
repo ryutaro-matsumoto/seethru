@@ -37,7 +37,7 @@ public class Pool : MonoBehaviour
 
 
 	public T Place<T>(Vector2 position, Quaternion rotation) where T : PoolObject {
-		return (T)Place(position);
+		return (T)Place(position, rotation);
 	}
 
 	public PoolObject Place(Vector2 position, Quaternion rotation) {

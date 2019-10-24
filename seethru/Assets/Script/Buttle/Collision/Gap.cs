@@ -17,8 +17,9 @@ public class Gap : MonoBehaviour {
 	private void OnTriggerEnter2D(Collider2D collision) {
 		if(collision.gameObject.tag == "Bullet"){
 			Hit = true;
-			player.isDead = true;
-			Debug.Log("Hit");
+			player.SendDeadHit(collision.gameObject.GetComponent<Bullet>().id);
+			Debug.Log(collision.gameObject.GetComponent<Bullet>().id);
+
 		}
 	}
 

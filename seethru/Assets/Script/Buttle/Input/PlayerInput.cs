@@ -8,7 +8,7 @@ public class PlayerInput : MonoBehaviour
 	Rigidbody2D rb2d;
 	Pool bulletPool;
 	Player player;
-	MrsClient mrsCli;
+	Animator anim;
 
 	// ゲームオブジェクト
 	GameObject pointer;
@@ -18,6 +18,8 @@ public class PlayerInput : MonoBehaviour
 	public float moveSpeed;
 	public float rotateSpeed;
 	public float moveForceMultiplier;
+
+	public bool isInput = false;
 
 	[SerializeField]
 	private GameObject bulletStart;
@@ -42,16 +44,21 @@ public class PlayerInput : MonoBehaviour
 
 		playerVector = new Vector2(0.0f, 1.0f);
 
-		mrsCli = GameObject.Find("clientobject").GetComponent<MrsClient>();
+		anim = transform.GetChild(6).GetComponent<Animator>();
 	}
 
 	// Update is called once per frame
 	void Update() {
-		GetInput();
-    }
+		if(isInput){
+			GetInput();
+			AngleCalc();
+		}
+		else {
+			inputMove = 0f;
+		}
+	}
 
 	private void FixedUpdate() {
-		AngleCalc();
 
 		Move();
 
@@ -125,16 +132,32 @@ public class PlayerInput : MonoBehaviour
 	/// 移動処理
 	/// </summary>
 	private void Move(){
+		
 		Vector2 moveVector = playerVector * inputMove;
 		rb2d.AddForce(moveForceMultiplier * (moveVector - rb2d.velocity));
+
+		anim.SetFloat("RunSpeed", inputMove);
+
+		if(inputMove != 0f){
+			anim.SetBool("Run", true);
+		}
+		else {
+			anim.SetBool("Run", false);
+		}
 	}
 
 
 	private void Attack(){
 		if(inputAttack && !inputAttackBuff){
-			bulletPool.Place(bulletStart.transform.position, transform.rotation);
-			if(GameManager.onNetwork){
-				mrsCli.SendShootData(bulletStart.transform.position.x, bulletStart.transform.position.y, transform.eulerAngles.z);
+			if(player.bullet > 0){
+				if (GameManager.onNetwork) {
+					GameManager.connection.SendShootData(bulletStart.transform.position.x, bulletStart.transform.position.y, transform.eulerAngles.z);
+				}
+				else{
+					bulletPool.Place(bulletStart.transform.position, transform.rotation);
+					//anim.SetBool("Attack", true);
+				}
+				--player.bullet;
 			}
 		}
 		inputAttackBuff = inputAttack;

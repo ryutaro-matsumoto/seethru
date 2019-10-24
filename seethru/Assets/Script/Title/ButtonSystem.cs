@@ -26,7 +26,6 @@ public class ButtonSystem : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     // 選択SE
     public AudioSource selectSound;
 
-    public GameObject effect;
 
     //===========================================================
     // OnPointerEnter function.
@@ -38,7 +37,6 @@ public class ButtonSystem : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
        // image.color = Color.white;
         image.color = new Color(1.0f, 1.0f, 1.0f, 0.3f);
         selectSound.PlayOneShot(selectSound.clip);
-        effect.SetActive(true);
     }
 
     //===========================================================
@@ -49,7 +47,6 @@ public class ButtonSystem : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public void OnPointerExit(PointerEventData eventData)
     {
         image.color = Color.clear;
-        effect.SetActive(false);
     }
 
     //------------------------------------------------------------------------------

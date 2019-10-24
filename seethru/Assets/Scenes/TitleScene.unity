@@ -450,6 +450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clickEnter: {fileID: 1674020695}
+  gameStart: NetworkSetting
 --- !u!1 &874931339
 GameObject:
   m_ObjectHideFlags: 0
@@ -919,6 +920,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectSound: {fileID: 1009790730}
+  effect: {fileID: 0}
 --- !u!114 &1009790729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1726,6 +1728,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectSound: {fileID: 1674020701}
+  effect: {fileID: 0}
 --- !u!114 &1674020700
 MonoBehaviour:
   m_ObjectHideFlags: 0

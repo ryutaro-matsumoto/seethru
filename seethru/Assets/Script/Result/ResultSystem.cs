@@ -1,9 +1,4 @@
-﻿//------------------------------------------------------------------------------
-// @name：ResultSystem.cs
-//
-// @note：
-//------------------------------------------------------------------------------
-
+﻿
 //------------------------------------------------------------------------------
 // namespace declaration.
 //------------------------------------------------------------------------------
@@ -26,6 +21,9 @@ public class ResultSystem : MonoBehaviour
     public AudioSource resultwindowSound;
     // ウィンドウイメージ
     public Image image;
+
+	public string backTitle = "TitleScene";
+	public string backRoom = "MatchRoom";
 
     // スタート時BGM/SE再生
     IEnumerator Playsound()
@@ -61,7 +59,8 @@ public class ResultSystem : MonoBehaviour
     public void ClickRoomBack()
     {
         clickEnter.PlayOneShot(clickEnter.clip);
-        FadeManeger.Fadeout("ResultScene");
+        FadeManeger.Fadeout(backRoom);
+        GameManager.connection.backToRoom();
     }
 
     //===========================================================
@@ -72,6 +71,9 @@ public class ResultSystem : MonoBehaviour
     public void ClickRoomExit()
     {
         clickEnter.PlayOneShot(clickEnter.clip);
-        FadeManeger.Fadeout("TitleScene");
-    }
+        FadeManeger.Fadeout(backTitle);
+		if(GameManager.onNetwork){
+			GameManager.connection.DisconnectRoom();
+		}
+	}
 }

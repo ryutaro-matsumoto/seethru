@@ -48,12 +48,12 @@ public class Bullet : PoolObject
 			ReturnToPool();
 		}
 
-		if(gapHit.GapHit||reflection.isDead){
+		if (gapHit.GapHit || reflection.isDead) {
 			HitEffect();
 		}
 	}
 
-	private void HitEffect(){
+	public void HitEffect(){
 		ReturnToPool();
 	}
 
