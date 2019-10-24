@@ -252,8 +252,11 @@ public class MrsClient : Mrs {
 
                     GameManager.ConnectionServer((uint)data.player_id, myClient);
                     netsettings.SetProfile(data.player_id, g_playerName);
-                    g_roomManager.setMyID(data.player_id);
-                    g_roomManager.UpdateProfileList(data.player_id, g_playerName);
+                    if (g_roomManager != null)
+                    {
+                        g_roomManager.setMyID(data.player_id);
+                        g_roomManager.UpdateProfileList(data.player_id, g_playerName);
+                    }
                 }
                 break;
 
@@ -261,8 +264,10 @@ public class MrsClient : Mrs {
             case 0x02:
                 {
                     S_DataProfile data = (S_DataProfile)Marshal.PtrToStructure(payload, typeof(S_DataProfile));
-
-                    g_roomManager.UpdateProfileList(data.player_id, data.name);
+                    if (g_roomManager != null)
+                    {
+                        g_roomManager.UpdateProfileList(data.player_id, data.name);
+                    }
                 }
                 break;
 
@@ -735,6 +740,7 @@ public class MrsClient : Mrs {
     {
         g_paytype = 0x05;
         byte[] blank = System.Text.Encoding.ASCII.GetBytes("1");
+        MRS_LOG_DEBUG("SEND COUNT DOWN START");
         mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, blank, (uint)blank.Length);
     }
 

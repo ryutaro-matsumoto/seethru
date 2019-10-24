@@ -224,6 +224,7 @@ MonoBehaviour:
   moveSpeed: 7
   rotateSpeed: 10
   moveForceMultiplier: 50
+  isInput: 0
   bulletStart: {fileID: 3068616725602467906}
 --- !u!114 &3068616724914550907
 MonoBehaviour:
