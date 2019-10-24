@@ -63,4 +63,13 @@ namespace DataStructures
         public S_DataPlayer data2;
         public S_DataPlayer data3;
     } 
+
+    // 被弾死用データ構造体
+    [StructLayout(LayoutKind.Sequential)]
+    public struct S_DeadHit
+    {
+        public int player_id;
+        public int bullet_id;
+        public int whosby_id;
+    }
 }
