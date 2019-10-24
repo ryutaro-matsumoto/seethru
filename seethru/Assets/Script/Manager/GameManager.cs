@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
 
 	static public StageSelect stageSelect;
 
-	
+	static public List<Bullet> bullets = new List<Bullet>();
 
  	private void Awake() {
 		DontDestroyOnLoad(this);
@@ -204,6 +204,12 @@ public class GameManager : MonoBehaviour
 		
 		Bullet bullet = bulletPool.Place<Bullet>(vec, qt);
 		bullet.id = bulletID;
+		for(int i = 0; i < bullets.Count; ++i){
+			if(bullets[i] != null){
+				bullets[i] = bullet;
+				break;
+			}
+		}
 
 		//players[playerID].GetComponent<Player>().anim.SetBool("Attack", true);
 	}
@@ -214,7 +220,7 @@ public class GameManager : MonoBehaviour
 	/// </summary>
 	/// <param name="playerID"></param>
 	public static void PlayerDeadFall(int playerID){
-		
+		players[playerID].GetComponent<FallDead>().Fall();
 	}
 
 	//------------------------------------------------------------------------
@@ -223,10 +229,14 @@ public class GameManager : MonoBehaviour
 	/// </summary>
 	/// <param name="playerID"></param>
 	/// <param name="bulletID"></param>
-	public static void PlayerDeadHit(int playerID, int bulletID){
-
+	public static void PlayerDeadHit(int playerID, int bulletID) {
+		players[playerID].GetComponent<Player>().DeadPlayer();
+		for (int i = 0; i < bullets.Count; ++i) {
+			if (bullets[i].id == bulletID) {
+				bullets[i].HitEffect();
+			}
+		}
 	}
-
 	//------------------------------------------------------------------------
 	/// <summary>
 	/// 弾の反射を受信時に使用

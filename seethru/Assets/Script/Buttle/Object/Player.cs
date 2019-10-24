@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
 
 	[HideInInspector]
 	public bool isDead = false;
+	[HideInInspector]
+	public bool isHit = false;
 
 	[HideInInspector]
 	public Animator anim;
@@ -27,13 +29,23 @@ public class Player : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	void FixedUpdate() {
-        if(isDead){
-			DeadPlayer();
+	void Update() {
+        if(isHit){
+			SendDeadHit();
 		}
     }
 
-	void DeadPlayer(){
+	private void SendDeadHit(){
+		if(GameManager.onNetwork){
+			/*MrsClient待ち*/
+
+		}
+		else {
+			DeadPlayer();
+		}
+	}
+
+	public void DeadPlayer(){
 		GameManager.livePlayer--;
 		gameObject.SetActive(false);
 	}

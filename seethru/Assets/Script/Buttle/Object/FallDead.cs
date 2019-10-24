@@ -32,6 +32,16 @@ public class FallDead : MonoBehaviour
 		}
 	}
 
+	public void SendFall(){
+		if(GameManager.onNetwork){
+			/* MrsClientの関数待ち */
+
+		}
+		else{
+			Fall();
+		}
+
+	}
 	public void Fall() {
 		isFall = true;
 		PlayerInput input = GetComponent<PlayerInput>();

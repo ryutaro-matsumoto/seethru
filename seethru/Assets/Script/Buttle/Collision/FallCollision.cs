@@ -7,7 +7,7 @@ public class FallCollision : MonoBehaviour
 	
 	private void OnTriggerExit2D(Collider2D collision) {
 		if(collision.gameObject.tag == "Floor"){
-			transform.parent.GetComponent<FallDead>().Fall();
+			transform.parent.GetComponent<FallDead>().SendFall();
 		}
 	}
 
