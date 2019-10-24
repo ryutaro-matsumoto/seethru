@@ -151,10 +151,12 @@ public class PlayerInput : MonoBehaviour
 	private void Attack(){
 		if(inputAttack && !inputAttackBuff){
 			if(player.bullet > 0){
-				//anim.SetBool("Attack", true);
-				bulletPool.Place(bulletStart.transform.position, transform.rotation);
 				if (GameManager.onNetwork) {
 					GameManager.connection.SendShootData(bulletStart.transform.position.x, bulletStart.transform.position.y, transform.eulerAngles.z);
+				}
+				else{
+					bulletPool.Place(bulletStart.transform.position, transform.rotation);
+					//anim.SetBool("Attack", true);
 				}
 				--player.bullet;
 			}

@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
 
 	static public StageSelect stageSelect;
 
+	
+
  	private void Awake() {
 		DontDestroyOnLoad(this);
 	}
@@ -187,5 +189,15 @@ public class GameManager : MonoBehaviour
 		stageSelect.transform.GetChild(0).GetChild(stageSelect.selectStage - 1).gameObject.SetActive(false);
 		stageSelect.selectStage = stage;
 		stageSelect.transform.GetChild(0).GetChild(stageSelect.selectStage - 1).gameObject.SetActive(true);
+	}
+
+
+	public static void BulletPlace(Vector2 vec, Quaternion qt, uint playerID, int bulletID){
+		
+		Bullet bullet = bulletPool.Place<Bullet>(vec, qt);
+		bullet.id = bulletID;
+
+		//players[playerID].GetComponent<Player>().anim.SetBool("Attack", true);
+
 	}
 }
