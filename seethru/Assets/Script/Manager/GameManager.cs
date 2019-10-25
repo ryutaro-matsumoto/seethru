@@ -9,10 +9,15 @@ public class GameManager : MonoBehaviour
 
 	static public bool onNetwork{ get{ return connection != null; } }
 
+	// プロフィール関係
+	static public uint playID;
+	static public string ipAddress = "192.168.252.120";
+	static public string playerName = "Anonymous";
+
+
 	static public MrsClient connection;
 	static public uint playerNum = 0;
 	static public GameObject[] players;
-	static public uint playID;
 
 	static public readonly string stageName = "Stage";
 

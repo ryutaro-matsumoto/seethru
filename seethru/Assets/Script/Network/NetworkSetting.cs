@@ -8,8 +8,6 @@ using DataStructures;
 
 public class NetworkSetting : MonoBehaviour
 {
-    public string ipAddress = "192.168.252.120";
-    public string playerName = "Anonymous";
 
     // コンポーネント
     public MrsClient mrsClient;
@@ -44,7 +42,7 @@ public class NetworkSetting : MonoBehaviour
         this.gameObject.SetActive(false);
 
         mrsClient = GameObject.Find("ClientObject").GetComponent<MrsClient>();
-        mrsClient.SetSettings(ipAddress, playerName);
+        mrsClient.SetSettings(GameManager.ipAddress, GameManager.playerName);
         mrsClient.StartEchoClient();
 
         this.gameObject.SetActive(true);
@@ -55,7 +53,7 @@ public class NetworkSetting : MonoBehaviour
     /// </summary>
     public void SetAddress()
     {
-        ipAddress = inputAddr.text;
+        GameManager.ipAddress = inputAddr.text;
     }
 
     /// <summary>
@@ -63,6 +61,6 @@ public class NetworkSetting : MonoBehaviour
     /// </summary>
     public void SetName()
     {
-        playerName = inputName.text;
+        GameManager.playerName = inputName.text;
     }
 }

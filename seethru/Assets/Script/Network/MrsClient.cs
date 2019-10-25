@@ -50,7 +50,6 @@ public class MrsClient : Mrs {
     private static bool createMrs;
     private static uint g_playercount = 0;
 
-    protected static string g_playerName;
 
     private static MrsClient myClient;
     private static RoomManager g_roomManager;
@@ -72,7 +71,7 @@ public class MrsClient : Mrs {
         g_ArgWriteDataLen = "1024";
         g_ArgWriteCount = "10";
         g_ArgConnections = "1";
-        g_ArgServerAddr = "127.0.0.1";
+        GameManager.ipAddress = "127.0.0.1";
 #if UNITY_WEBGL
         g_ArgServerPort       = "22223";
 #else
@@ -251,11 +250,11 @@ public class MrsClient : Mrs {
                     S_DataProfile data = (S_DataProfile)Marshal.PtrToStructure(payload, typeof(S_DataProfile));
 
                     GameManager.ConnectionServer((uint)data.player_id, myClient);
-                    netsettings.SetProfile(data.player_id, g_playerName);
+                    netsettings.SetProfile(data.player_id, GameManager.playerName);
                     if (g_roomManager != null)
                     {
                         g_roomManager.setMyID(data.player_id);
-                        g_roomManager.UpdateProfileList(data.player_id, g_playerName);
+                        g_roomManager.UpdateProfileList(data.player_id, GameManager.playerName);
                     }
                 }
                 break;
@@ -568,7 +567,7 @@ public class MrsClient : Mrs {
         
         mrs.Connect.Request connect_request = new mrs.Connect.Request();
         connect_request.ConnectionType = MrsConnectionType.NONE;
-        connect_request.Addr           = g_ArgServerAddr;
+        connect_request.Addr           = GameManager.ipAddress;
         connect_request.Port           = ToUInt16( g_ArgServerPort );
         connect_request.TimeoutMsec    = ToUInt32( g_ArgTimeoutMsec );
         Int32 connection_type = ToInt32( g_ArgConnectionType );
@@ -730,8 +729,8 @@ public class MrsClient : Mrs {
     /// <param name="_ip">IPアドレス</param>
     public void SetSettings(string _ip, string _name)
     {
-        g_playerName = _name;
-        g_ArgServerAddr = _ip;
+        GameManager.playerName = _name;
+        GameManager.ipAddress = _ip;
         netsettings.SetProfile(-1, _name);
     }
 
@@ -871,6 +870,7 @@ public class MrsClient : Mrs {
 
 	//-----------------------------------------------------------------------
 	static public void SendProfileData() {
+		netsettings.SetProfile(-1, GameManager.playerName);
 		connected = true;
 		g_paytype = 0x01;
 		IntPtr p_data = Marshal.AllocHGlobal(Marshal.SizeOf(netsettings.GetMyProfile()));
