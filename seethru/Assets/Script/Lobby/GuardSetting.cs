@@ -7,6 +7,10 @@ public class GuardSetting : MonoBehaviour
 
 	public int guardSetNum = 0;
 
+	private void Update() {
+		SetGuardData();
+	}
+
 	public void SetGuardData(){
 
 		int cnt = 0;
