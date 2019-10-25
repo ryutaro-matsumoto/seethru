@@ -51,7 +51,7 @@ public class RoomManager : MonoBehaviour
         {
             if (profile[i].name == "") { playerList.transform.GetChild(i).GetComponent<Text>().text = "Waiting other player..."; }
             else { playerList.transform.GetChild(i).GetComponent<Text>().text = profile[i].name; }
-            if(myID == i) { playerList.transform.GetChild(i).GetComponent<Text>().text = "ITS ME"; }
+            if(myID == i) { playerList.transform.GetChild(i).GetComponent<Text>().color = new Color(1f, 0f, 0f); }
         }
     }
 

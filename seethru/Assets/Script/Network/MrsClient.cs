@@ -879,6 +879,5 @@ public class MrsClient : Mrs {
 			mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)Marshal.SizeOf(netsettings.GetMyProfile()));
 		}
 		Marshal.FreeHGlobal(p_data);
-		FadeManeger.Fadeout("MatchRoom");
 	}
 }
