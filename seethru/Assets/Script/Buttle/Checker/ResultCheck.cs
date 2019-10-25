@@ -7,6 +7,7 @@ public class ResultCheck : MonoBehaviour
 {
 	public string resultScene;
 
+
 	private bool onResult = false;
     void Update()
     {

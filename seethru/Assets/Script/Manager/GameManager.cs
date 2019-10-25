@@ -229,7 +229,7 @@ public class GameManager : MonoBehaviour
 	/// <param name="playerID"></param>
 	/// <param name="bulletID"></param>
 	public static void PlayerDeadHit(int playerID, int bulletID) {
-		players[playerID].GetComponent<Player>().DeadPlayer();
+		players[playerID].GetComponent<Player>().isDead = true;
 		for (int i = 0; i < bullets.Count; ++i) {
 			if (bullets[i].id == bulletID) {
 				bullets[i].HitEffect();
