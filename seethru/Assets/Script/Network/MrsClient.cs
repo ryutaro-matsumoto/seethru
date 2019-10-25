@@ -321,7 +321,7 @@ public class MrsClient : Mrs {
                     S_DataPlayer data = (S_DataPlayer)Marshal.PtrToStructure(payload, typeof(S_DataPlayer));
                     if (GameManager.players[data.id] != null)
                     {
-                        GameManager.players[data.id].transform.position = new Vector3(data.x, data.y, 0);
+                        GameManager.players[data.id].GetComponent<Player>().receivePos = new Vector2(data.x, data.y);
                         GameManager.players[data.id].transform.eulerAngles = new Vector3(0.0f, 0.0f, data.angle);
 
                         // 送信側プレイヤーが死んでいるなら受信側のクライアントでも死なす

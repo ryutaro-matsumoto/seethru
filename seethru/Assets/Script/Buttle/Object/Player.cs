@@ -23,6 +23,10 @@ public class Player : MonoBehaviour
 	[HideInInspector]
 	public Animator anim;
 
+	public Vector2 receivePos;
+
+	Rigidbody2D rb2d;
+
 	private void Start() {
 		bullet = startBullet;
 		if(GetComponent<PlayerInput>() != null){
@@ -31,12 +35,18 @@ public class Player : MonoBehaviour
 		else{
 			anim = transform.GetChild(4).GetComponent<Animator>();
 		}
+		rb2d = GetComponent<Rigidbody2D>();
 	}
 
 	// Update is called once per frame
 	void Update() {
 		if(isDead){
 			DeadPlayer();
+		}
+
+		if(GetComponent<PlayerInput>() == null){
+			Vector2 velo = (receivePos - (Vector2)transform.position) / 2f;
+			rb2d.velocity = velo;
 		}
     }
 
