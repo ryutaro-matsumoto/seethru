@@ -23,7 +23,6 @@ public class ResultSystem : MonoBehaviour
     public Image image;
 
 	public string backTitle = "TitleScene";
-	public string backRoom = "MatchRoom";
 
     // スタート時BGM/SE再生
     IEnumerator Playsound()
@@ -59,7 +58,6 @@ public class ResultSystem : MonoBehaviour
     public void ClickRoomBack()
     {
         clickEnter.PlayOneShot(clickEnter.clip);
-        FadeManeger.Fadeout(backRoom);
         GameManager.connection.backToRoom();
     }
 

@@ -252,6 +252,7 @@ public class MrsClient : Mrs {
                     GameManager.ConnectionServer((uint)data.player_id, myClient);
                     netsettings.SetProfile(data.player_id, GameManager.playerName);
                     GameManager.UpdateProfileList(data.player_id, GameManager.playerName);
+					FadeManeger.Fadeout("MatchRoom");
                 }
                 break;
 
@@ -472,7 +473,6 @@ public class MrsClient : Mrs {
 
 		SendProfileData();
 
-		FadeManeger.Fadeout("MatchRoom");
     }
     
     // ソケット接続時に呼ばれる
