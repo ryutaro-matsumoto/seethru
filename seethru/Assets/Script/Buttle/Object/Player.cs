@@ -51,7 +51,6 @@ public class Player : MonoBehaviour
 	}
 
 	public void DeadPlayer(){
-		GameManager.livePlayer--;
 		gameObject.SetActive(false);
 	}
 }

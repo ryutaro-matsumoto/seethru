@@ -13,24 +13,22 @@ public class GameManager : MonoBehaviour
 	static public uint playerNum = 0;
 	static public GameObject[] players;
 	static public uint playID;
-	static public Pool bulletPool = null;
 
-	static public string stageName = "Stage";
-
-	static private int[] startPositonIDTable;	
+	static public readonly string stageName = "Stage";
 
 	static private Color[] playerColor = new Color[4];
 
 	static public uint livePlayer = 0;
 
+	//ゲーム中のオブジェクト（毎回初期化）
+	static private int[] startPositonIDTable;
 	static public FloorMap floorMap;
 	static public GameObject timeControler;
-
 	static public StageSelect stageSelect;
-
 	static public List<Bullet> bullets = new List<Bullet>();
+	static public Pool bulletPool = null;
 
- 	private void Awake() {
+	private void Awake() {
 		DontDestroyOnLoad(this);
 	}
 
@@ -245,6 +243,16 @@ public class GameManager : MonoBehaviour
 	/// <param name="bulletID"></param>
 	public static void BulletReflection(int bulletID){
 
+	}
+
+	public static void BackRoom(){
+		floorMap = null;
+		timeControler = null;
+		stageSelect = null;
+		bullets = new List<Bullet>();
+		bulletPool = null;
+
+		
 	}
 
 }

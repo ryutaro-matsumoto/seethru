@@ -19,7 +19,6 @@ public class Gap : MonoBehaviour {
 			Hit = true;
 			player.SendDeadHit(collision.gameObject.GetComponent<Bullet>().id);
 			Debug.Log(collision.gameObject.GetComponent<Bullet>().id);
-
 		}
 	}
 

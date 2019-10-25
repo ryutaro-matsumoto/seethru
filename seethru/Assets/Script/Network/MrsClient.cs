@@ -421,7 +421,13 @@ public class MrsClient : Mrs {
                 }
                 break;
 
-            default: { } break;
+			//--------------------------------------- シーンの切り替え 0x3#
+			case 0x31:
+				{
+					
+				}
+				break;
+			default: { } break;
         }
     }
     
@@ -848,4 +854,11 @@ public class MrsClient : Mrs {
 
         Marshal.FreeHGlobal(send);
     }
+
+
+	//-----------------------------------------------------------------------
+	public void SendOnResult(){
+		g_paytype = 0x31;
+		mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, null, 0);
+	}
 }
