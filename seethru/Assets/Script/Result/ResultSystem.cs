@@ -59,6 +59,7 @@ public class ResultSystem : MonoBehaviour
     {
         clickEnter.PlayOneShot(clickEnter.clip);
         GameManager.connection.backToRoom();
+		GameManager.BackRoom();
     }
 
     //===========================================================

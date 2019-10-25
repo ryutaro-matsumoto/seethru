@@ -258,7 +258,7 @@ public class GameManager : MonoBehaviour
 		floorMap = null;
 		timeControler = null;
 		stageSelect = null;
-		bullets = new List<Bullet>();
+		bullets.Clear();
 		bulletPool = null;
 	}
 
