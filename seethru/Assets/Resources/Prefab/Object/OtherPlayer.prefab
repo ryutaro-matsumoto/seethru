@@ -137,6 +137,10 @@ MonoBehaviour:
   attackStop: 0
   coolTime: 1
   isDead: 0
+  isHit: 0
+  anim: {fileID: 0}
+  receivePos: {x: 0, y: 0}
+  animationRange: 0.01
 --- !u!50 &9054932993696119135
 Rigidbody2D:
   serializedVersion: 4

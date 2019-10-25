@@ -23,7 +23,11 @@ public class Player : MonoBehaviour
 	[HideInInspector]
 	public Animator anim;
 
+
 	public Vector2 receivePos;
+
+	public float animationRange;
+
 
 	Rigidbody2D rb2d;
 
@@ -45,7 +49,18 @@ public class Player : MonoBehaviour
 		}
 
 		if(GetComponent<PlayerInput>() == null){
-			transform.position = Vector2.Lerp(transform.position, receivePos, 0.5f);
+			Vector2 vec = Vector2.Lerp(transform.position, receivePos, 0.5f);
+			Vector2 pos = transform.position;
+			transform.position = vec;
+
+			vec -= pos;
+			if(vec.magnitude > animationRange){
+				anim.SetBool("Run", true);
+				anim.SetFloat("RunSpeed", 1f);
+			}
+			else {
+				anim.SetBool("Run", false); ;
+			}
 		}
     }
 
