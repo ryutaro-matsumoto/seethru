@@ -92,6 +92,7 @@ public class MrsClient : Mrs {
 		}
 		else {
 			Destroy(this.gameObject);
+			return;
 		}
 
 		gameObject.AddComponent< mrs.ScreenLogger >();
