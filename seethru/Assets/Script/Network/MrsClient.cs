@@ -467,17 +467,20 @@ public class MrsClient : Mrs {
     // 鍵交換した時に呼ばれる
     [AOT.MonoPInvokeCallback(typeof(MrsKeyExchangeCallback))]
     private static void on_key_exchange( MrsConnection connection, IntPtr connection_data ){
-        //MRS_LOG_DEBUG( "on_key_exchange" );
-        connected = true;
-        g_paytype = 0x01;
-        IntPtr p_data = Marshal.AllocHGlobal(Marshal.SizeOf(netsettings.GetMyProfile()));
-        Marshal.StructureToPtr(netsettings.GetMyProfile(), p_data, false);
-        if (g_nowconnect != null)
-        {
-            mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)Marshal.SizeOf(netsettings.GetMyProfile()));
-        }
-        Marshal.FreeHGlobal(p_data);
-        mrs.Utility.LoadScene("MatchRoom");
+		//MRS_LOG_DEBUG( "on_key_exchange" );
+		//connected = true;
+		//g_paytype = 0x01;
+		//IntPtr p_data = Marshal.AllocHGlobal(Marshal.SizeOf(netsettings.GetMyProfile()));
+		//Marshal.StructureToPtr(netsettings.GetMyProfile(), p_data, false);
+		//if (g_nowconnect != null)
+		//{
+		//    mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)Marshal.SizeOf(netsettings.GetMyProfile()));
+		//}
+		//Marshal.FreeHGlobal(p_data);
+
+		SendProfileData();
+
+		FadeManeger.Fadeout("MatchRoom");
     }
     
     // ソケット接続時に呼ばれる
@@ -819,8 +822,7 @@ public class MrsClient : Mrs {
     public unsafe void backToRoom()
     {
         g_gameon = false;
-		g_paytype = 0x32;
-		mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, null, 0);
+		SendProfileData();
 	}
 
 	/// <summary>
@@ -865,5 +867,18 @@ public class MrsClient : Mrs {
 		g_paytype = 0x31;
 		g_gameon = false;
 		mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, null, 0);
+	}
+
+	//-----------------------------------------------------------------------
+	static public void SendProfileData() {
+		connected = true;
+		g_paytype = 0x01;
+		IntPtr p_data = Marshal.AllocHGlobal(Marshal.SizeOf(netsettings.GetMyProfile()));
+		Marshal.StructureToPtr(netsettings.GetMyProfile(), p_data, false);
+		if (g_nowconnect != null) {
+			mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)Marshal.SizeOf(netsettings.GetMyProfile()));
+		}
+		Marshal.FreeHGlobal(p_data);
+		FadeManeger.Fadeout("MatchRoom");
 	}
 }
