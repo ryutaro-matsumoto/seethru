@@ -45,7 +45,7 @@ public class Player : MonoBehaviour
 		}
 
 		if(GetComponent<PlayerInput>() == null){
-			Vector2 velo = (receivePos - (Vector2)transform.position) / 2f;
+			Vector2 velo = (receivePos - (Vector2)transform.position);
 			rb2d.velocity = velo;
 		}
     }
