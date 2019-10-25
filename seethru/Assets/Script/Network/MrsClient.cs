@@ -194,12 +194,12 @@ public class MrsClient : Mrs {
 
     }
 
-    private void InitMyData()
+    static private void InitMyData()
     {
-        myData.x = 0;
-        myData.y = 0;
-        myData.angle = 0;
-        myData.dead = false;
+        myNewData.x = 0;
+        myNewData.y = 0;
+        myNewData.angle = 0;
+        myNewData.dead = false;
     }
 
     private static String connection_type_to_string( MrsConnection connection ){
@@ -872,5 +872,7 @@ public class MrsClient : Mrs {
 			mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)Marshal.SizeOf(netsettings.GetMyProfile()));
 		}
 		Marshal.FreeHGlobal(p_data);
+
+		InitMyData();
 	}
 }
