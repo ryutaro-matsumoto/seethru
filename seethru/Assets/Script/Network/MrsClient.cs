@@ -663,7 +663,7 @@ public class MrsClient : Mrs {
                 if (g_nowconnect != null)
                 {
                     mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)Marshal.SizeOf(myNewData));
-                    //MRS_LOG_DEBUG("SEND MY DATA");
+                    MRS_LOG_DEBUG("SEND MY DATA");
                 }
                 Marshal.FreeHGlobal(p_data);
                 myData = myNewData;
