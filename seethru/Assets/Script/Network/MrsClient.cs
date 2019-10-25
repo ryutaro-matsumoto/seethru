@@ -651,8 +651,8 @@ public class MrsClient : Mrs {
         // 前フレームで死んでいるなら、他プレイヤーに座標データは送信しない
         if (GameManager.players[GameManager.playID] != null)
         {
-            if (!GameManager.players[GameManager.playID].transform.GetComponent<Player>().isDead)
-            {
+            //if (!GameManager.players[GameManager.playID].transform.GetComponent<Player>().isDead)
+            //{
                 myNewData.id = GameManager.playID;
                 myNewData.x = GameManager.players[GameManager.playID].transform.position.x;
                 myNewData.y = GameManager.players[GameManager.playID].transform.position.y;
@@ -667,7 +667,7 @@ public class MrsClient : Mrs {
                 }
                 Marshal.FreeHGlobal(p_data);
                 myData = myNewData;
-            }
+            //}
         }
     }
 
@@ -872,7 +872,7 @@ public class MrsClient : Mrs {
 			mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)Marshal.SizeOf(netsettings.GetMyProfile()));
 		}
 		Marshal.FreeHGlobal(p_data);
-
 		InitMyData();
+
 	}
 }
