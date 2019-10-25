@@ -14,6 +14,10 @@ public class GameManager : MonoBehaviour
 	static public string ipAddress = "192.168.252.120";
 	static public string playerName = "Anonymous";
 
+	static public DataStructures.S_DataProfile[] profiles = new DataStructures.S_DataProfile[4];
+
+	static public string[] playerNames;
+
 
 	static public MrsClient connection;
 	static public uint playerNum = 0;

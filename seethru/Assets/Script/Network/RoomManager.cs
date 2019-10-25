@@ -49,16 +49,16 @@ public class RoomManager : MonoBehaviour
     {
         for(int i = 0; i < 4; i++)
         {
-            if (profile[i].name == "") { playerList.transform.GetChild(i).GetComponent<Text>().text = "Waiting other player..."; }
-            else { playerList.transform.GetChild(i).GetComponent<Text>().text = profile[i].name; }
+            if (GameManager.profiles[i].name == "") { playerList.transform.GetChild(i).GetComponent<Text>().text = "Waiting other player..."; }
+            else { playerList.transform.GetChild(i).GetComponent<Text>().text = GameManager.profiles[i].name; }
             if(myID == i) { playerList.transform.GetChild(i).GetComponent<Text>().color = new Color(1f, 0f, 0f); }
         }
     }
 
     public void UpdateProfileList(int _id, string _name)
     {
-        profile[_id].player_id = _id;
-        profile[_id].name = _name;
+		GameManager.profiles[_id].player_id = _id;
+		GameManager.profiles[_id].name = _name;
         UpdateNameList();
     }
 
