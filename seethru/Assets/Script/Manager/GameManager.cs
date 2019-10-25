@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
 	/// <param name="id">サーバーから送られてきたID</param>
 	/// data<param name="client">接続成功したクライアントクラス</param>
 	static public void ConnectionServer(uint id, MrsClient client){
+		Debug.Log("Connect Server");
 		ReceiveID(id);
 		SetConnection(client);
 	}
@@ -156,6 +157,8 @@ public class GameManager : MonoBehaviour
 		}
 
 		Debug.Log("playID" + playID);
+		Debug.Log("onNetwork" + onNetwork);
+
 	}
 
 

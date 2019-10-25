@@ -85,7 +85,16 @@ public class MrsClient : Mrs {
     protected bool m_IsRunning;
     
     void Awake(){
-        gameObject.AddComponent< mrs.ScreenLogger >();
+
+		if (!createMrs) {
+			DontDestroyOnLoad(this.gameObject);
+			createMrs = true;
+		}
+		else {
+			Destroy(this.gameObject);
+		}
+
+		gameObject.AddComponent< mrs.ScreenLogger >();
         gameObject.AddComponent<GameManager>();
         gameObject.AddComponent<NetworkSettingData>();
 
@@ -99,15 +108,6 @@ public class MrsClient : Mrs {
 
 
         g_gameon = false;
-        if (!createMrs)
-        {
-            DontDestroyOnLoad(this.gameObject);
-            createMrs = true;
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
 
     }
 
@@ -648,6 +648,7 @@ public class MrsClient : Mrs {
     /// </summary>
     public static void CompareMyData()
     {
+		Debug.Log("Compare");
         // 前フレームで死んでいるなら、他プレイヤーに座標データは送信しない
         if (GameManager.players[GameManager.playID] != null)
         {
