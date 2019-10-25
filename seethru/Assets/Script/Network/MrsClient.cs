@@ -251,11 +251,7 @@ public class MrsClient : Mrs {
 
                     GameManager.ConnectionServer((uint)data.player_id, myClient);
                     netsettings.SetProfile(data.player_id, GameManager.playerName);
-                    if (g_roomManager != null)
-                    {
-                        g_roomManager.setMyID(data.player_id);
-                        g_roomManager.UpdateProfileList(data.player_id, GameManager.playerName);
-                    }
+                    GameManager.UpdateProfileList(data.player_id, GameManager.playerName);
                 }
                 break;
 

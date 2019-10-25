@@ -262,4 +262,10 @@ public class GameManager : MonoBehaviour
 		bulletPool = null;
 	}
 
+
+	static public void UpdateProfileList(int _id, string _name) {
+		GameManager.profiles[_id].player_id = _id;
+		GameManager.profiles[_id].name = _name;
+	}
+
 }
