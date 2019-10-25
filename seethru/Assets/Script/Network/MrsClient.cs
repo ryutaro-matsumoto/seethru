@@ -259,10 +259,7 @@ public class MrsClient : Mrs {
             case 0x02:
                 {
                     S_DataProfile data = (S_DataProfile)Marshal.PtrToStructure(payload, typeof(S_DataProfile));
-                    if (g_roomManager != null)
-                    {
-                        g_roomManager.UpdateProfileList(data.player_id, data.name);
-                    }
+					GameManager.UpdateProfileList(data.player_id, data.name);
                 }
                 break;
 
