@@ -48,6 +48,10 @@ public class LookatObject : MonoBehaviour
 			}
 		}
 
+		if(playerx[0] == null || playerx[1] == null || playery[0] == null || playery[1] == null) {
+			return;
+		}
+
 		Vector2 vecx = Vector2.Lerp(playerx[0].transform.position, playerx[1].transform.position, 0.5f);
 		Vector2 vecy = Vector2.Lerp(playery[0].transform.position, playery[1].transform.position, 0.5f);
 

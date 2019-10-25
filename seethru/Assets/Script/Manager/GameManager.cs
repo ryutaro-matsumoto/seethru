@@ -251,8 +251,6 @@ public class GameManager : MonoBehaviour
 		stageSelect = null;
 		bullets = new List<Bullet>();
 		bulletPool = null;
-
-		
 	}
 
 }

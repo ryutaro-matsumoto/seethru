@@ -813,16 +813,20 @@ public class MrsClient : Mrs {
         g_gameon = true;
     }
 
-    public void backToRoom()
+	/// <summary>
+	/// ルームに帰るときの処理
+	/// </summary>
+    public unsafe void backToRoom()
     {
         g_gameon = false;
+		g_paytype = 0x32;
+		mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, null, 0);
+	}
 
-    }
-
-    /// <summary>
-    /// 落下死したらサーバーに自分のIDを送信
-    /// </summary>
-    public unsafe void SendPlayerDeadFall()
+	/// <summary>
+	/// 落下死したらサーバーに自分のIDを送信
+	/// </summary>
+	public unsafe void SendPlayerDeadFall()
     {
         g_paytype = 0x21;
         IntPtr send = Marshal.AllocHGlobal(sizeof(Int32));
@@ -859,6 +863,7 @@ public class MrsClient : Mrs {
 	//-----------------------------------------------------------------------
 	public void SendOnResult(){
 		g_paytype = 0x31;
+		g_gameon = false;
 		mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, null, 0);
 	}
 }
