@@ -42,10 +42,10 @@ public class RoomManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-                
-    }
+		UpdateNameList();
+	}
 
-    public void UpdateNameList()
+	public void UpdateNameList()
     {
         for(int i = 0; i < 4; i++)
         {
@@ -55,12 +55,6 @@ public class RoomManager : MonoBehaviour
         }
     }
 
-    public void UpdateProfileList(int _id, string _name)
-    {
-		GameManager.profiles[_id].player_id = _id;
-		GameManager.profiles[_id].name = _name;
-        UpdateNameList();
-    }
 
     public void PressReady()
     {
