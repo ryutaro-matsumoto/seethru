@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
 
 	static public string[] playerNames;
 
+	static public Guard.GuardColliderType[] guards = new Guard.GuardColliderType[2];
 
 	static public MrsClient connection;
 	static public uint playerNum = 0;
@@ -136,6 +137,8 @@ public class GameManager : MonoBehaviour
 				players[i].transform.GetChild(6).GetChild(2).GetChild(1).gameObject.GetComponent<SkinnedMeshRenderer>().material.color = playerColor[i];
 				players[i].transform.GetChild(6).GetChild(2).GetChild(3).gameObject.GetComponent<SkinnedMeshRenderer>().material.color = playerColor[i];
 				players[i].transform.GetChild(6).GetChild(2).GetChild(5).gameObject.GetComponent<SkinnedMeshRenderer>().material.color = playerColor[i];
+				players[i].transform.GetChild(3).GetComponent<Guard>().SetGuard(guards);
+
 				continue;
 			}
 			players[i] = MonoBehaviour.Instantiate(otherPlayerPrefab, startPositions[startPositonIDTable[i]].transform.position, startPositions[startPositonIDTable[i]].transform.rotation);

@@ -17,7 +17,7 @@ public class RoomManager : MonoBehaviour
 
     MrsClient mrsClient;
 
-    
+	GuardSetting gs;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +37,8 @@ public class RoomManager : MonoBehaviour
 
         mrsClient = GameObject.Find("ClientObject").GetComponent<MrsClient>();
         mrsClient.setRoomManager(this);
+
+		gs = GameObject.Find("GuardSetting").GetComponent<GuardSetting>();
     }
 
     // Update is called once per frame
@@ -60,21 +62,22 @@ public class RoomManager : MonoBehaviour
     {
         readyFlag[myID] = true;
         bool not_ready = false;
-        //for (int i = 0; i < 4; i++)
-        //{
-        //    if (playerName[i] != "")
-        //    {
-        //        if (!readyFlag[i])
-        //        {
-        //            not_ready = true;
-        //            break;
-        //        }
-        //    }
-        //}
-        //UpdateNameList();
+		//for (int i = 0; i < 4; i++)
+		//{
+		//    if (playerName[i] != "")
+		//    {
+		//        if (!readyFlag[i])
+		//        {
+		//            not_ready = true;
+		//            break;
+		//        }
+		//    }
+		//}
+		//UpdateNameList();
         if (!not_ready)
         {
-            mrsClient.SendRoomReady();
+			gs.SetGuardData();
+			mrsClient.SendRoomReady();
         }
     }
 
