@@ -649,9 +649,9 @@ public class MrsClient : Mrs {
     public static void CompareMyData()
     {
         // 前フレームで死んでいるなら、他プレイヤーに座標データは送信しない
-        if (!myNewData.dead)
+        if (GameManager.players[GameManager.playID] != null)
         {
-            if (GameManager.players != null)
+            if (!GameManager.players[GameManager.playID].transform.GetComponent<Player>().isDead)
             {
                 myNewData.id = GameManager.playID;
                 myNewData.x = GameManager.players[GameManager.playID].transform.position.x;
