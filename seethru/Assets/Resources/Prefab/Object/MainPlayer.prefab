@@ -244,6 +244,10 @@ MonoBehaviour:
   attackStop: 0
   coolTime: 1
   isDead: 0
+  isHit: 0
+  anim: {fileID: 0}
+  receivePos: {x: 0, y: 0}
+  animationRange: 0
 --- !u!50 &3068616724914550906
 Rigidbody2D:
   serializedVersion: 4
@@ -294,7 +298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!1 &3068616725602467906
 GameObject:
   m_ObjectHideFlags: 0
@@ -1085,15 +1089,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 111f939c3400d64498d1618db9508fa2, type: 3}
---- !u!1 &30653275553448961 stripped
+--- !u!1 &9115749690776701444 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 8295311374116747164, guid: 111f939c3400d64498d1618db9508fa2,
+  m_CorrespondingSourceObject: {fileID: 1005320076812089753, guid: 111f939c3400d64498d1618db9508fa2,
     type: 3}
   m_PrefabInstance: {fileID: 8318776622466249629}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7871274115891030233 stripped
+--- !u!1 &30653275553448961 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 2183781111002684228, guid: 111f939c3400d64498d1618db9508fa2,
+  m_CorrespondingSourceObject: {fileID: 8295311374116747164, guid: 111f939c3400d64498d1618db9508fa2,
     type: 3}
   m_PrefabInstance: {fileID: 8318776622466249629}
   m_PrefabAsset: {fileID: 0}
@@ -1103,9 +1107,9 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8318776622466249629}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &9115749690776701444 stripped
+--- !u!1 &7871274115891030233 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 1005320076812089753, guid: 111f939c3400d64498d1618db9508fa2,
+  m_CorrespondingSourceObject: {fileID: 2183781111002684228, guid: 111f939c3400d64498d1618db9508fa2,
     type: 3}
   m_PrefabInstance: {fileID: 8318776622466249629}
   m_PrefabAsset: {fileID: 0}

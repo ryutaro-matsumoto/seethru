@@ -11,6 +11,7 @@ public class FloorChip : MonoBehaviour
 
 	private float scale;
 
+	private float speed = 0;
 	private void Start() {
 		scale = transform.localScale.x;
 	}
@@ -22,14 +23,16 @@ public class FloorChip : MonoBehaviour
 	private void Update() {
 		if(isFall){
 			scale -= fallSpeed * Time.deltaTime;
-			transform.localScale = new Vector3(scale, scale, 1f);
+			//transform.localScale = new Vector3(scale, scale, 1f);
 			if (scale <= 0) {
 				gameObject.SetActive(false);
 			}
 
-			Vector3 newPosition = transform.position;
-			newPosition.z += scaleSpeed * Time.deltaTime; ;
 
+			Vector3 newPosition = transform.position;
+			speed += scaleSpeed * Time.deltaTime; ;
+
+			newPosition.z += speed;
 			transform.position = newPosition;
 		}
 	}

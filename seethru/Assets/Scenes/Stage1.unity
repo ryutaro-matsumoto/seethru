@@ -3473,6 +3473,90 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1410910024}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1417485219
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2336687972661303444, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_Name
+      value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 2336687972660806836, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -12.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2336687972660806836, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -12.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2336687972660806836, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2336687972660806836, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2336687972660806836, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2336687972660806836, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2336687972660806836, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2336687972660806836, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2336687972660806836, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 2336687972660806836, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 2336687972660806836, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2336687972660806836, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 2336687972660806836, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2336687972660806836, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.55
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4b6373ae9d20600418711acf9771a242, type: 3}
 --- !u!1001 &1423269579
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4730,6 +4814,90 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2ae847f3ae10e8449a665ea070a012f, type: 3}
+--- !u!1001 &1906356826
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2336687972661303444, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_Name
+      value: Wall (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2336687972660806836, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 12.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2336687972660806836, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 12.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2336687972660806836, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2336687972660806836, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2336687972660806836, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2336687972660806836, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2336687972660806836, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2336687972660806836, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2336687972660806836, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 2336687972660806836, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2336687972660806836, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2336687972660806836, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 2336687972660806836, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2336687972660806836, guid: 4b6373ae9d20600418711acf9771a242,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.55
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4b6373ae9d20600418711acf9771a242, type: 3}
 --- !u!1001 &1917804345
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10052,7 +10220,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!1 &705062039241261536
 GameObject:
   m_ObjectHideFlags: 0
@@ -11963,7 +12131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!212 &3202953402370325807
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12275,7 +12443,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!4 &3923890431889832406
 Transform:
   m_ObjectHideFlags: 0
@@ -12835,7 +13003,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!4 &4836371434196967195
 Transform:
   m_ObjectHideFlags: 0
@@ -12896,7 +13064,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276315734789912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12910,7 +13078,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276315795727632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12924,7 +13092,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276315846040597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12938,7 +13106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276315937678236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12952,7 +13120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276315948685978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12966,7 +13134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276316047118558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12980,7 +13148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276316085425660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12994,7 +13162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276316116233341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13008,7 +13176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276316205605109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13022,7 +13190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276316206380543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13036,7 +13204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276316215391729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13050,7 +13218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276316249399710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13064,7 +13232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276316291274882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13078,7 +13246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276316298005949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13092,7 +13260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276316408054102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13106,7 +13274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276316423953662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13120,7 +13288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276316560066062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13134,7 +13302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276316593073582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13148,7 +13316,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276316597220050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13162,7 +13330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276316636128109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13176,7 +13344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276316716497187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13190,7 +13358,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276316733310230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13204,7 +13372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276316777466207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13218,7 +13386,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276316799573261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13232,7 +13400,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276316884832051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13246,7 +13414,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276316911063757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13260,7 +13428,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276316931686596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13274,7 +13442,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276317020379129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13288,7 +13456,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276317114226736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13302,7 +13470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276317153173095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13316,7 +13484,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276317161885812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13330,7 +13498,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276317225247367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13344,7 +13512,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276317235274561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13358,7 +13526,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276317257719972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13372,7 +13540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276317263769759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13386,7 +13554,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276317275396629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13400,7 +13568,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276317281297660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13414,7 +13582,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276317294786900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13428,7 +13596,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276317364227593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13442,7 +13610,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276317424689826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13456,7 +13624,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276317430266696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13470,7 +13638,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276317492031481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13484,7 +13652,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276317509309538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13498,7 +13666,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276317520701955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13512,7 +13680,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276317615367901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13526,7 +13694,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276317644912788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13540,7 +13708,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276317648244475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13554,7 +13722,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276317663142526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13568,7 +13736,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &4965276317696011504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13582,7 +13750,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &5039455793482015674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13678,7 +13846,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!1 &5145086192246310210
 GameObject:
   m_ObjectHideFlags: 0
@@ -15022,7 +15190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!4 &5977881982958569012
 Transform:
   m_ObjectHideFlags: 0
@@ -15329,7 +15497,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!4 &6912379652427049368
 Transform:
   m_ObjectHideFlags: 0
@@ -15765,7 +15933,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!4 &7958646236563867861
 Transform:
   m_ObjectHideFlags: 0
@@ -16802,7 +16970,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!114 &8832286955068744828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16882,7 +17050,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!212 &9098069609314410216
 SpriteRenderer:
   m_ObjectHideFlags: 0

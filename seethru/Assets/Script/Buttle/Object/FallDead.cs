@@ -12,6 +12,8 @@ public class FallDead : MonoBehaviour
 
 	private float scale;
 
+	private float speed = 0;
+
 	// Start is called before the first frame update
 	void Start()
     {
@@ -20,14 +22,15 @@ public class FallDead : MonoBehaviour
 	private void Update() {
 		if (isFall) {
 			scale -= fallSpeed * Time.deltaTime;
-			transform.localScale = new Vector3(scale, scale, scale);
+			//transform.localScale = new Vector3(scale, scale, scale);
 			if (scale <= 0) {
 				GetComponent<Player>().isDead = true;
 			}
 
 			Vector3 newPosition = transform.position;
-			newPosition.z += scaleSpeed * Time.deltaTime; ;
+			speed += scaleSpeed * Time.deltaTime; ;
 
+			newPosition.z += speed;
 			transform.position = newPosition;
 		}
 	}
@@ -44,9 +47,9 @@ public class FallDead : MonoBehaviour
 	}
 	public void Fall() {
 		isFall = true;
-		PlayerInput input = GetComponent<PlayerInput>();
-		if(input != null){
-			input.isInput = false;
-		}
+		//	PlayerInput input = GetComponent<PlayerInput>();
+		//	if(input != null){
+		//		input.isInput = false;
+		//	}
 	}
 }

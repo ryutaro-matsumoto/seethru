@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 1
-  scaleSpeed: 2
+  scaleSpeed: 0.5
 --- !u!1 &9054932994145150522
 GameObject:
   m_ObjectHideFlags: 0

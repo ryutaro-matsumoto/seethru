@@ -76,7 +76,6 @@ public class RoomManager : MonoBehaviour
 		//UpdateNameList();
         if (!not_ready)
         {
-			gs.SetGuardData();
 			mrsClient.SendRoomReady();
         }
     }
