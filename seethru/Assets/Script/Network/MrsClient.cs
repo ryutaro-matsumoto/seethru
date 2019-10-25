@@ -735,6 +735,8 @@ public class MrsClient : Mrs {
     {
         mrs_close(g_nowconnect);
         g_gameon = false;
+		GameManager.OffConnection();
+		Destroy(this);
     }
 
     /// <summary>
