@@ -154,6 +154,8 @@ public class GameManager : MonoBehaviour
 
 			connection.SendStartingPos();
 		}
+
+		Debug.Log("playID" + playID);
 	}
 
 
