@@ -79,7 +79,7 @@ public class Player : MonoBehaviour
 		gameObject.SetActive(false);
 		GameObject effect = (GameObject)Resources.Load(GameManager.effectPath + "Water/Splash");
 		Vector3 newPosition = transform.position;
-		newPosition.z = transform.position.z - 1.2f;
+		newPosition.z = transform.position.z - 2f;
 
 		Instantiate(effect, newPosition, transform.rotation);
 

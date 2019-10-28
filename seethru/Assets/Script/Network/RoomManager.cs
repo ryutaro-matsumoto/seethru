@@ -22,6 +22,8 @@ public class RoomManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+		FadeManeger.Fadein();
+
         SoundManager.Instance.PlayBgm("BGM_Room");
 
         playerList = GameObject.Find("PlayerList");

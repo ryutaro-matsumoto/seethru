@@ -224,9 +224,6 @@ public class MrsClient : Mrs {
         buffer.Write( payload, payload_len );
         while ( 0 < buffer.GetDataLen() ){
             mrs.Time write_time = buffer.ReadTime();
-            MRS_LOG_DEBUG( "read_echo data={0} data_len={1} diff_time={2}({3} - {4})",
-                ToString( buffer.GetData() ), g_WriteDataLen,
-                ( read_time - write_time ).ToString(), read_time.ToString(), write_time.ToString() );
             if ( ! buffer.Read( null, g_WriteDataLen ) ){
                 MRS_LOG_ERR( "Lost data. len={0} {1}", buffer.GetDataLen(), mrs.Utility.ToHex( buffer.GetData(), buffer.GetDataLen() ) );
                 break;
@@ -234,13 +231,11 @@ public class MrsClient : Mrs {
             
             ++g_ReadCount;
             if ( g_WriteCount * g_Connections <= g_ReadCount ){
-                MRS_LOG_DEBUG( "Since all records have been received, it is finished." );
             }
         }
     }
     
     private static void parse_record( MrsConnection connection, IntPtr connection_data, UInt32 seqnum, UInt16 options, UInt16 payload_type, IntPtr payload, UInt32 payload_len ){
-        MRS_LOG_DEBUG( "parse_record seqnum={0} options=0x{1:X2} payload=0x{2:X2}/{3}", seqnum, options, payload_type, payload_len );
         // MRS_PAYLOAD_TYPE_BEGIN - MRS_PAYLOAD_TYPE_ENDの範囲内で任意のIDを定義し、対応するアプリケーションコードを記述する
         switch (payload_type)
         {
@@ -269,7 +264,6 @@ public class MrsClient : Mrs {
             case 0x03:
                 {
                     S_StartingData starting = (S_StartingData)Marshal.PtrToStructure(payload, typeof(S_StartingData));
-                    MRS_LOG_DEBUG("Starting... Table:{0} countPlayers:{1}", String.Join(", ", starting.spawnid), starting.sumplayer);
 
                     InitMrsforGame(starting);
                     g_playercount = starting.sumplayer;
@@ -306,7 +300,6 @@ public class MrsClient : Mrs {
                     //string str = BitConverter.ToString(data, 0);
                     IntPtr ptr = payload;
                     Int32 stagenum = *(Int32*)ptr;
-                    MRS_LOG_DEBUG("STAGE NUM: {0}", stagenum);
 
                     GameManager.StageNumSelect(stagenum);
                 }
@@ -387,7 +380,6 @@ public class MrsClient : Mrs {
             // 0x15 床の落下の合図
             case 0x15:
                 {
-                    MRS_LOG_DEBUG("RECEIVE 0x15 Turn on to FALL FLOOR");
                     GameManager.FallFloor();
                 }
                 break;
@@ -409,7 +401,6 @@ public class MrsClient : Mrs {
             case 0x21:
                 unsafe{
                     Int32 fellPlayerID = *(Int32*)payload;
-                    MRS_LOG_DEBUG("Player No.{0} was falling out",fellPlayerID);
                     GameManager.PlayerDeadFall(fellPlayerID);
                 }
                 break;
@@ -420,7 +411,6 @@ public class MrsClient : Mrs {
                 {
                     S_DeadHit data = (S_DeadHit)Marshal.PtrToStructure(payload, typeof(S_DeadHit));
 
-                    MRS_LOG_DEBUG("Player No.{0} was shot by Player No.{1} at Bullet No.{2}", data.player_id, data.whosby_id, data.bullet_id);
                     GameManager.PlayerDeadHit(data.player_id, data.bullet_id);
                 }
                 break;
@@ -444,7 +434,6 @@ public class MrsClient : Mrs {
         
         if ( g_IsValidRecord ){
             mrs_write_record( connection, g_RecordOptions, g_paytype, buffer.GetData(), buffer.GetDataLen() );
-            MRS_LOG_DEBUG("WROTE RECORD type:0x{0:X}", g_paytype);
         }else{
             mrs_write( connection, buffer.GetData(), buffer.GetDataLen() );
         }
@@ -489,8 +478,6 @@ public class MrsClient : Mrs {
     // ソケット接続時に呼ばれる
     [AOT.MonoPInvokeCallback(typeof(MrsConnectCallback))]
     private static void on_connect( MrsConnection connection, IntPtr connection_data ){
-        MRS_LOG_DEBUG( "on_connect local_mrs_version=0x{0:X} remote_mrs_version=0x{1:X}",
-            mrs_get_version( MRS_VERSION_KEY ), mrs_connection_get_remote_version( connection, MRS_VERSION_KEY ) );
 
         if ( g_IsKeyExchange ){
             mrs_set_cipher( connection, mrs_cipher_create( MrsCipherType.ECDH ) );
@@ -503,8 +490,6 @@ public class MrsClient : Mrs {
     // ソケット切断時に呼ばれる
     [AOT.MonoPInvokeCallback(typeof(MrsDisconnectCallback))]
     private static void on_disconnect( MrsConnection connection, IntPtr connection_data ){
-        MRS_LOG_DEBUG( "on_disconnect local_mrs_version=0x{0:X} remote_mrs_version=0x{1:X}",
-            mrs_get_version( MRS_VERSION_KEY ), mrs_connection_get_remote_version( connection, MRS_VERSION_KEY ) );
         connected = false;
     }
     
@@ -675,7 +660,6 @@ public class MrsClient : Mrs {
                 if (g_nowconnect != null)
                 {
                     mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, p_data, (uint)Marshal.SizeOf(myNewData));
-                    MRS_LOG_DEBUG("SEND MY DATA");
                 }
                 Marshal.FreeHGlobal(p_data);
                 myData = myNewData;
@@ -771,14 +755,12 @@ public class MrsClient : Mrs {
         g_paytype = 0x15;
         byte[] blank = System.Text.Encoding.ASCII.GetBytes("1");
         mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, blank, (uint)blank.Length);
-        MRS_LOG_DEBUG("SENT FALL FLOOR");
     }
 
     public void SendCountDownStart()
     {
         g_paytype = 0x05;
         byte[] blank = System.Text.Encoding.ASCII.GetBytes("1");
-        MRS_LOG_DEBUG("SEND COUNT DOWN START");
         mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, blank, (uint)blank.Length);
     }
 
@@ -792,7 +774,6 @@ public class MrsClient : Mrs {
         IntPtr sendTime = Marshal.AllocHGlobal(sizeof(Int32));
         *(Int32*)sendTime = _second;
         mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, sendTime, (uint)sizeof(Int32));
-        MRS_LOG_DEBUG("SENT COUNT DOWN TIME  TIMES LEFT: {0}",_second);
         Marshal.FreeHGlobal(sendTime);
     }
 
@@ -807,7 +788,6 @@ public class MrsClient : Mrs {
         *(Int32*)send = _stagenum;
 
         mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, send, (uint)sizeof(Int32));
-        MRS_LOG_DEBUG("SENT STAGE NUMBER : {0}", _stagenum);
 
         Marshal.FreeHGlobal(send);
     }
@@ -839,7 +819,6 @@ public class MrsClient : Mrs {
         *(Int32*)send = (Int32)GameManager.playID;
 
         mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, send, (uint)sizeof(Int32));
-        MRS_LOG_DEBUG("SENT FELL NUMBER : {0}", GameManager.playID);
 
         Marshal.FreeHGlobal(send);
     }
@@ -860,7 +839,6 @@ public class MrsClient : Mrs {
         *(S_DeadHit*)send = (S_DeadHit)sendHit;
 
         mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, send, (uint)sizeof(S_DeadHit));
-        MRS_LOG_DEBUG("SENT FELL NUMBER : {0}", GameManager.playID);
 
         Marshal.FreeHGlobal(send);
     }

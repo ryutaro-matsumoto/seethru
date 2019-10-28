@@ -13,6 +13,7 @@ TagManager:
   - Floor
   - Reload
   - Model
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -42,7 +43,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Effect
   - MouseScreen
   - Reflecter
   - ReflectObject

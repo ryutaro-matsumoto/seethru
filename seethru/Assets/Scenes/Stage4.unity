@@ -44630,7 +44630,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallCount: 1
-  floorFallSeconds: 0.2
+  floorFallSeconds: 0.04
 --- !u!114 &6298629845622105269
 MonoBehaviour:
   m_ObjectHideFlags: 0

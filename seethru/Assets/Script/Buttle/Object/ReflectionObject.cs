@@ -13,12 +13,16 @@ public class ReflectionObject : MonoBehaviour {
 	public Vector2 vector;
 	Bullet bullet;
 
+	CircleCollider2D col;
+
 	// Start is called before the first frame update
 	void OnEnable() {
 		isDead = false;
 		rigidbody2d = GetComponent<Rigidbody2D>();
 		reflect = startReflect;
 		bullet = GetComponent<Bullet>();
+		col = GetComponent<CircleCollider2D>();
+		StartCoroutine("NotHitTime");
 	}
 
 	// Update is called once per frame
@@ -90,4 +94,10 @@ public class ReflectionObject : MonoBehaviour {
 	//		rigidbody2d.angularVelocity = 0f;
 	//	}
 	//}
+
+	IEnumerator NotHitTime(){
+		yield return new WaitForSeconds(0.05f);
+
+		col.enabled = true;
+	}
 }
