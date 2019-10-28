@@ -21,8 +21,8 @@ public class NetworkSetting : MonoBehaviour
 
     private void Start()
     {
-        InputParent = GameObject.Find("InputAddress");
-        InputChild = InputParent.transform.GetChild(0).gameObject;
+        //InputParent = GameObject.Find("InputAddress");
+        //InputChild = InputParent.transform.GetChild(0).gameObject;
 
         addr = new string[4];
     }
