@@ -70,19 +70,36 @@ public class NetworkSetting : MonoBehaviour
         addr[0] = InputParent.transform.GetChild(0).GetComponent<InputField>().text;
         if (addr[0].Length >= 3)
         {
-
+            InputParent.transform.GetChild(1).GetComponent<InputField>().ActivateInputField();
+            
         }
     }
     public void SetAddress2()
     {
-
+        InputChild = InputParent.transform.GetChild(1).transform.gameObject;
+        addr[1] = InputParent.transform.GetChild(1).GetComponent<InputField>().text;
+        if (addr[0].Length >= 3)
+        {
+            InputParent.transform.GetChild(2).GetComponent<InputField>().ActivateInputField();
+        }
     }
     public void SetAddress3()
     {
 
+        InputChild = InputParent.transform.GetChild(2).transform.gameObject;
+        addr[2] = InputParent.transform.GetChild(2).GetComponent<InputField>().text;
+        if (addr[2].Length >= 3)
+        {
+            InputParent.transform.GetChild(3).GetComponent<InputField>().ActivateInputField();
+        }
     }
     public void SetAddress4()
     {
+        InputChild = InputParent.transform.GetChild(3).transform.gameObject;
+        addr[0] = InputParent.transform.GetChild(3).GetComponent<InputField>().text;
+        if (addr[0].Length >= 3)
+        {
+        }
 
     }
 

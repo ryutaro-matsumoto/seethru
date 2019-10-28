@@ -394,9 +394,12 @@ public class MrsClient : Mrs {
 
             // 0x16 弾がシールドで反射
             case 0x16:
-                {
-                    S_ReflexShot reflex = (S_ReflexShot)Marshal.PtrToStructure(payload, typeof(S_ReflexShot));
-                    GameManager.BulletReflection(reflex.bullet_id, reflex.position, reflex.angle);
+                unsafe{
+                    //S_ReflexShot reflex = (S_ReflexShot)Marshal.PtrToStructure(payload, typeof(S_ReflexShot));
+                    //GameManager.BulletReflection(reflex.bullet_id, reflex.position, reflex.angle);
+
+                    Int32 bulletID = *(Int32*)payload;
+                    GameManager.BulletReflection(bulletID);
                 }
                 break;
 
@@ -891,20 +894,23 @@ public class MrsClient : Mrs {
     /// <param name="_id">弾のID</param>
     /// <param name="_pos">座標</param>
     /// <param name="_angle">反射後の角度</param>
-    static public void SendReflexShot(int _id, Vector2 _pos, Vector2 _angle)
+    static unsafe public void SendReflexShot(int _id, Vector2 _pos, Vector2 _angle)
     {
-        S_ReflexShot reflex = new S_ReflexShot();
-        reflex.bullet_id = _id;
-        reflex.position = _pos;
-        reflex.angle = _angle;
+        IntPtr ptr = Marshal.AllocHGlobal(sizeof(Int32));
+        *(Int32*)ptr = _id;
 
-        IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(reflex));
-        Marshal.StructureToPtr(reflex, ptr, false);
+        //S_ReflexShot reflex = new S_ReflexShot();
+        //reflex.bullet_id = _id;
+        //reflex.position = _pos;
+        //reflex.angle = _angle;
+
+        //IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(reflex));
+        //Marshal.StructureToPtr(reflex, ptr, false);
 
         g_paytype = 0x16;
         if (g_nowconnect != null)
         {
-            mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, ptr, (uint)Marshal.SizeOf(reflex));
+            mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, ptr, (uint)sizeof(Int32));
         }
         Marshal.FreeHGlobal(ptr);
     } 
