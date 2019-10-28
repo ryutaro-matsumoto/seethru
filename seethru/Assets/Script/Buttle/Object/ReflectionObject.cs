@@ -56,34 +56,11 @@ public class ReflectionObject : MonoBehaviour {
 		}
 
 		if(collision.gameObject.tag == "Guard"){
-			reflect--;
-			if (reflect < 0) {
-				isDead = true;
-				return;
+			if (GameManager.onNetwork) {
+				MrsClient.SendReflexShot(bullet.id);
 			}
-
-			foreach (ContactPoint2D contact in collision.contacts) {
-				if (contact.otherCollider.gameObject == gameObject) {
-					Vector2 vec = vector;
-
-					/*演算*/
-					Vector2 ans = vec + 2 * Vector2.Dot(-vec, contact.normal) * contact.normal;
-					float angleRad = Mathf.Atan2(ans.y, ans.x);
-
-
-
-					if(GameManager.onNetwork){
-						MrsClient.SendReflexShot(bullet.id, contact.point, ans.normalized * vec.magnitude);
-					}
-					else{
-						/*代入*/
-						rigidbody2d.velocity = ans.normalized * vec.magnitude;
-						transform.eulerAngles = new Vector3(0f, 0f, angleRad * Mathf.Rad2Deg - 90f);
-						rigidbody2d.angularVelocity = 0f;
-						transform.position = contact.point;
-					}
-					vector = ans.normalized * vec.magnitude;
-				}
+			else {
+				bullet.HitEffect();
 			}
 
 		}
