@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 
+	static public string effectPath = "Material/Particle/Polygonal Particles/Assets/Prefabs/";
+
 	static public bool onNetwork{ get{ return connection != null; } }
 
 	// プロフィール関係

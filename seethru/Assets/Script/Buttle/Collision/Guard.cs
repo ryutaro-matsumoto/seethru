@@ -17,6 +17,10 @@ public class Guard : MonoBehaviour
 
 	}
 
+	public void Update() {
+		transform.localEulerAngles = -transform.parent.eulerAngles;
+	}
+
 
 	public void SetGuard(GuardColliderType[] typeArray) {
 		for(int i = 0; i < 4; i++){

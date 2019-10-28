@@ -47,22 +47,23 @@ public class Player : MonoBehaviour
 		if(isDead){
 			DeadPlayer();
 		}
+		if(GameManager.onNetwork){
+			if (GetComponent<PlayerInput>() == null) {
+				Vector2 vec = Vector2.Lerp(transform.position, receivePos, 0.5f);
+				Vector2 pos = transform.position;
+				transform.position = vec;
 
-		if(GetComponent<PlayerInput>() == null){
-			Vector2 vec = Vector2.Lerp(transform.position, receivePos, 0.5f);
-			Vector2 pos = transform.position;
-			transform.position = vec;
-
-			vec -= pos;
-			if(vec.magnitude > animationRange){
-				anim.SetBool("Run", true);
-				anim.SetFloat("RunSpeed", 1f);
-			}
-			else {
-				anim.SetBool("Run", false); ;
+				vec -= pos;
+				if (vec.magnitude > animationRange) {
+					anim.SetBool("Run", true);
+					anim.SetFloat("RunSpeed", 1f);
+				}
+				else {
+					anim.SetBool("Run", false); ;
+				}
 			}
 		}
-    }
+	}
 
 	public void SendDeadHit(int bulletID){
 		if(GameManager.onNetwork){
@@ -76,5 +77,12 @@ public class Player : MonoBehaviour
 
 	public void DeadPlayer(){
 		gameObject.SetActive(false);
+		GameObject effect = (GameObject)Resources.Load(GameManager.effectPath + "Water/Splash");
+		Vector3 newPosition = transform.position;
+		newPosition.z = transform.position.z - 1.2f;
+
+		Instantiate(effect, newPosition, transform.rotation);
+
+		isDead = true;
 	}
 }

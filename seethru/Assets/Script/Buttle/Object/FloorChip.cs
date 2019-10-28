@@ -37,22 +37,13 @@ public class FloorChip : MonoBehaviour
 		}
 	}
 
+	public void FallNotice(){
+		GetComponent<SpriteRenderer>().color = new Color(0.5f, 0.5f, 0.5f);
+	}
+
 	public void Fall(){
 		GetComponent<BoxCollider2D>().enabled = false;
 		//StartCoroutine("FallCoroutine");
 		isFall = true;
 	}
-
-	//public IEnumerator FallCoroutine(){
-	//	float scale = transform.localScale.x;
-	//	bool loop = true;
-	//	while(loop){
-	//		scale -= fallSpeed * Time.fixedTime;
-	//		transform.localScale = new Vector3(scale, scale, 1f);
-	//		if(scale <= 0){
-	//			gameObject.SetActive(false);
-	//		}
-	//		yield return new WaitForSeconds(Time.fixedTime);
-	//	}
-	//}
 }
