@@ -22,6 +22,8 @@ public class RoomManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        SoundManager.Instance.PlayBgm("BGM_Room");
+
         playerList = GameObject.Find("PlayerList");
         profile = new DataStructures.S_DataProfile[4];
         playerName = new string[4];
@@ -78,6 +80,8 @@ public class RoomManager : MonoBehaviour
         {
 			mrsClient.SendRoomReady();
         }
+
+        SoundManager.Instance.StopBgmFadeout();
     }
 
     public void setMyID(int _id) { myID = _id; }

@@ -36,7 +36,9 @@ public class ButtonSystem : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
        // image.color = Color.white;
         image.color = new Color(1.0f, 1.0f, 1.0f, 0.3f);
-        selectSound.PlayOneShot(selectSound.clip);
+
+        SoundManager.Instance.PlaySe("SE1_Corsor");
+       // selectSound.PlayOneShot(selectSound.clip);
     }
 
     //===========================================================

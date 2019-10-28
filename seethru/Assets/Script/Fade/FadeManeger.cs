@@ -33,7 +33,7 @@ public class FadeManeger : MonoBehaviour
     public static bool isFadeout = false;
 
     //\ フェードしたい時間
-    private static float fadeTime = 1.5f;
+    private static float fadeTime = 2.0f;
 
     //\ 次のシーン番号
     private static int nextScene = 0;

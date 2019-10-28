@@ -8,23 +8,18 @@ using DataStructures;
 
 public class NetworkSetting : MonoBehaviour
 {
+    public string ipAddress = "192.168.252.120";
+    public string playerName = "Anonymous";
 
     // コンポーネント
     public MrsClient mrsClient;
     public InputField inputAddr;
     public InputField inputName;
-    public GameObject InputParent;
-    public GameObject InputChild;
-
-    string[] addr;
 
 
-    private void Start()
+    void Start()
     {
-        //InputParent = GameObject.Find("InputAddress");
-        //InputChild = InputParent.transform.GetChild(0).gameObject;
-
-        addr = new string[4];
+        SoundManager.Instance.PlayBgm("BGM_Network");
     }
 
     void End()
@@ -50,10 +45,12 @@ public class NetworkSetting : MonoBehaviour
         this.gameObject.SetActive(false);
 
         mrsClient = GameObject.Find("ClientObject").GetComponent<MrsClient>();
-        mrsClient.SetSettings(GameManager.ipAddress, GameManager.playerName);
+        mrsClient.SetSettings(ipAddress, playerName);
         mrsClient.StartEchoClient();
 
         this.gameObject.SetActive(true);
+
+        SoundManager.Instance.StopBgmFadeout();
     }
 
     /// <summary>
@@ -61,46 +58,7 @@ public class NetworkSetting : MonoBehaviour
     /// </summary>
     public void SetAddress()
     {
-        GameManager.ipAddress = inputAddr.text;
-    }
-
-    public void SetAddress1()
-    {
-        InputChild = InputParent.transform.GetChild(0).transform.gameObject;
-        addr[0] = InputParent.transform.GetChild(0).GetComponent<InputField>().text;
-        if (addr[0].Length >= 3)
-        {
-            InputParent.transform.GetChild(1).GetComponent<InputField>().ActivateInputField();
-            
-        }
-    }
-    public void SetAddress2()
-    {
-        InputChild = InputParent.transform.GetChild(1).transform.gameObject;
-        addr[1] = InputParent.transform.GetChild(1).GetComponent<InputField>().text;
-        if (addr[0].Length >= 3)
-        {
-            InputParent.transform.GetChild(2).GetComponent<InputField>().ActivateInputField();
-        }
-    }
-    public void SetAddress3()
-    {
-
-        InputChild = InputParent.transform.GetChild(2).transform.gameObject;
-        addr[2] = InputParent.transform.GetChild(2).GetComponent<InputField>().text;
-        if (addr[2].Length >= 3)
-        {
-            InputParent.transform.GetChild(3).GetComponent<InputField>().ActivateInputField();
-        }
-    }
-    public void SetAddress4()
-    {
-        InputChild = InputParent.transform.GetChild(3).transform.gameObject;
-        addr[0] = InputParent.transform.GetChild(3).GetComponent<InputField>().text;
-        if (addr[0].Length >= 3)
-        {
-        }
-
+        ipAddress = inputAddr.text;
     }
 
     /// <summary>
@@ -108,6 +66,6 @@ public class NetworkSetting : MonoBehaviour
     /// </summary>
     public void SetName()
     {
-        GameManager.playerName = inputName.text;
+        playerName = inputName.text;
     }
 }

@@ -30,6 +30,9 @@ public class TitleSystem : MonoBehaviour
     {
         // フェードイン
         FadeManeger.Fadein();
+
+        // タイトルBGMスタート
+        SoundManager.Instance.PlayBgm("BGM_Title");
     }
 
     //------------------------------------------------------------------------------
@@ -61,8 +64,14 @@ public class TitleSystem : MonoBehaviour
     //===========================================================
     public void ClickGameStartButton()
     {
-        clickEnter.PlayOneShot(clickEnter.clip);
+        // 決定SE再生
+        SoundManager.Instance.PlaySe("SE1_Enter");
+        //clickEnter.PlayOneShot(clickEnter.clip);
+        // フェードアウト
         FadeManeger.Fadeout(gameStart);
+        // タイトルBGMストップ
+        //SoundManager.Instance.StopBgm();
+        SoundManager.Instance.StopBgmFadeout();
     }
 
     //===========================================================
