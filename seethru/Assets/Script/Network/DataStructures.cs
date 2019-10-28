@@ -72,4 +72,13 @@ namespace DataStructures
         public int bullet_id;
         public int whosby_id;
     }
+
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct S_ReflexShot
+    {
+        public int bullet_id;
+        public Vector2 position;
+        public Vector2 angle;
+    }
 }
