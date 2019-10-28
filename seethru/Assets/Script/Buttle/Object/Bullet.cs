@@ -55,6 +55,8 @@ public class Bullet : PoolObject
 
 	public void HitEffect(){
 		ReturnToPool();
+		GameObject effect = (GameObject)Resources.Load(GameManager.effectPath + "Smoke/Smoke04");
+		Instantiate(effect, transform.position, transform.rotation);
 	}
 
 }

@@ -22,10 +22,12 @@ public class ResultCheck : MonoBehaviour
 		if (GameManager.livePlayer <= 1 && !onResult){
 			SceneManager.LoadScene(resultScene, LoadSceneMode.Additive);
 			onResult = true;
-			if(GameManager.playID == 0){
-				GameManager.connection.SendOnResult();
+			if(GameManager.onNetwork){
+				if (GameManager.playID == 0) {
+					GameManager.connection.SendOnResult();
+				}
 			}
-			if(!GameManager.players[GameManager.playID].GetComponent<Player>().isDead){
+			if (!GameManager.players[GameManager.playID].GetComponent<Player>().isDead){
 				GameManager.players[GameManager.playID].GetComponent<PlayerInput>().isInput = false;				
 			}
 		}   

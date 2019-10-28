@@ -12429,7 +12429,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallCount: 1
-  floorFallSeconds: 0.2
+  floorFallSeconds: 0.05
 --- !u!114 &3750731190152706715
 MonoBehaviour:
   m_ObjectHideFlags: 0

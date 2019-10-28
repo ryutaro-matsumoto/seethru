@@ -10,8 +10,14 @@ public class FloorSet : MonoBehaviour
 
 	IEnumerator FallFloor(float floorFallSeconds) {
 		for(int i = 0; i < transform.childCount; ++i){ 
-			transform.GetChild(i).GetComponent<FloorChip>().Fall();
+			transform.GetChild(i).GetComponent<FloorChip>().FallNotice();
 			yield return new WaitForSeconds(floorFallSeconds);
+		}
+
+		yield return new WaitForSeconds(1.0f);
+
+		for (int i = 0; i < transform.childCount; ++i) {
+			transform.GetChild(i).GetComponent<FloorChip>().Fall();
 		}
 	}
 }
