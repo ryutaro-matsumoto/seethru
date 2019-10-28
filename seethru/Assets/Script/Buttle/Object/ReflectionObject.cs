@@ -73,7 +73,7 @@ public class ReflectionObject : MonoBehaviour {
 
 
 					if(GameManager.onNetwork){
-						SendReflexShot(bullet.id, contact.point, ans.normalized * vec.magnitude);
+						MrsClient.SendReflexShot(bullet.id, contact.point, ans.normalized * vec.magnitude);
 					}
 					else{
 						/*代入*/
