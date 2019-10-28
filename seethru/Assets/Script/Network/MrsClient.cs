@@ -894,7 +894,7 @@ public class MrsClient : Mrs {
     /// <param name="_id">弾のID</param>
     /// <param name="_pos">座標</param>
     /// <param name="_angle">反射後の角度</param>
-    static unsafe public void SendReflexShot(int _id, Vector2 _pos, Vector2 _angle)
+    static unsafe public void SendReflexShot(int _id)
     {
         IntPtr ptr = Marshal.AllocHGlobal(sizeof(Int32));
         *(Int32*)ptr = _id;
