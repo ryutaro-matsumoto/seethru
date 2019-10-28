@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 823071c0e5dca23439e188b01c53bc69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stagenum: 3
+  stagenum: 5
   id: 0
   guards: 0000000002000000
 --- !u!4 &120225255
