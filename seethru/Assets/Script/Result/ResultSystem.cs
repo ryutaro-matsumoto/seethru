@@ -13,10 +13,6 @@ using UnityEngine.UI;
 //------------------------------------------------------------------------------
 public class ResultSystem : MonoBehaviour
 {
-    // 決定SE
-    public AudioSource clickEnter;
-    // リザルトメインBGM
-    public AudioSource resultSound;
     // ウィンドウSE
     public AudioSource resultwindowSound;
     // ウィンドウイメージ
@@ -31,7 +27,7 @@ public class ResultSystem : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         resultwindowSound.PlayOneShot(resultwindowSound.clip);
         yield return new WaitForSeconds(1f);
-        resultSound.PlayOneShot(resultSound.clip);
+        SoundManager.Instance.PlayBgm("BGM_Result");
     }
 
     //------------------------------------------------------------------------------
@@ -58,7 +54,13 @@ public class ResultSystem : MonoBehaviour
     //===========================================================
     public void ClickRoomBack()
     {
-        clickEnter.PlayOneShot(clickEnter.clip);
+        // 決定SE再生
+        SoundManager.Instance.PlaySe("SE1_Enter");
+
+        // リザルトBGMストップ
+        SoundManager.Instance.StopBgmFadeout();
+
+        // フェードアウト
         FadeManeger.Fadeout(backRoom);
         GameManager.connection.backToRoom();
     }
@@ -70,7 +72,13 @@ public class ResultSystem : MonoBehaviour
     //===========================================================
     public void ClickRoomExit()
     {
-        clickEnter.PlayOneShot(clickEnter.clip);
+        // 決定SE再生
+        SoundManager.Instance.PlaySe("SE1_Enter");
+
+        // リザルトBGMストップ
+        SoundManager.Instance.StopBgmFadeout();
+
+        // フェードアウト
         FadeManeger.Fadeout(backTitle);
 		if(GameManager.onNetwork){
 			GameManager.connection.DisconnectRoom();

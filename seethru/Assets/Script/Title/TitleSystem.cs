@@ -18,9 +18,6 @@ using UnityEngine.EventSystems;
 //------------------------------------------------------------------------------
 public class TitleSystem : MonoBehaviour
 {
-    // 決定SE
-    public AudioSource clickEnter;
-
 	public string gameStart;
 
     //------------------------------------------------------------------------------
@@ -64,14 +61,13 @@ public class TitleSystem : MonoBehaviour
     //===========================================================
     public void ClickGameStartButton()
     {
-        // 決定SE再生
-        SoundManager.Instance.PlaySe("SE1_Enter");
-        //clickEnter.PlayOneShot(clickEnter.clip);
         // フェードアウト
         FadeManeger.Fadeout(gameStart);
         // タイトルBGMストップ
         //SoundManager.Instance.StopBgm();
         SoundManager.Instance.StopBgmFadeout();
+        // 決定SE再生
+        SoundManager.Instance.PlaySe("SE1_Enter");
     }
 
     //===========================================================

@@ -23,10 +23,6 @@ public class ButtonSystem : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     // カーソルImage
     public Image image { get { return GetComponent<Image>(); } }
 
-    // 選択SE
-    public AudioSource selectSound;
-
-
     //===========================================================
     // OnPointerEnter function.
     //
@@ -38,7 +34,6 @@ public class ButtonSystem : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         image.color = new Color(1.0f, 1.0f, 1.0f, 0.3f);
 
         SoundManager.Instance.PlaySe("SE1_Corsor");
-       // selectSound.PlayOneShot(selectSound.clip);
     }
 
     //===========================================================
