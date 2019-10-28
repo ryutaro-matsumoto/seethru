@@ -11,11 +11,14 @@ public class ReflectionObject : MonoBehaviour {
 	public int startReflect = 2;
 
 	public Vector2 vector;
+	Bullet bullet;
+
 	// Start is called before the first frame update
 	void OnEnable() {
 		isDead = false;
 		rigidbody2d = GetComponent<Rigidbody2D>();
 		reflect = startReflect;
+		bullet = GetComponent<Bullet>();
 	}
 
 	// Update is called once per frame
@@ -35,21 +38,54 @@ public class ReflectionObject : MonoBehaviour {
 				if(contact.otherCollider.gameObject == gameObject){
 					Vector2 vec = vector;
 
+					/*演算*/
 					Vector2 ans = vec + 2 * Vector2.Dot(-vec, contact.normal) * contact.normal;
-
-					rigidbody2d.velocity = ans.normalized * vec.magnitude;
-
-
 					float angleRad = Mathf.Atan2(ans.y, ans.x);
+
+
+					/*代入*/
+					rigidbody2d.velocity = ans.normalized * vec.magnitude;
 					transform.eulerAngles = new Vector3(0f, 0f, angleRad * Mathf.Rad2Deg - 90f);
 
 					rigidbody2d.angularVelocity = 0f;
 
 					transform.position = contact.point;
-
 					vector = ans.normalized * vec.magnitude;
 				}
 			}
+		}
+
+		if(collision.gameObject.tag == "Guard"){
+			reflect--;
+			if (reflect < 0) {
+				isDead = true;
+				return;
+			}
+
+			foreach (ContactPoint2D contact in collision.contacts) {
+				if (contact.otherCollider.gameObject == gameObject) {
+					Vector2 vec = vector;
+
+					/*演算*/
+					Vector2 ans = vec + 2 * Vector2.Dot(-vec, contact.normal) * contact.normal;
+					float angleRad = Mathf.Atan2(ans.y, ans.x);
+
+
+
+					if(GameManager.onNetwork){
+						SendReflexShot(bullet.id, contact.point, ans.normalized * vec.magnitude);
+					}
+					else{
+						/*代入*/
+						rigidbody2d.velocity = ans.normalized * vec.magnitude;
+						transform.eulerAngles = new Vector3(0f, 0f, angleRad * Mathf.Rad2Deg - 90f);
+						rigidbody2d.angularVelocity = 0f;
+						transform.position = contact.point;
+					}
+					vector = ans.normalized * vec.magnitude;
+				}
+			}
+
 		}
 	}
 
