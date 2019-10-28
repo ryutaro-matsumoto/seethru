@@ -57,4 +57,9 @@ public class Bullet : PoolObject
 		ReturnToPool();
 	}
 
+	public void ReceiveReflect(Vector3 pos, Vector2 vec){
+		rb2d.velocity = vec;
+		transform.position = pos;
+	}
+
 }

@@ -19,6 +19,8 @@ public class PlayerInput : MonoBehaviour
 	public float rotateSpeed;
 	public float moveForceMultiplier;
 
+	public float lateFrame = 0;
+
 	public bool isInput = false;
 
 	[SerializeField]
@@ -63,6 +65,7 @@ public class PlayerInput : MonoBehaviour
 		Move();
 
 		Attack();
+
 	}
 
 	/// <summary>
@@ -154,8 +157,8 @@ public class PlayerInput : MonoBehaviour
 					GameManager.connection.SendShootData(bulletStart.transform.position.x, bulletStart.transform.position.y, transform.eulerAngles.z);
 				}
 				else{
-					bulletPool.Place(bulletStart.transform.position, transform.rotation);
-					//anim.SetBool("Attack", true);
+					anim.SetTrigger("Attack");
+					StartCoroutine("LateFrameAttack");
 				}
 				--player.bullet;
 			}
@@ -166,5 +169,14 @@ public class PlayerInput : MonoBehaviour
 
 	public float Vector2Cross(Vector2 vec1, Vector2 vec2){
 		return vec1.x * vec2.y - vec2.x * vec1.y;
+	}
+
+
+	IEnumerator LateFrameAttack(){
+		yield return new WaitForSeconds(lateFrame);
+
+		Bullet bullet = bulletPool.Place<Bullet>(bulletStart.transform.position, transform.rotation);
+		Vector3 newPosition = bulletStart.transform.position;
+		bullet.transform.position = newPosition;
 	}
 }

@@ -221,6 +221,10 @@ public class GameManager : MonoBehaviour
 		
 		Bullet bullet = bulletPool.Place<Bullet>(vec, qt);
 		bullet.id = bulletID;
+		Vector3 newPosition = vec;
+		newPosition.z = -1.3f;
+		bullet.transform.position = newPosition;
+
 		for(int i = 0; i < bullets.Count; ++i){
 			if(bullets[i] != null){
 				bullets[i] = bullet;
@@ -229,7 +233,8 @@ public class GameManager : MonoBehaviour
 		}
 
 		bullets.Add(bullet);
-		//players[playerID].GetComponent<Player>().anim.SetBool("Attack", true);
+		//players[playerID].GetComponent<Player>().anim.SetTrigger("Attack");
+		;
 	}
 
 	//------------------------------------------------------------------------
@@ -260,8 +265,14 @@ public class GameManager : MonoBehaviour
 	/// 弾の反射を受信時に使用
 	/// </summary>
 	/// <param name="bulletID"></param>
-	public static void BulletReflection(int bulletID){
-
+	public static void BulletReflection(int bulletID, Vector2 pos, Vector2 reflectvec){
+		foreach(Bullet bullet in bullets){
+			if(bullet.id == bulletID){
+				Vector3 newPosition = new Vector3(pos.x, pos.y, 1.3f);
+				bullet.ReceiveReflect(newPosition, reflectvec);
+			}
+		}
+		
 	}
 
 	public static void BackRoom(){
