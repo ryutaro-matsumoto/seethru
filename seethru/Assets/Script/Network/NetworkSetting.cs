@@ -17,8 +17,9 @@ public class NetworkSetting : MonoBehaviour
     public InputField inputName;
 
 
-    private void Start()
+    void Start()
     {
+        SoundManager.Instance.PlayBgm("BGM_Network");
     }
 
     void End()
@@ -48,6 +49,8 @@ public class NetworkSetting : MonoBehaviour
         mrsClient.StartEchoClient();
 
         this.gameObject.SetActive(true);
+
+        SoundManager.Instance.StopBgmFadeout();
     }
 
     /// <summary>
