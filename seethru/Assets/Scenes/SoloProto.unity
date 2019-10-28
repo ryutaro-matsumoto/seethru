@@ -151,6 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stagenum: 1
   id: 0
+  guards: 0000000002000000
 --- !u!4 &120225255
 Transform:
   m_ObjectHideFlags: 0
