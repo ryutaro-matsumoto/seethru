@@ -13,10 +13,18 @@ public class NetworkSetting : MonoBehaviour
     public MrsClient mrsClient;
     public InputField inputAddr;
     public InputField inputName;
+    public GameObject InputParent;
+    public GameObject InputChild;
+
+    string[] addr;
 
 
     private void Start()
     {
+        InputParent = GameObject.Find("InputAddress");
+        InputChild = InputParent.transform.GetChild(0).gameObject;
+
+        addr = new string[4];
     }
 
     void End()
@@ -54,6 +62,28 @@ public class NetworkSetting : MonoBehaviour
     public void SetAddress()
     {
         GameManager.ipAddress = inputAddr.text;
+    }
+
+    public void SetAddress1()
+    {
+        InputChild = InputParent.transform.GetChild(0).transform.gameObject;
+        addr[0] = InputParent.transform.GetChild(0).GetComponent<InputField>().text;
+        if (addr[0].Length >= 3)
+        {
+
+        }
+    }
+    public void SetAddress2()
+    {
+
+    }
+    public void SetAddress3()
+    {
+
+    }
+    public void SetAddress4()
+    {
+
     }
 
     /// <summary>
