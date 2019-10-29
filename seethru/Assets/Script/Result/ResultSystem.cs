@@ -13,24 +13,18 @@ using UnityEngine.UI;
 //------------------------------------------------------------------------------
 public class ResultSystem : MonoBehaviour
 {
-    // 決定SE
-    public AudioSource clickEnter;
-    // リザルトメインBGM
-    public AudioSource resultSound;
-    // ウィンドウSE
-    public AudioSource resultwindowSound;
     // ウィンドウイメージ
     public Image image;
 
 	public string backTitle = "TitleScene";
+	public string backRoom = "MatchRoom";
 
     // スタート時BGM/SE再生
     IEnumerator Playsound()
     {
         yield return new WaitForSeconds(0.1f);
-        resultwindowSound.PlayOneShot(resultwindowSound.clip);
         yield return new WaitForSeconds(1f);
-        resultSound.PlayOneShot(resultSound.clip);
+        SoundManager.Instance.PlayBgm("BGM_Result");
     }
 
     //------------------------------------------------------------------------------
@@ -40,7 +34,6 @@ public class ResultSystem : MonoBehaviour
     {
         StartCoroutine(Playsound());
         image.color = new Color(0.0f, 0.0f, 0.0f, 0.5f);
-		GameManager.isGetMyProfile = false;
     }
 
     //------------------------------------------------------------------------------
@@ -48,22 +41,25 @@ public class ResultSystem : MonoBehaviour
     //------------------------------------------------------------------------------
     void Update()
     {
-		if (GameManager.isGetMyProfile) {
-			FadeManeger.Fadeout("MatchRoom");
-			gameObject.SetActive(false);
-		}
-	}
+        
+    }
 
-	//===========================================================
-	// ClickRoomBack function.
-	//
-	// @note：「ルームに戻る」ボタンをクリック時処理
-	//===========================================================
-	public void ClickRoomBack()
+    //===========================================================
+    // ClickRoomBack function.
+    //
+    // @note：「ルームに戻る」ボタンをクリック時処理
+    //===========================================================
+    public void ClickRoomBack()
     {
-        clickEnter.PlayOneShot(clickEnter.clip);
+        // 決定SE再生
+        SoundManager.Instance.PlaySe("SE1_Enter");
+
+        // リザルトBGMストップ
+        SoundManager.Instance.StopBgmFadeout();
+
+        // フェードアウト
+        FadeManeger.Fadeout(backRoom);
         GameManager.connection.backToRoom();
-		GameManager.BackRoom();
     }
 
     //===========================================================
@@ -73,7 +69,13 @@ public class ResultSystem : MonoBehaviour
     //===========================================================
     public void ClickRoomExit()
     {
-        clickEnter.PlayOneShot(clickEnter.clip);
+        // 決定SE再生
+        SoundManager.Instance.PlaySe("SE1_Enter");
+
+        // リザルトBGMストップ
+        SoundManager.Instance.StopBgmFadeout();
+
+        // フェードアウト
         FadeManeger.Fadeout(backTitle);
 		if(GameManager.onNetwork){
 			GameManager.connection.DisconnectRoom();
