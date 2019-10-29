@@ -647,7 +647,7 @@ public class MrsClient : Mrs {
     /// </summary>
     public static void CompareMyData()
     {
-		Debug.Log("Compare");
+		//Debug.Log("Compare");
         // 前フレームで死んでいるなら、他プレイヤーに座標データは送信しない
         if (GameManager.players[GameManager.playID] != null)
         {
