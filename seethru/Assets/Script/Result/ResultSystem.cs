@@ -50,6 +50,7 @@ public class ResultSystem : MonoBehaviour
     {
 		if (GameManager.isGetMyProfile) {
 			FadeManeger.Fadeout("MatchRoom");
+			gameObject.SetActive(false);
 		}
 	}
 

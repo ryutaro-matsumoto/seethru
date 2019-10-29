@@ -36,6 +36,7 @@ public class NetworkSetting : MonoBehaviour
     {
 		if(GameManager.isGetMyProfile){
 			FadeManeger.Fadeout("MatchRoom");
+			gameObject.SetActive(false);
 		}
 	}
 
