@@ -38,6 +38,10 @@ public class ReflectionObject : MonoBehaviour {
 				return;
 			}
 
+			if(LayerMask.LayerToName(gameObject.layer) == "MyBullet"){
+				gameObject.layer = LayerMask.NameToLayer("Bullet");
+			}
+
 			foreach (ContactPoint2D contact in collision.contacts) {
 				if(contact.otherCollider.gameObject == gameObject){
 					Vector2 vec = vector;

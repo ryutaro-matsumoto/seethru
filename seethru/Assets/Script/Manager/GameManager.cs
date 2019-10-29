@@ -235,6 +235,10 @@ public class GameManager : MonoBehaviour
 			}
 		}
 
+		if(playerID == playID){
+			bullet.gameObject.layer = LayerMask.NameToLayer("MyBullet");
+		}
+
 		bullets.Add(bullet);
 		//players[playerID].GetComponent<Player>().anim.SetTrigger("Attack");
 		;
