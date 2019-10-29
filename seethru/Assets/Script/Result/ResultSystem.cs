@@ -13,8 +13,6 @@ using UnityEngine.UI;
 //------------------------------------------------------------------------------
 public class ResultSystem : MonoBehaviour
 {
-    // ウィンドウSE
-    public AudioSource resultwindowSound;
     // ウィンドウイメージ
     public Image image;
 
@@ -25,7 +23,6 @@ public class ResultSystem : MonoBehaviour
     IEnumerator Playsound()
     {
         yield return new WaitForSeconds(0.1f);
-        resultwindowSound.PlayOneShot(resultwindowSound.clip);
         yield return new WaitForSeconds(1f);
         SoundManager.Instance.PlayBgm("BGM_Result");
     }
