@@ -115,7 +115,11 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         {
             seIndex.Add(se[i].name, i);
         }
-    }
+
+        // fadeTime = 1.0;
+        //isfadeOut = false;
+        //fadeDeltaTime = 0;
+}
 
     //------------------------------------------------------------------------------
     // update function.
@@ -167,11 +171,16 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     //===========================================================
     public void PlayBgmInit(int index)
     {
+        fadeTime = 2.0;
+        isfadeOut = false;
+        fadeDeltaTime = 0;
+
         index = Mathf.Clamp(index, 0, bgm.Length);
         bgmAudioSource.clip = bgm[index];
         bgmAudioSource.loop = true;
         bgmAudioSource.volume = BgmVolume * Volume;
         bgmAudioSource.Play();
+
     }
     public void PlayBgm(string name)
     {
