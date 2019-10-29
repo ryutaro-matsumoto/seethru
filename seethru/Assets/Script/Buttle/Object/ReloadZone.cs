@@ -13,6 +13,8 @@ public class ReloadZone : MonoBehaviour
 		coll = GetComponent<BoxCollider2D>();
 	}
 
+
+
 	IEnumerator CoolTimeCoroutine(){
 		int coolTimeCount = coolTime;
 		while(coolTimeCount > 0){
@@ -21,8 +23,12 @@ public class ReloadZone : MonoBehaviour
 			yield return new WaitForSeconds(1f);
 		}
 
+		transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
+		transform.GetChild(0).GetChild(1).GetComponent<ParticleSystem>().Play(true);
+
 		coll.enabled = true;
 	}
+
 
 	private void OnTriggerEnter2D(Collider2D collision) {
 		if(collision.gameObject.tag == "Reload"){
@@ -32,10 +38,15 @@ public class ReloadZone : MonoBehaviour
 				if(player.bullet > player.startBullet){
 					player.bullet = player.startBullet;
 				}
+				coll.enabled = false;
+				StartCoroutine("CoolTimeCoroutine");
+
+				transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+				transform.GetChild(0).GetChild(1).GetComponent<ParticleSystem>().Stop(true, ParticleSystemStopBehavior.StopEmitting);
+
+				collision.transform.GetChild(0).GetComponent<ParticleSystem>().Play(true);
 			}
 
-			coll.enabled = false;
-			StartCoroutine("CoolTimeCoroutine");
 		}
 	}
 }

@@ -186,7 +186,7 @@ MonoBehaviour:
   scalingSpeed: 0.05
   size: 5
   minSize: 4
-  adjustPos: 5
+  adjustPos: 3
 --- !u!1 &6732254747873710687
 GameObject:
   m_ObjectHideFlags: 0
