@@ -338,46 +338,46 @@ public class MrsClient : Mrs {
                 break;
 
             // 0x11 : 10/18現在未使用のゲーム中情報送受信用
-            case 0x11:
-                {
-                    stopwatch.Start();
-                    //MRS_LOG_DEBUG("RECEIVED PACK:{0}", payload);
-                    unsafe
-                    {
-                        S_DataPlayerPackage package = *(S_DataPlayerPackage*)payload;
-                        S_DataPlayer[] data = new S_DataPlayer[g_playercount];
+            //case 0x11:
+            //    {
+            //        stopwatch.Start();
+            //        //MRS_LOG_DEBUG("RECEIVED PACK:{0}", payload);
+            //        unsafe
+            //        {
+            //            S_DataPlayerPackage package = *(S_DataPlayerPackage*)payload;
+            //            S_DataPlayer[] data = new S_DataPlayer[g_playercount];
 
-                        data[0] = new S_DataPlayer();
-                        data[0] = package.data0;
-                        data[1] = new S_DataPlayer();
-                        data[1] = package.data1;
-                        data[2] = new S_DataPlayer();
-                        data[2] = package.data2;
-                        data[3] = new S_DataPlayer();
-                        data[3] = package.data3;
+            //            data[0] = new S_DataPlayer();
+            //            data[0] = package.data0;
+            //            data[1] = new S_DataPlayer();
+            //            data[1] = package.data1;
+            //            data[2] = new S_DataPlayer();
+            //            data[2] = package.data2;
+            //            data[3] = new S_DataPlayer();
+            //            data[3] = package.data3;
 
-                        for (int i = 0; i < g_playercount; i++)
-                        {
-                            if (GameManager.players[i] != null && GameManager.playID != i)
-                            {
-                                if (!GameManager.players[i].GetComponent<Player>().isDead)
-                                {
-                                    GameManager.players[i].transform.position = new Vector3(data[i].x, data[i].y, 0);
-                                    GameManager.players[i].transform.eulerAngles = new Vector3(0.0f, 0.0f, data[i].angle);
+            //            for (int i = 0; i < g_playercount; i++)
+            //            {
+            //                if (GameManager.players[i] != null && GameManager.playID != i)
+            //                {
+            //                    if (!GameManager.players[i].GetComponent<Player>().isDead)
+            //                    {
+            //                        GameManager.players[i].transform.position = new Vector3(data[i].x, data[i].y, 0);
+            //                        GameManager.players[i].transform.eulerAngles = new Vector3(0.0f, 0.0f, data[i].angle);
 
-                                    // 送信側プレイヤーが死んでいるなら受信側のクライアントでも死なす
-                                    if (data[i].dead) { GameManager.players[i].transform.GetComponent<Player>().isDead = data[i].dead; }
-                                    //MRS_LOG_DEBUG("RECEIVED DATA  id:{0} pos_x:{1} pos_y:{2} look:{3} dead:{4}",
-                                    //data[i].id, data[i].x, data[i].y, data[i].angle, data[i].dead);
-                                }
-                            }
-                        }
-                        stopwatch.Stop();
-                        //MRS_LOG_DEBUG("RECEIVED DATA TIME : {0}", stopwatch.ElapsedMilliseconds);
-                        stopwatch.Reset();
-                    }
-                }
-                break;
+            //                        // 送信側プレイヤーが死んでいるなら受信側のクライアントでも死なす
+            //                        if (data[i].dead) { GameManager.players[i].transform.GetComponent<Player>().isDead = data[i].dead; }
+            //                        //MRS_LOG_DEBUG("RECEIVED DATA  id:{0} pos_x:{1} pos_y:{2} look:{3} dead:{4}",
+            //                        //data[i].id, data[i].x, data[i].y, data[i].angle, data[i].dead);
+            //                    }
+            //                }
+            //            }
+            //            stopwatch.Stop();
+            //            //MRS_LOG_DEBUG("RECEIVED DATA TIME : {0}", stopwatch.ElapsedMilliseconds);
+            //            stopwatch.Reset();
+            //        }
+            //    }
+            //    break;
 
             // 0x15 床の落下の合図
             case 0x15:
