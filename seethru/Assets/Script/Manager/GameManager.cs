@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
 	/// <param name="id">サーバーから送られてきたID</param>
 	/// data<param name="client">接続成功したクライアントクラス</param>
 	static public void ConnectionServer(uint id, MrsClient client){
-		Debug.Log("Connect Server");
+		//Debug.Log("Connect Server");
 		ReceiveID(id);
 		SetConnection(client);
 	}
@@ -130,9 +130,9 @@ public class GameManager : MonoBehaviour
 		GameObject otherPlayerPrefab = (GameObject)Resources.Load("Prefab/Object/OtherPlayer");
 		GameObject mainPlayerPrefab = (GameObject)Resources.Load("Prefab/Object/MainPlayer");
 
-		Debug.Log(otherPlayerPrefab);
+		//Debug.Log(otherPlayerPrefab);
 
-		Debug.Log(startPositions.Length);
+		//Debug.Log(startPositions.Length);
 
 		for (int i = 0; i < playerNum; ++i) {
 			if (i == playID) {
@@ -157,13 +157,13 @@ public class GameManager : MonoBehaviour
 		bulletPool = GameObject.Find("BulletPool").GetComponent<Pool>();
 
 		if(onNetwork){
-			Debug.Log("Init success");
+			//Debug.Log("Init success");
 
 			connection.SendStartingPos();
 		}
 
-		Debug.Log("playID" + playID);
-		Debug.Log("onNetwork" + onNetwork);
+		//Debug.Log("playID" + playID);
+		//Debug.Log("onNetwork" + onNetwork);
 
 	}
 
