@@ -40,6 +40,7 @@ public class ResultSystem : MonoBehaviour
     {
         StartCoroutine(Playsound());
         image.color = new Color(0.0f, 0.0f, 0.0f, 0.5f);
+		GameManager.isGetMyProfile = false;
     }
 
     //------------------------------------------------------------------------------
@@ -47,15 +48,17 @@ public class ResultSystem : MonoBehaviour
     //------------------------------------------------------------------------------
     void Update()
     {
-        
-    }
+		if (GameManager.isGetMyProfile) {
+			FadeManeger.Fadeout("MatchRoom");
+		}
+	}
 
-    //===========================================================
-    // ClickRoomBack function.
-    //
-    // @note：「ルームに戻る」ボタンをクリック時処理
-    //===========================================================
-    public void ClickRoomBack()
+	//===========================================================
+	// ClickRoomBack function.
+	//
+	// @note：「ルームに戻る」ボタンをクリック時処理
+	//===========================================================
+	public void ClickRoomBack()
     {
         clickEnter.PlayOneShot(clickEnter.clip);
         GameManager.connection.backToRoom();

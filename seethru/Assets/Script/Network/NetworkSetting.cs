@@ -34,8 +34,10 @@ public class NetworkSetting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-    }
+		if(GameManager.isGetMyProfile){
+			FadeManeger.Fadeout("MatchRoom");
+		}
+	}
 
     /// <summary>
     /// JoinServerボタンが押されるとMrsの接続が呼び出される

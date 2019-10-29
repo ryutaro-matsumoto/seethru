@@ -248,7 +248,9 @@ public class MrsClient : Mrs {
                     GameManager.ConnectionServer((uint)data.player_id, myClient);
                     netsettings.SetProfile(data.player_id, GameManager.playerName);
                     GameManager.UpdateProfileList(data.player_id, GameManager.playerName);
-					FadeManeger.Fadeout("MatchRoom");
+					GameManager.isGetMyProfile = true;
+
+					//FadeManeger.Fadeout("MatchRoom");
                 }
                 break;
 
@@ -490,6 +492,7 @@ public class MrsClient : Mrs {
     // ソケット切断時に呼ばれる
     [AOT.MonoPInvokeCallback(typeof(MrsDisconnectCallback))]
     private static void on_disconnect( MrsConnection connection, IntPtr connection_data ){
+		GameManager.isGetMyProfile = false;
         connected = false;
     }
     
@@ -730,6 +733,7 @@ public class MrsClient : Mrs {
     public void DisconnectRoom()
     {
         mrs_close(g_nowconnect);
+		GameManager.isGetMyProfile = false;
         g_gameon = false;
     }
 

@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
 	static public string playerName = "Anonymous";
 
 	static public DataStructures.S_DataProfile[] profiles = new DataStructures.S_DataProfile[4];
+	static public bool isGetMyProfile;
 
 	static public string[] playerNames;
 
