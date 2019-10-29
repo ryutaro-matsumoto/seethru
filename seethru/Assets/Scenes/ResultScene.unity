@@ -211,7 +211,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &151535168
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6456,7 +6456,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad5d4836f5c6e47488475a164f866bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resultwindowSound: {fileID: 1112166546}
   image: {fileID: 1043679684}
   backTitle: TitleScene
   backRoom: MatchRoom
@@ -7653,7 +7652,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1813226270
 Transform:
   m_ObjectHideFlags: 0
