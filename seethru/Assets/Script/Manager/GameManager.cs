@@ -235,7 +235,12 @@ public class GameManager : MonoBehaviour
 			}
 		}
 
-		if(playerID == playID){
+		Debug.Log("playerid" + playerID);
+
+		if(playerID != playID){
+			bullet.gameObject.layer = LayerMask.NameToLayer("Bullet");
+			Debug.Log(LayerMask.LayerToName(bullet.gameObject.layer));
+		}else{
 			bullet.gameObject.layer = LayerMask.NameToLayer("MyBullet");
 		}
 
@@ -264,6 +269,7 @@ public class GameManager : MonoBehaviour
 		for (int i = 0; i < bullets.Count; ++i) {
 			if (bullets[i].id == bulletID) {
 				bullets[i].HitEffect();
+				bullets.RemoveAt(i);
 			}
 		}
 	}
@@ -273,9 +279,10 @@ public class GameManager : MonoBehaviour
 	/// </summary>
 	/// <param name="bulletID"></param>
 	public static void BulletReflection(int bulletID){
-		foreach(Bullet bullet in bullets){
-			if(bullet.id == bulletID){
-				bullet.HitEffect();
+		for(int i = 0; i < bullets.Count; ++i){
+			if(bullets[i].id == bulletID){
+				bullets[i].HitEffect();
+				bullets.RemoveAt(i);
 			}
 		}
 		

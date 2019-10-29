@@ -39,6 +39,8 @@ public class Bullet : PoolObject
 
 		tr.Clear();
 
+		gameObject.layer = LayerMask.NameToLayer("MyBullet");
+
 		id = -1;
 	}
 
@@ -58,5 +60,4 @@ public class Bullet : PoolObject
 		GameObject effect = (GameObject)Resources.Load(GameManager.effectPath + "Smoke/Smoke04");
 		Instantiate(effect, transform.position, transform.rotation);
 	}
-
 }
