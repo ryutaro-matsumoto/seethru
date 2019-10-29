@@ -40,6 +40,8 @@ public class Bullet : PoolObject
 		tr.Clear();
 
 		id = -1;
+
+
 	}
 
 	private void Update() {
