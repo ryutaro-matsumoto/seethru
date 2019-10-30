@@ -116,8 +116,6 @@ public class MrsClient : Mrs {
 
         g_gameon = false;
 
-
-		mrs_console_log
     }
 
     private void Start()

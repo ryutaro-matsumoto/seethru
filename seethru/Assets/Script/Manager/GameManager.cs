@@ -90,6 +90,9 @@ public class GameManager : MonoBehaviour
 		StageSceneTranslation(_stageId);
 		playerNum = _playerNum;
 		startPositonIDTable = _tabelIds;
+
+		SoundManager.Instance.StopBgmFadeout();
+
 	}
 
 	static public void ProtoStart(int[] _tabelIds, uint _playerNum) {

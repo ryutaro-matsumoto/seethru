@@ -36,6 +36,9 @@ public class NetworkSetting : MonoBehaviour
     {
 		if(GameManager.isGetMyProfile){
 			FadeManeger.Fadeout("MatchRoom");
+
+			SoundManager.Instance.StopBgmFadeout();
+
 			gameObject.SetActive(false);
 		}
 	}
@@ -52,8 +55,6 @@ public class NetworkSetting : MonoBehaviour
         mrsClient.StartEchoClient();
 
         this.gameObject.SetActive(true);
-
-        SoundManager.Instance.StopBgmFadeout();
     }
 
     /// <summary>

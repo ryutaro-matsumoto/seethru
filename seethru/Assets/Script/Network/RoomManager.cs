@@ -83,7 +83,6 @@ public class RoomManager : MonoBehaviour
 			mrsClient.SendRoomReady();
         }
 
-        SoundManager.Instance.StopBgmFadeout();
     }
 
     public void setMyID(int _id) { myID = _id; }
