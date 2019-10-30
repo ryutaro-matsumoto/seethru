@@ -42,8 +42,8 @@ public class MainCamera : MonoBehaviour
 			c_camera.orthographicSize = Mathf.Lerp(c_camera.orthographicSize, (lookatObject.Distance.y / 2f) + size, scalingSpeed);
 		}
 
-		if(c_camera.orthographicSize < minSize){
-			c_camera.orthographicSize = minSize;
+		if(newPosition.z > -minSize){
+			newPosition.z = -minSize;
 		}
 
 		transform.position = newPosition;

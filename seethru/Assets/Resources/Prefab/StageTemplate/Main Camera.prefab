@@ -176,7 +176,7 @@ MonoBehaviour:
   lookatObject: {fileID: 0}
   scalingSpeed: 0.05
   size: 5
-  minSize: 4
+  minSize: 10
   adjustPos: 3
 --- !u!1 &6732254747873710687
 GameObject:
