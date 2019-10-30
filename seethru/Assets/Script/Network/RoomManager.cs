@@ -13,7 +13,7 @@ public class RoomManager : MonoBehaviour
 
     int myID = 0;
 
-    GameObject playerList;
+    GameObject canvas;
 
     MrsClient mrsClient;
 
@@ -26,7 +26,7 @@ public class RoomManager : MonoBehaviour
 
         SoundManager.Instance.PlayBgm("BGM_Room");
 
-        playerList = GameObject.Find("PlayerList");
+		canvas = GameObject.Find("Canvas");
         profile = new DataStructures.S_DataProfile[4];
         playerName = new string[4];
         readyFlag = new bool[4];
@@ -39,7 +39,13 @@ public class RoomManager : MonoBehaviour
         }
         playerName[0] = "hostman";
 
-        mrsClient = GameObject.Find("ClientObject").GetComponent<MrsClient>();
+		if(GameManager.playID != 0){
+			canvas.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+			canvas.transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
+			canvas.transform.GetChild(2).gameObject.SetActive(false);
+		}
+
+		mrsClient = GameObject.Find("ClientObject").GetComponent<MrsClient>();
         mrsClient.setRoomManager(this);
 
 		gs = GameObject.Find("GuardSetting").GetComponent<GuardSetting>();
@@ -49,15 +55,26 @@ public class RoomManager : MonoBehaviour
     void Update()
     {
 		UpdateNameList();
+
+		if (GameManager.playID != 0) {
+			canvas.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+			canvas.transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
+			canvas.transform.GetChild(2).gameObject.SetActive(false);
+		}
+		else{
+			canvas.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+			canvas.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
+			canvas.transform.GetChild(2).gameObject.SetActive(true);
+		}
 	}
 
 	public void UpdateNameList()
     {
         for(int i = 0; i < 4; i++)
         {
-            if (GameManager.profiles[i].name == "") { playerList.transform.GetChild(i).GetComponent<Text>().text = "Waiting other player..."; }
-            else { playerList.transform.GetChild(i).GetComponent<Text>().text = GameManager.profiles[i].name; }
-            if(myID == i) { playerList.transform.GetChild(i).GetComponent<Text>().color = new Color(1f, 0f, 0f); }
+            if (GameManager.profiles[i].name == "") { canvas.transform.GetChild(1).GetChild(i).GetComponent<Text>().text = "Waiting other player..."; }
+            else { canvas.transform.GetChild(1).GetChild(i).GetComponent<Text>().text = GameManager.profiles[i].name; }
+            if(myID == i) { canvas.transform.GetChild(1).GetChild(i).GetComponent<Text>().color = new Color(1f, 0f, 0f); }
         }
     }
 
@@ -86,4 +103,10 @@ public class RoomManager : MonoBehaviour
     }
 
     public void setMyID(int _id) { myID = _id; }
+
+	public void BackTitle(){
+		GameManager.connection.DisconnectRoom();
+		FadeManeger.Fadeout("Title");
+		GameManager.soundManager.StopBgmFadeout();
+	}
 }

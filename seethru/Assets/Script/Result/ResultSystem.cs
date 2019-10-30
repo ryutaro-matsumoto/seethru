@@ -34,7 +34,17 @@ public class ResultSystem : MonoBehaviour
     {
         StartCoroutine(Playsound());
         image.color = new Color(0.0f, 0.0f, 0.0f, 0.5f);
-    }
+
+		GameObject resultMenu = GameObject.Find("Result_Main");
+
+		if(GameManager.playID != 0){
+			resultMenu.transform.GetChild(0).GetChild(5).gameObject.SetActive(false);
+			resultMenu.transform.GetChild(0).GetChild(6).gameObject.SetActive(false);
+			resultMenu.transform.GetChild(1).GetChild(5).gameObject.SetActive(false);
+			resultMenu.transform.GetChild(1).GetChild(6).gameObject.SetActive(false);
+		}
+
+	}
 
     //------------------------------------------------------------------------------
     // update function.

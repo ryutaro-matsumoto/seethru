@@ -751,6 +751,7 @@ public class MrsClient : Mrs {
     {
         mrs_close(g_nowconnect);
 		GameManager.isGetMyProfile = false;
+		GameManager.OffConnection();
         g_gameon = false;
     }
 
