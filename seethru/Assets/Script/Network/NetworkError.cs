@@ -29,9 +29,18 @@ public class NetworkError : MonoBehaviour
     /// <param name="_errid">エラー番号</param>
     public void PopupErrorWindow(int _errid)
     {
-        g_errorNumber = _errid - 1;
-        msgChild = msgesParent.transform.GetChild(g_errorNumber).gameObject;
+        if (_errid >= 3)
+        {
+            msgChild = msgesParent.transform.GetChild(2).gameObject;
+        }
+        else
+        {
+            msgChild = msgesParent.transform.GetChild(_errid - 1).gameObject;
+        }
+
         msgChild.SetActive(true);
+
+        g_errorNumber = _errid;
     }
 
 
@@ -40,7 +49,7 @@ public class NetworkError : MonoBehaviour
         msgChild.SetActive(false);                          // エラーメッセージを非アクティブしてリセット
         myObj.transform.parent.gameObject.SetActive(false); // ErrorWindowの親のCanvasごと非アクティブ
     
-        switch (g_errorNumber + 1)
+        switch (g_errorNumber)
         {
             // case 1 : とりあえずネットワークのエラー　タイトルへ戻す
             case 1:
@@ -56,7 +65,8 @@ public class NetworkError : MonoBehaviour
                 }
                 break;
 
-            default: { }break;
+            // default : その他のエラー　タイトルへ戻す
+            default: { mrsClient.BackToTitle(); } break;
         }
     }
 
