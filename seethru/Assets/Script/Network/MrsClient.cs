@@ -344,6 +344,8 @@ public class MrsClient : Mrs {
                 {
                     S_DataShots data = (S_DataShots)Marshal.PtrToStructure(payload, typeof(S_DataShots));
 
+					Debug.Log("bullet place");
+
                     GameManager.BulletPlace(new Vector2(data.x, data.y), Quaternion.AngleAxis(data.angle, Vector3.forward), data.whos_shot, data.bullet_id);
 
                 }

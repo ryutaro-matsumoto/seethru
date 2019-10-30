@@ -234,12 +234,6 @@ public class GameManager : MonoBehaviour
 		newPosition.z = -1.3f;
 		bullet.transform.position = newPosition;
 
-		for(int i = 0; i < bullets.Count; ++i){
-			if(bullets[i] != null){
-				bullets[i] = bullet;
-				return;
-			}
-		}
 
 		Debug.Log("playerid" + playerID);
 
@@ -249,14 +243,17 @@ public class GameManager : MonoBehaviour
 		}else{
 			bullet.gameObject.layer = LayerMask.NameToLayer("MyBullet");
 		}
+		players[playerID].GetComponent<Player>().anim.SetTrigger("Attack");
 
-		GameObject eff = (GameObject)Resources.Load("Prefab/Particle/Effect_Gun");
 
-		Instantiate(eff, vec, qt);
 
+		for (int i = 0; i < bullets.Count; ++i) {
+			if (bullets[i] != null) {
+				bullets[i] = bullet;
+				return;
+			}
+		}
 		bullets.Add(bullet);
-		//players[playerID].GetComponent<Player>().anim.SetTrigger("Attack");
-		;
 	}
 
 	//------------------------------------------------------------------------

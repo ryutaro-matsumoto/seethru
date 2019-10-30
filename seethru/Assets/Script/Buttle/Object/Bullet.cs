@@ -44,6 +44,12 @@ public class Bullet : PoolObject
 		id = -1;
 
 		GameManager.soundManager.PlaySeInit((int)SoundManager.SEIndex.Shot);
+
+		Vector3 newPos = new Vector3(transform.position.x, transform.position.y, -1.3f);
+		GameObject eff = (GameObject)Resources.Load("Prefab/Particle/Effect_Gun");
+
+		Instantiate(eff, newPos, transform.rotation);
+
 	}
 
 	private void Update() {
