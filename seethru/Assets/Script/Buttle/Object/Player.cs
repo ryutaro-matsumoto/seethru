@@ -83,7 +83,7 @@ public class Player : MonoBehaviour
 
 		Instantiate(effect, newPosition, transform.rotation);
 
-		GameManager.soundManager.PlaySeInit((int)SoundManager.SEIndex.Hit2);
+		GameManager.soundManager.PlaySeInit((int)SoundManager.SEIndex.Hit);
 
 		isDead = true;
 	}

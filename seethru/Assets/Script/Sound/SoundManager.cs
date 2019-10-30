@@ -67,6 +67,8 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 		Drop,
 		Hit,
 		Hit2,
+		Hit3,
+		Reflect,
 		Reflection,
 		Shot
 	}

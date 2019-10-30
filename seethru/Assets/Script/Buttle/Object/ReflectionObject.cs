@@ -60,6 +60,7 @@ public class ReflectionObject : MonoBehaviour {
 					vector = ans.normalized * vec.magnitude;
 				}
 			}
+			GameManager.soundManager.PlaySeInit((int)SoundManager.SEIndex.Reflect);
 		}
 
 		if(collision.gameObject.tag == "Guard"){
