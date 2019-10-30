@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class EffectObject : MonoBehaviour
 {
+
+	public float time = 1f;
     // Start is called before the first frame update
     void Start()
     {
-        
+		Destroy(this, time);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

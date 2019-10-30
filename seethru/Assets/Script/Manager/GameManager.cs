@@ -250,6 +250,9 @@ public class GameManager : MonoBehaviour
 			bullet.gameObject.layer = LayerMask.NameToLayer("MyBullet");
 		}
 
+		GameObject eff = (GameObject)Resources.Load("Prefab/Particle/Effect_Gun");
+
+		Instantiate(eff, vec, qt);
 
 		bullets.Add(bullet);
 		//players[playerID].GetComponent<Player>().anim.SetTrigger("Attack");
