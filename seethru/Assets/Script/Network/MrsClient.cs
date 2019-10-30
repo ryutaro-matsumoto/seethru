@@ -54,6 +54,10 @@ public class MrsClient : Mrs {
     private static MrsClient myClient;
     private static RoomManager g_roomManager;
 
+    public GameObject errorCanvas;
+    private static GameObject errCanvas;
+    public static NetworkError netError;
+
     private bool updatefix = false;
 
     private static System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
@@ -95,7 +99,11 @@ public class MrsClient : Mrs {
 			return;
 		}
 
-		gameObject.AddComponent< mrs.ScreenLogger >();
+        errorCanvas.SetActive(true);
+        netError = errorCanvas.transform.GetChild(0).GetComponent<NetworkError>();
+        errCanvas = errorCanvas;
+
+        gameObject.AddComponent< mrs.ScreenLogger >();
         gameObject.AddComponent<GameManager>();
         gameObject.AddComponent<NetworkSettingData>();
 
@@ -110,6 +118,11 @@ public class MrsClient : Mrs {
 
         g_gameon = false;
 
+    }
+
+    private void Start()
+    {
+        errorCanvas.SetActive(false);
     }
 
 #if false
@@ -508,9 +521,12 @@ public class MrsClient : Mrs {
         
         default: break;
         }
-        
-        MRS_LOG_ERR( "on_error local_mrs_version=0x{0:X} remote_mrs_version=0x{1:X} status={2}",
-            mrs_get_version( MRS_VERSION_KEY ), mrs_connection_get_remote_version( connection, MRS_VERSION_KEY ), ToString( mrs_get_connection_error_string( status ) ) );
+
+        ErrorCanvasTurnOn((int)status);
+
+
+        //MRS_LOG_ERR( "on_error local_mrs_version=0x{0:X} remote_mrs_version=0x{1:X} status={2}",
+        //  mrs_get_version( MRS_VERSION_KEY ), mrs_connection_get_remote_version( connection, MRS_VERSION_KEY ), ToString( mrs_get_connection_error_string( status ) ) );
     }
     
     // レコード受信時に呼ばれる
@@ -896,4 +912,18 @@ public class MrsClient : Mrs {
         }
         Marshal.FreeHGlobal(ptr);
     } 
+
+    public void BackToTitle()
+    {
+        g_gameon = false;
+        GameManager.isGetMyProfile = false;
+
+        FadeManeger.Fadeout("TitleScene");
+    }
+
+    static void ErrorCanvasTurnOn(int _errid)
+    {
+        errCanvas.SetActive(true);
+        netError.PopupErrorWindow(_errid);
+    }
 }
