@@ -51,6 +51,26 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     AudioSource bgmAudioSource;
     AudioSource seAudioSource;
 
+
+	public enum BGMIndex{
+		GameMain = 0,
+		Network,
+		Result,
+		Room,
+		Titie
+	};
+
+	public enum SEIndex{
+		Corsor = 0,
+		Enter,
+		ResultWindow,
+		Drop,
+		Hit,
+		Hit2,
+		Reflection,
+		Shot
+	}
+
     public double fadeTime = 1.0;
     bool isfadeOut = false;
     double fadeDeltaTime = 0;
@@ -115,6 +135,8 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         {
             seIndex.Add(se[i].name, i);
         }
+
+		GameManager.soundManager = this;
 
         // fadeTime = 1.0;
         //isfadeOut = false;

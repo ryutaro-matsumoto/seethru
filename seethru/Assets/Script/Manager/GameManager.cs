@@ -41,6 +41,9 @@ public class GameManager : MonoBehaviour
 	static public List<Bullet> bullets = new List<Bullet>();
 	static public Pool bulletPool = null;
 
+	static public SoundManager soundManager;
+
+
 	private void Awake() {
 		DontDestroyOnLoad(this);
 	}
@@ -244,6 +247,7 @@ public class GameManager : MonoBehaviour
 			bullet.gameObject.layer = LayerMask.NameToLayer("MyBullet");
 		}
 
+
 		bullets.Add(bullet);
 		//players[playerID].GetComponent<Player>().anim.SetTrigger("Attack");
 		;
@@ -283,9 +287,9 @@ public class GameManager : MonoBehaviour
 			if(bullets[i].id == bulletID){
 				bullets[i].HitEffect();
 				bullets.RemoveAt(i);
+				soundManager.PlaySeInit((int)SoundManager.SEIndex.Reflection);
 			}
-		}
-		
+		}		
 	}
 
 	public static void BackRoom(){

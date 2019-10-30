@@ -42,6 +42,8 @@ public class Bullet : PoolObject
 		gameObject.layer = LayerMask.NameToLayer("MyBullet");
 
 		id = -1;
+
+		GameManager.soundManager.PlaySeInit((int)SoundManager.SEIndex.Shot);
 	}
 
 	private void Update() {

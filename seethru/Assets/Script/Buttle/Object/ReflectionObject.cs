@@ -22,7 +22,6 @@ public class ReflectionObject : MonoBehaviour {
 		reflect = startReflect;
 		bullet = GetComponent<Bullet>();
 		col = GetComponent<CircleCollider2D>();
-		StartCoroutine("NotHitTime");
 	}
 
 	// Update is called once per frame

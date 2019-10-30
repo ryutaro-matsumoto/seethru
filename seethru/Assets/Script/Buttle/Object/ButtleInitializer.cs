@@ -16,8 +16,13 @@ public class ButtleInitializer : MonoBehaviour
 			}
 			GameManager.players[i].name = "player" + i;
 		}
+
     }
+
 	private void Start() {
 		FadeManeger.Fadein();
+		if(GameManager.soundManager != null){
+			GameManager.soundManager.PlayBgmInit((int)SoundManager.BGMIndex.GameMain);
+		}
 	}
 }
