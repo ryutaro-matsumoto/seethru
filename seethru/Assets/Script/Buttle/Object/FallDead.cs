@@ -28,7 +28,7 @@ public class FallDead : MonoBehaviour
 			}
 
 			Vector3 newPosition = transform.position;
-			speed += scaleSpeed * Time.deltaTime; ;
+			speed += scaleSpeed * Time.deltaTime;
 
 			newPosition.z += speed;
 			transform.position = newPosition;

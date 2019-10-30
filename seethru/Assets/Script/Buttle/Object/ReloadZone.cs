@@ -11,6 +11,11 @@ public class ReloadZone : MonoBehaviour
 
 	private void Start() {
 		coll = GetComponent<BoxCollider2D>();
+		coll.enabled = false;
+		StartCoroutine("CoolTimeCoroutine");
+
+		transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+		transform.GetChild(0).GetChild(1).GetComponent<ParticleSystem>().Stop(true, ParticleSystemStopBehavior.StopEmitting);
 	}
 
 
