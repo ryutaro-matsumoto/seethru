@@ -152,15 +152,20 @@ public class PlayerInput : MonoBehaviour
 
 	private void Attack(){
 		if(inputAttack && !inputAttackBuff){
-			if(player.bullet > 0){
+			anim.SetTrigger("Attack");
+
+			if (player.bullet > 0){
+
 				if (GameManager.onNetwork) {
 					GameManager.connection.SendShootData(bulletStart.transform.position.x, bulletStart.transform.position.y, transform.eulerAngles.z);
 				}
 				else{
-					anim.SetTrigger("Attack");
 					StartCoroutine("LateFrameAttack");
 				}
 				--player.bullet;
+			}
+			else{
+				GameManager.soundManager.PlaySeInit((int)SoundManager.SEIndex.DryFire);
 			}
 		}
 		inputAttackBuff = inputAttack;

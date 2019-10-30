@@ -70,7 +70,14 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 		Hit3,
 		Reflect,
 		Reflection,
-		Shot
+		Shot,
+		DryFire,
+		Floor1,
+		Floor2,
+		FootStep,
+		Heal,
+		Reload,
+		RePop
 	}
 
     public double fadeTime = 1.0;
