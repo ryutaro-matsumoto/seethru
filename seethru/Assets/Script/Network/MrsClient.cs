@@ -103,7 +103,6 @@ public class MrsClient : Mrs {
         netError = errorCanvas.transform.GetChild(0).GetComponent<NetworkError>();
         errCanvas = errorCanvas;
 
-        gameObject.AddComponent< mrs.ScreenLogger >();
         gameObject.AddComponent<GameManager>();
         gameObject.AddComponent<NetworkSettingData>();
 
@@ -115,9 +114,10 @@ public class MrsClient : Mrs {
         netsettings = gameObject.GetComponent<NetworkSettingData>();
         InitMyData();
 
-
         g_gameon = false;
 
+
+		mrs_console_log
     }
 
     private void Start()
@@ -282,6 +282,7 @@ public class MrsClient : Mrs {
 
                     InitMrsforGame(starting);
                     g_playercount = starting.sumplayer;
+					
                 }
                 break;
 
