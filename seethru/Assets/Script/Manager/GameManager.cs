@@ -301,6 +301,51 @@ public class GameManager : MonoBehaviour
 		stageSelect = null;
 		bullets.Clear();
 		bulletPool = null;
+		if(onNetwork){
+			connection.SendBackRoom();
+		}
+		else {
+			// フェードアウト
+			FadeManeger.Fadeout("MatchRoom");
+			GameManager.connection.backToRoom();
+		}
+	}
+
+
+	public static void ReceiveBackRoom(){
+		FadeManeger.Fadeout("MatchRoom");
+		GameManager.connection.backToRoom();
+		soundManager.StopBgmFadeout();
+		// 決定SE再生
+		SoundManager.Instance.PlaySe("SE1_Enter");
+
+
+	}
+
+	public static void BackTitle(){
+		floorMap = null;
+		timeControler = null;
+		stageSelect = null;
+		bullets.Clear();
+		bulletPool = null;
+		if (onNetwork) {
+			connection.SendBackRoom();
+		}
+		else {
+			// フェードアウト
+			FadeManeger.Fadeout("TitleScene");
+			GameManager.connection.backToRoom();
+		}
+	}
+
+	public static void ReceiveBackTitle(){
+		FadeManeger.Fadeout("TitleScene");
+		GameManager.connection.DisconnectRoom();
+		soundManager.StopBgmFadeout();
+		// 決定SE再生
+		SoundManager.Instance.PlaySe("SE1_Enter");
+
+
 	}
 
 
@@ -308,5 +353,6 @@ public class GameManager : MonoBehaviour
 		GameManager.profiles[_id].player_id = _id;
 		GameManager.profiles[_id].name = _name;
 	}
+
 
 }

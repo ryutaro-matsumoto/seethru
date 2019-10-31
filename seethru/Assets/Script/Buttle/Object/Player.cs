@@ -49,10 +49,10 @@ public class Player : MonoBehaviour
 		}
 		if(GameManager.onNetwork){
 			if (GetComponent<PlayerInput>() == null) {
-				Vector2 vec = Vector2.Lerp(transform.position, new Vector3(receivePos.x, receivePos.y, transform.position.z), 0.5f);
+				Vector2 vec = Vector2.Lerp(transform.position, receivePos, 0.5f);
 				Vector2 pos = transform.position;
-				transform.position = vec;
-
+				transform.position = new Vector3(vec.x, vec.y, transform.position.z);
+				
 				vec -= pos;
 				if (vec.magnitude > animationRange) {
 					anim.SetBool("Run", true);

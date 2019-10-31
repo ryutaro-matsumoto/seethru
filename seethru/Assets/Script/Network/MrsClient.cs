@@ -432,9 +432,13 @@ public class MrsClient : Mrs {
                 break;
 
 			//--------------------------------------- シーンの切り替え 0x3#
-			case 0x31:
+			case 0x32:
 				{
-					
+					GameManager.ReceiveBackRoom();
+				}
+				break;
+			case 0x33: {
+					GameManager.ReceiveBackRoom();
 				}
 				break;
 			default: { } break;
@@ -869,6 +873,18 @@ public class MrsClient : Mrs {
 	//-----------------------------------------------------------------------
 	public void SendOnResult(){
 		g_paytype = 0x31;
+		g_gameon = false;
+		mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, null, 0);
+	}
+
+	public void SendBackRoom(){
+		g_paytype = 0x32;
+		g_gameon = false;
+		mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, null, 0);
+	}
+
+	public void SendBackTitle(){
+		g_paytype = 0x33;
 		g_gameon = false;
 		mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, null, 0);
 	}

@@ -53,16 +53,8 @@ public class ResultSystem : MonoBehaviour
     //===========================================================
     public void ClickRoomBack()
     {
-        // 決定SE再生
-        SoundManager.Instance.PlaySe("SE1_Enter");
-
-        // リザルトBGMストップ
-        SoundManager.Instance.StopBgmFadeout();
-
-        // フェードアウト
-        FadeManeger.Fadeout(backRoom);
-        GameManager.connection.backToRoom();
-    }
+		GameManager.BackRoom();
+	}
 
     //===========================================================
     // ClickExitButton function.
@@ -71,16 +63,13 @@ public class ResultSystem : MonoBehaviour
     //===========================================================
     public void ClickRoomExit()
     {
-        // 決定SE再生
-        SoundManager.Instance.PlaySe("SE1_Enter");
-
-        // リザルトBGMストップ
-        SoundManager.Instance.StopBgmFadeout();
-
-        // フェードアウト
-        FadeManeger.Fadeout(backTitle);
 		if(GameManager.onNetwork){
-			GameManager.connection.DisconnectRoom();
+			GameManager.BackTitle();
 		}
+		else{
+			// フェードアウト
+			FadeManeger.Fadeout(backTitle);
+		}
+		GameManager.connection.DisconnectRoom();
 	}
 }

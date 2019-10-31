@@ -106,7 +106,7 @@ public class RoomManager : MonoBehaviour
 
 	public void BackTitle(){
 		GameManager.connection.DisconnectRoom();
-		FadeManeger.Fadeout("Title");
+		FadeManeger.Fadeout("TitleScene");
 		GameManager.soundManager.StopBgmFadeout();
 	}
 }

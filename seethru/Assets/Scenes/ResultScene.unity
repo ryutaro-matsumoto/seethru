@@ -334,6 +334,7 @@ GameObject:
   - component: {fileID: 244687755}
   - component: {fileID: 244687754}
   - component: {fileID: 244687753}
+  - component: {fileID: 244687758}
   m_Layer: 5
   m_Name: L_Result_roomExit
   m_TagString: Untagged
@@ -486,6 +487,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 244687751}
   m_CullTransparentMesh: 0
+--- !u!114 &244687758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244687751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95c801c10a0ec6a4dba71462d4dca317, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &284857640
 GameObject:
   m_ObjectHideFlags: 0
@@ -5328,6 +5341,7 @@ GameObject:
   - component: {fileID: 346811278}
   - component: {fileID: 346811281}
   - component: {fileID: 346811283}
+  - component: {fileID: 346811282}
   m_Layer: 5
   m_Name: Result_roomExit
   m_TagString: Untagged
@@ -5468,6 +5482,18 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!114 &346811282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346811276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95c801c10a0ec6a4dba71462d4dca317, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &346811283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6719,6 +6745,7 @@ GameObject:
   - component: {fileID: 1343418338}
   - component: {fileID: 1343418341}
   - component: {fileID: 1343418343}
+  - component: {fileID: 1343418342}
   m_Layer: 5
   m_Name: Result_roomBack
   m_TagString: Untagged
@@ -6859,6 +6886,18 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!114 &1343418342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1343418336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95c801c10a0ec6a4dba71462d4dca317, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1343418343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7872,6 +7911,7 @@ GameObject:
   - component: {fileID: 1909242123}
   - component: {fileID: 1909242122}
   - component: {fileID: 1909242121}
+  - component: {fileID: 1909242126}
   m_Layer: 5
   m_Name: L_Result_roomBack
   m_TagString: Untagged
@@ -8024,6 +8064,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1909242119}
   m_CullTransparentMesh: 0
+--- !u!114 &1909242126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909242119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95c801c10a0ec6a4dba71462d4dca317, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1940225651
 GameObject:
   m_ObjectHideFlags: 0
