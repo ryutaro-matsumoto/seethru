@@ -28,8 +28,10 @@ public class GuardSetButton : MonoBehaviour
 	public void Click(){
 		GuardSetting gs = transform.parent.GetComponent<GuardSetting>();
 
+		GameManager.soundManager.PlaySeInit((int)SoundManager.SEIndex.Corsor);
 
-		if(isSelect){
+
+		if (isSelect){
 			isSelect = false;
 			gs.guardSetNum--;
 		}

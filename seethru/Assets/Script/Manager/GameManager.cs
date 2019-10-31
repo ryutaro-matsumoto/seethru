@@ -91,6 +91,7 @@ public class GameManager : MonoBehaviour
 		playerNum = _playerNum;
 		startPositonIDTable = _tabelIds;
 
+		soundManager.PlaySeInit((int)SoundManager.SEIndex.Enter);
 		SoundManager.Instance.StopBgmFadeout();
 
 	}
@@ -215,6 +216,8 @@ public class GameManager : MonoBehaviour
 		stageSelect.transform.GetChild(0).GetChild(stageSelect.selectStage - 1).gameObject.SetActive(false);
 		stageSelect.selectStage = stage;
 		stageSelect.transform.GetChild(0).GetChild(stageSelect.selectStage - 1).gameObject.SetActive(true);
+
+		soundManager.PlaySeInit((int)SoundManager.SEIndex.Corsor);
 	}
 
 
