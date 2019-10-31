@@ -321,8 +321,6 @@ public class GameManager : MonoBehaviour
 		soundManager.StopBgmFadeout();
 		// 決定SE再生
 		SoundManager.Instance.PlaySe("SE1_Enter");
-
-
 	}
 
 	public static void BackTitle(){
