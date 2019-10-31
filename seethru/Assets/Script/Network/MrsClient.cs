@@ -844,6 +844,8 @@ public class MrsClient : Mrs {
         IntPtr send = Marshal.AllocHGlobal(sizeof(Int32));
         *(Int32*)send = (Int32)GameManager.playID;
 
+		Debug.Log("fall");
+
         mrs_write_record(g_nowconnect, g_RecordOptions, g_paytype, send, (uint)sizeof(Int32));
 
         Marshal.FreeHGlobal(send);
@@ -859,8 +861,9 @@ public class MrsClient : Mrs {
         sendHit.bullet_id = _bulletID;
         sendHit.player_id = (int)GameManager.playID;
         sendHit.whosby_id = -1;
+		Debug.Log("hit");
 
-        g_paytype = 0x22;
+		g_paytype = 0x22;
         IntPtr send = Marshal.AllocHGlobal(sizeof(S_DeadHit));
         *(S_DeadHit*)send = (S_DeadHit)sendHit;
 
