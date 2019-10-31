@@ -63,13 +63,6 @@ public class ResultSystem : MonoBehaviour
     //===========================================================
     public void ClickRoomExit()
     {
-		if(GameManager.onNetwork){
-			GameManager.BackTitle();
-		}
-		else{
-			// フェードアウト
-			FadeManeger.Fadeout(backTitle);
-		}
-		GameManager.connection.DisconnectRoom();
+		GameManager.BackTitle();
 	}
 }

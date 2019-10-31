@@ -438,7 +438,7 @@ public class MrsClient : Mrs {
 				}
 				break;
 			case 0x33: {
-					GameManager.ReceiveBackRoom();
+					GameManager.ReceiveBackTitle();
 				}
 				break;
 			default: { } break;

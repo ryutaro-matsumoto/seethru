@@ -329,7 +329,7 @@ public class GameManager : MonoBehaviour
 		bullets.Clear();
 		bulletPool = null;
 		if (onNetwork) {
-			connection.SendBackRoom();
+			connection.SendBackTitle();
 		}
 		else {
 			// フェードアウト
