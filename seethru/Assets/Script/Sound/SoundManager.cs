@@ -72,6 +72,8 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 		Reflection,
 		Shot,
 		DryFire,
+		Fall_High,
+		Fall_Low,
 		Floor1,
 		Floor2,
 		FootStep,

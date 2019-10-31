@@ -11,6 +11,7 @@ public class FloorSet : MonoBehaviour
 	IEnumerator FallFloor(float floorFallSeconds) {
 		for(int i = 0; i < transform.childCount; ++i){ 
 			transform.GetChild(i).GetComponent<FloorChip>().FallNotice();
+			GameManager.soundManager.PlaySeInit((int)SoundManager.SEIndex.Floor1);
 			yield return new WaitForSeconds(floorFallSeconds);
 		}
 
@@ -19,5 +20,7 @@ public class FloorSet : MonoBehaviour
 		for (int i = 0; i < transform.childCount; ++i) {
 			transform.GetChild(i).GetComponent<FloorChip>().Fall();
 		}
+		GameManager.soundManager.PlaySeInit((int)SoundManager.SEIndex.Fall_Low);
+
 	}
 }

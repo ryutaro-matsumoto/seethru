@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour
 
 		players = new GameObject[playerNum];
 
-		GameObject[] startPositions = GameObject.FindGameObjectsWithTag("StartPosition");
+		GameObject initObj = GameObject.Find("Initializer");
 
 		GameObject otherPlayerPrefab = (GameObject)Resources.Load("Prefab/Object/OtherPlayer");
 		GameObject mainPlayerPrefab = (GameObject)Resources.Load("Prefab/Object/MainPlayer");
@@ -142,7 +142,7 @@ public class GameManager : MonoBehaviour
 
 		for (int i = 0; i < playerNum; ++i) {
 			if (i == playID) {
-				players[i] = MonoBehaviour.Instantiate(mainPlayerPrefab, startPositions[startPositonIDTable[i]].transform.position, startPositions[startPositonIDTable[i]].transform.rotation);
+				players[i] = MonoBehaviour.Instantiate(mainPlayerPrefab, initObj.transform.GetChild(startPositonIDTable[i]).position, initObj.transform.GetChild(startPositonIDTable[i]).transform.rotation);
 				players[i].transform.GetChild(6).GetChild(2).GetChild(1).gameObject.GetComponent<SkinnedMeshRenderer>().material.color = playerColor[i];
 				players[i].transform.GetChild(6).GetChild(2).GetChild(3).gameObject.GetComponent<SkinnedMeshRenderer>().material.color = playerColor[i];
 				players[i].transform.GetChild(6).GetChild(2).GetChild(5).gameObject.GetComponent<SkinnedMeshRenderer>().material.color = playerColor[i];
@@ -150,7 +150,7 @@ public class GameManager : MonoBehaviour
 
 				continue;
 			}
-			players[i] = MonoBehaviour.Instantiate(otherPlayerPrefab, startPositions[startPositonIDTable[i]].transform.position, startPositions[startPositonIDTable[i]].transform.rotation);
+			players[i] = MonoBehaviour.Instantiate(otherPlayerPrefab, initObj.transform.GetChild(startPositonIDTable[i]).position, initObj.transform.GetChild(startPositonIDTable[i]).transform.rotation);
 			players[i].transform.GetChild(4).GetChild(2).GetChild(1).gameObject.GetComponent<SkinnedMeshRenderer>().material.color = playerColor[i];
 			players[i].transform.GetChild(4).GetChild(2).GetChild(3).gameObject.GetComponent<SkinnedMeshRenderer>().material.color = playerColor[i];
 			players[i].transform.GetChild(4).GetChild(2).GetChild(5).gameObject.GetComponent<SkinnedMeshRenderer>().material.color = playerColor[i];

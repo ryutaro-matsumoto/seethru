@@ -32,6 +32,8 @@ public class ReloadZone : MonoBehaviour
 		transform.GetChild(0).GetChild(1).GetComponent<ParticleSystem>().Play(true);
 
 		coll.enabled = true;
+
+		GameManager.soundManager.PlaySeInit((int)SoundManager.SEIndex.RePop);
 	}
 
 
@@ -45,6 +47,8 @@ public class ReloadZone : MonoBehaviour
 				}
 				coll.enabled = false;
 				StartCoroutine("CoolTimeCoroutine");
+
+				GameManager.soundManager.PlaySeInit((int)SoundManager.SEIndex.Heal);
 
 				transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
 				transform.GetChild(0).GetChild(1).GetComponent<ParticleSystem>().Stop(true, ParticleSystemStopBehavior.StopEmitting);

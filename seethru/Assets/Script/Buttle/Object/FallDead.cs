@@ -47,7 +47,7 @@ public class FallDead : MonoBehaviour
 	}
 	public void Fall() {
 		isFall = true;
-		GameManager.soundManager.PlaySeInit((int)SoundManager.SEIndex.Drop);
+		GameManager.soundManager.PlaySeInit((int)SoundManager.SEIndex.Fall_High);
 		//	PlayerInput input = GetComponent<PlayerInput>();
 		//	if(input != null){
 		//		input.isInput = false;
